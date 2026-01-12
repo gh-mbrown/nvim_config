@@ -23,16 +23,11 @@ vim.opt.hlsearch = true
 vim.opt.termguicolors = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.diagnostic.config({
-	virtual_text = true,
-	signs = true,
-	underline = true,
-	update_in_insert = true,
-	severity_sort = true
-})
 vim.opt.backup = false
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 vim.g.zig_fmt_autosave = 1
+vim.opt.shellcmdflag = "-s"
+vim.o.winborder = "rounded"

@@ -14,7 +14,7 @@ if not (vim.uv or vim.loop).fs_stat(path) then
     if vim.v.shell_error ~= 0 then
         vim.api.nvim_echo(
             {
-                { 
+                {
                     "Failed to clone lazy.nvim:\n",
                     "ErrorMsg"
                 },
@@ -36,10 +36,27 @@ end
 
 vim.opt.rtp:prepend(path)
 
+local plugins = {}
+
+local cwDir = vim.fn.stdpath("config")
+local files = vim.split(vim.fn.glob(cwDir .. "/lua/plugins/*"), '\n', {trimempty=true})
+
+for _, f in pairs(files) do
+    local file = vim.fn.fnamemodify(f, ":t")
+    local plugin = vim.fn.fnamemodify(file, ":r")
+
+    if plugin == "init" then
+        goto continue
+    end
+
+    vim.list_extend(plugins, {require("plugins."..plugin)})
+
+    ::continue::
+end
+
 require("lazy").setup({
-    spec = {
-        {
-            import = "plugins"
-        },
+    spec = plugins,
+    checker = {
+        enabled = true,
     },
 })

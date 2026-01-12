@@ -16,10 +16,7 @@ return {
             defaults = {
                 file_ignore_patterns = {
                     "%__virtual.cs$",
-                    "bin",
                     "obj",
-                    ".zig-cache",
-                    "zig-output",
                 },
                 layout_strategy = "flex",
                 layout_config = {
@@ -29,24 +26,12 @@ return {
                     horizontal = {
                         mirror = false,
                         prompt_position = "top",
-                        width = function (_, cols, _)
-                            return cols
-                        end,
-                        height = function (_, _, rows)
-                            return rows
-                        end,
                         preview_cutoff = 10,
                         preview_width = 0.5,
                     },
                     vertical = {
                         mirror = true,
                         prompt_position = "top",
-                        width = function (_, cols, _)
-                            return cols
-                        end,
-                        height = function (_, _, rows)
-                            return rows
-                        end,
                         preview_cutoff = 10,
                         preview_height = 0.5,
                     },
@@ -93,6 +78,6 @@ return {
         vim.keymap.set("n", "<leader>gb", builtin.git_branches)
         vim.keymap.set("n", "<leader>gs", builtin.git_status)
         vim.keymap.set("n", "<leader>gc", builtin.git_commits)
-        vim.keymap.set("n", "<leader>ts", builtin.treesitter)
+        vim.keymap.set("n", "<leader>ft", builtin.treesitter)
     end
 }

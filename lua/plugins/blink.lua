@@ -6,7 +6,22 @@ return {
     version = "1.*",
     opts = {
         keymap = {
-            preset = "default"
+            ["<C-j>"] = {
+                "select_next",
+                "fallback_to_mappings"
+            },
+            ["<C-k>"] = {
+                "select_prev",
+                "fallback_to_mappings"
+            },
+            ["<CR>"] = {
+                "select_and_accept",
+                "fallback"
+            },
+            ["<C-;>"] = {
+                "hide",
+                "fallback"
+            }
         },
         appearance = {
             nerd_font_variant = "normal"
