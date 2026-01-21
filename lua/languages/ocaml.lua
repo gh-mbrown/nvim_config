@@ -20,7 +20,9 @@ vim.lsp.config("ocamllsp", {
         },
         ".git"
     },
-    settings = {}
+    settings = {
+
+    }
 })
 
 vim.lsp.enable "ocamllsp"

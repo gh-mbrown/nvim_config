@@ -14,7 +14,7 @@ return {
             end
         },
         "neovim/nvim-lspconfig",
-        "mason-org/mason-registry",
+        -- "mason-org/mason-registry",
     },
     opts = {
         ensure_installed = {
@@ -32,6 +32,8 @@ return {
             "stylua",
             "yamlls",
             "pyright",
+            "rust_analyzer",
+            "zls"
         }
     },
     highlight = {

@@ -17,6 +17,8 @@ return {
                 file_ignore_patterns = {
                     "%__virtual.cs$",
                     "obj",
+                    "_build",
+                    "bin"
                 },
                 layout_strategy = "flex",
                 layout_config = {

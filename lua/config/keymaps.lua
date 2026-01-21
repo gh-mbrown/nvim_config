@@ -25,3 +25,6 @@ map("v", "K", ":m '<-2<CR>gv=gv")
 
 map("n", "<C-p>", '"*p')
 map("v", "<C-y>", '"+y')
+
+map("n", "<leader>m", ":Mason<CR>")
+map("n", "<leader>l", ":Lazy<CR>")
