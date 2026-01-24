@@ -79,8 +79,6 @@ return {
 		vim.keymap.set("n", "gr", builtin.lsp_references)
 		vim.keymap.set("n", "gi", builtin.lsp_implementations)
 		vim.keymap.set("n", "<leader>gb", builtin.git_branches)
-		vim.keymap.set("n", "<leader>gs", builtin.git_status)
-		vim.keymap.set("n", "<leader>gc", builtin.git_commits)
 		vim.keymap.set("n", "<leader>pt", builtin.treesitter)
 	end,
 }
