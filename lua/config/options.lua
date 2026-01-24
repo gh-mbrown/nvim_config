@@ -1,4 +1,4 @@
-vim.opt.mouse = 'a'
+vim.opt.mouse = "a"
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
@@ -6,15 +6,15 @@ vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.cindent = true
 vim.opt.cinoptions = {
-    "g0",
-    "N-s",
-    "t0",
-    "(0",
+	"g0",
+	"N-s",
+	"t0",
+	"(0",
 }
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.nu = true
-vim.opt.cursorline = true
+vim.opt.cursorline = false
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.showmode = true
