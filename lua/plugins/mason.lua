@@ -14,7 +14,6 @@ return {
 			end,
 		},
 		"neovim/nvim-lspconfig",
-		-- "mason-org/mason-registry",
 	},
 	opts = {
 		ensure_installed = {
@@ -27,7 +26,7 @@ return {
 			"rust_analyzer",
 			"zls",
 			"clangd",
-			"codelldb",
+			-- "codelldb",
 			"fsautocomplete",
 			"neocmake",
 			"ruff",
