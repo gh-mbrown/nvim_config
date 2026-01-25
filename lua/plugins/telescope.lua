@@ -75,7 +75,7 @@ return {
 		vim.keymap.set("n", "<leader>pb", builtin.buffers)
 		vim.keymap.set("n", "<leader>ph", builtin.help_tags)
 		vim.keymap.set("n", "<leader>pc", builtin.current_buffer_fuzzy_find)
-		vim.keymap.set("n", "<leader>fd", builtin.diagnostics)
+		vim.keymap.set("n", "<leader>pd", builtin.diagnostics)
 		vim.keymap.set("n", "gd", builtin.lsp_definitions)
 		vim.keymap.set("n", "gr", builtin.lsp_references)
 		vim.keymap.set("n", "gi", builtin.lsp_implementations)
