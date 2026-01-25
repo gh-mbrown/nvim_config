@@ -19,6 +19,7 @@ return {
 					"obj",
 					"_build",
 					"bin",
+					"out",
 				},
 				layout_strategy = "flex",
 				layout_config = {
