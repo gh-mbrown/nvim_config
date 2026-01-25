@@ -1,20 +1,18 @@
 return {
-	"Shatur/neovim-ayu",
+	"nanotech/jellybeans.vim",
 	config = function()
-		require("ayu").setup({
-			overrides = {
-				Normal = { bg = "None" },
-				NormalFloat = { bg = "none" },
-				ColorColumn = { bg = "None" },
-				SignColumn = { bg = "None" },
-				Folded = { bg = "None" },
-				FoldColumn = { bg = "None" },
-				CursorLine = { bg = "None" },
-				CursorColumn = { bg = "None" },
-				VertSplit = { bg = "None" },
+		vim.g.jellybeans_overrides = {
+			background = {
+				guibg = "none",
 			},
-		})
-
-		vim.cmd([[colorscheme ayu-dark]])
+			gutter = {
+				guibg = "none",
+			},
+			signcolumn = {
+				guibg = "none",
+			},
+		}
+		vim.cmd.background = "dark"
+		vim.cmd.colorscheme("jellybeans")
 	end,
 }
