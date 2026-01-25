@@ -7,7 +7,7 @@ return {
 			local branch = vim.fn.input("Branch name: ")
 			if branch ~= "" then
 				vim.cmd.Git("checkout -b " .. branch)
-				vim.cmd.Git("git push -u origin " .. branch)
+				vim.cmd.Git("push -u origin " .. branch)
 			end
 		end)
 		vim.keymap.set("n", "<leader>gA", function()
