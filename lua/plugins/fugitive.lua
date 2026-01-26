@@ -27,7 +27,7 @@ return {
 			default = vim.trim(default)
 			local command = "pull --rebase " .. default
 			print(command)
-			vim.cmd.Git(command)
+			-- vim.cmd.Git(command)
 		end)
 		vim.keymap.set("n", "<leader>gB", function()
 			vim.cmd.Git("blame")
