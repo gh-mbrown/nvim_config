@@ -23,8 +23,11 @@ return {
 			vim.cmd.Git("push")
 		end)
 		vim.keymap.set("n", "<leader>gP", function()
-			local default = vim.cmd.Git("symbolic-ref refs/remotes/origin/HEAD --short")
-			vim.cmd.Git("pull --rebase " .. default)
+			local default = vim.system(vim.cmd.Git("symbolic-ref refs/remotes/origin/HEAD --short"))
+			print(type(default))
+			local command = "pull --rebase " .. default
+			print(command)
+			vim.cmd.Git(command)
 		end)
 		vim.keymap.set("n", "<leader>gB", function()
 			vim.cmd.Git("blame")
