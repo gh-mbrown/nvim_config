@@ -3,9 +3,9 @@ return {
 	version = "*",
 	config = function()
 		require("toggleterm").setup({
-			size = 40,
-			direction = "float",
-			open_mapping = [[<c-\]],
+			size = 50,
+			direction = "horizontal",
+			open_mapping = [[<c-\>]],
 			float_opts = {
 				border = "single",
 				itle_pos = "left",
