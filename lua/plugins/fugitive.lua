@@ -23,7 +23,7 @@ return {
 			vim.cmd.Git("push")
 		end)
 		vim.keymap.set("n", "<leader>gP", function()
-			vim.cmd.Git("pull --rebase=true")
+			vim.cmd.Git("pull --rebase")
 		end)
 		vim.keymap.set("n", "<leader>gB", function()
 			vim.cmd.Git("blame")
