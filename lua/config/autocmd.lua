@@ -12,6 +12,7 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- Disables inlay hints
 vim.api.nvim_create_autocmd({ "BufWritePost", "LspAttach", "BufEnter" }, {
 	callback = function(args)
 		local bufnr = args.buf or 0
@@ -26,6 +27,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
+-- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
 	callback = function()
 		vim.highlight.on_yank()
