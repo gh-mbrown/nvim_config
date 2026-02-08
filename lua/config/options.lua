@@ -30,4 +30,4 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 vim.opt.shellcmdflag = "-s"
 vim.o.winborder = "rounded"
-vim.opt.wrap = false
+vim.opt.wrap = true
