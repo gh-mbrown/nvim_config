@@ -19,6 +19,9 @@ return {
 		vim.keymap.set("n", "<leader>e2", function()
 			vim.cmd.HopChar2()
 		end)
+		vim.keymap.set("n", "<leader>ea", function()
+			vim.cmd.HopAnywhere()
+		end)
 
 		hop.setup({})
 	end,

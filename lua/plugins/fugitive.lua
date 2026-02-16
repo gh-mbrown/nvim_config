@@ -77,6 +77,9 @@ return {
 				vim.cmd.Git("rebase " .. branch)
 			end
 		end)
+		vim.keymap.set("n", "<leader>gF", function()
+			vim.cmd.Git("fetch")
+		end)
 
 		vim.opt.diffopt:append("algorithm:patience")
 		vim.opt.diffopt:append("indent-heuristic")
