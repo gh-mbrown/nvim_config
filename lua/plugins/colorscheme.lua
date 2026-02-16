@@ -1,24 +1,12 @@
 return {
-	"nanotech/jellybeans.vim",
+	"rose-pine/neovim",
+	name = "rose-pine",
 	config = function()
-		vim.g.jellybeans_overrides = {
-			background = {
-				guibg = "none",
+		require("rose-pine").setup({
+			styles = {
+				transparency = true,
 			},
-			gutter = {
-				guibg = "none",
-			},
-			signcolumn = {
-				guibg = "none",
-			},
-			pmenu = {
-				guibg = "none",
-			},
-			cursorlinenr = {
-				guifg = "f5830b",
-			},
-		}
-		vim.cmd.background = "dark"
-		vim.cmd.colorscheme("jellybeans")
+		})
+		vim.cmd([[colorscheme rose-pine]])
 	end,
 }

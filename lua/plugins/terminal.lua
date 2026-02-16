@@ -4,7 +4,7 @@ return {
 	config = function()
 		require("toggleterm").setup({
 			size = 50,
-			direction = "horizontal",
+			direction = "float",
 			open_mapping = [[<c-\>]],
 			float_opts = {
 				border = "single",
