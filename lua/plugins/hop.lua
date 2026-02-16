@@ -31,18 +31,9 @@ return {
 		vim.keymap.set("n", "<leader>ea", function()
 			vim.cmd.HopAnywhere()
 		end)
-		vim.keymap.set("n", "<leader>ee", hop_word_end)
-
-		vim.api.nvim_set_hl(0, "HopNextKey", {
-			bg = "NONE",
-		})
-
-		vim.api.nvim_set_hl(0, "HopNextKey1", {
-			bg = "NONE",
-		})
-		vim.api.nvim_set_hl(0, "HopNextKey2", {
-			bg = "NONE",
-		})
+		vim.keymap.set("n", "<leader>ee", function()
+			vim.cmd.HopWordEnd()
+		end)
 
 		hop.setup({})
 	end,
