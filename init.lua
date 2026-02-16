@@ -21,3 +21,13 @@ vim.api.nvim_set_hl(0, "HopNextKey2", {
 	fg = "#2b8db3",
 	bold = true,
 })
+
+vim.api.nvim_set_hl(0, "LineNr", {
+	fg = "#ebbcba",
+})
+vim.api.nvim_set_hl(0, "LineNrBelow", {
+	fg = "#6e6a86",
+})
+vim.api.nvim_set_hl(0, "LineNrAbove", {
+	fg = "#6e6a86",
+})
