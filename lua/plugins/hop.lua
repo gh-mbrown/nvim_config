@@ -22,7 +22,7 @@ return {
 		vim.keymap.set("n", "<leader>ec", function()
 			vim.cmd.HopCamelCase()
 		end)
-		vim.keymap.set("n", "<leader>ep", function()
+		vim.keymap.set("n", "<leader>ef", function()
 			vim.cmd.HopPattern()
 		end)
 		vim.keymap.set("n", "<leader>e2", function()
