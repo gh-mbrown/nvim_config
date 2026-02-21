@@ -21,7 +21,7 @@ M.on_attach = function(_, _)
 	-- WORKSPACE COMMANDS
 	vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder)
 	vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder)
-	vim.keymap.set("n", "<leader>wl", function()
+	vim.keymap.set("n", "<leader>wf", function()
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 	end)
 

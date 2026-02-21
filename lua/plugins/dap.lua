@@ -64,7 +64,7 @@ return {
 		vim.keymap.set("n", "<leader>de", function()
 			vim.cmd.DapEval()
 		end)
-		vim.keymap.set("n", "<leader>dl", function()
+		vim.keymap.set("n", "<leader>ds", function()
 			vim.cmd.DapShowLog()
 		end)
 		vim.keymap.set("n", "<leader>dr", function()
