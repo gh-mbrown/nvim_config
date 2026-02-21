@@ -33,9 +33,9 @@ return {
 		vim.keymap.set("n", "<leader>cg", function()
 			vim.cmd.CMakeGenerate()
 		end)
-        vim.keymap.set("n", "<leader>cd", function ()
-            vim.cmd.CMakeDebug()
-        end)
+		vim.keymap.set("n", "<leader>cd", function()
+			vim.cmd.CMakeDebug()
+		end)
 	end,
 	opts = {},
 }
