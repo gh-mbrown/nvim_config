@@ -31,3 +31,6 @@ vim.api.nvim_set_hl(0, "LineNrBelow", {
 vim.api.nvim_set_hl(0, "LineNrAbove", {
 	fg = "#6e6a86",
 })
+vim.api.nvim_set_hl(0, "BlinkCmpDoc", {
+	bg = "none",
+})
