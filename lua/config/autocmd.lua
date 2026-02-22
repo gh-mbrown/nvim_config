@@ -33,17 +33,3 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
-
--- Start and exit tmux on vim enter and leave
-vim.api.nvim_create_autocmd("VimEnter", {
-	callback = function()
-		vim.fn.system("tmux split-window -h -p 30 -c '#{pane_current_path}'")
-		vim.fn.system("tmux select-pane -t 1")
-	end,
-})
-
-vim.api.nvim_create_autocmd("VimLeave", {
-	callback = function()
-		vim.fn.system("tmux kill-pane -a")
-	end,
-})
