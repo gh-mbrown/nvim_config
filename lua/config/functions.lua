@@ -21,7 +21,12 @@ end
 
 ---Kills the current pane in tmux
 local function close_window()
-	vim.fn.system("tmux kill-pane")
+	local num = vim.fn.system("tmux list-panes | wc -l")
+	if tonumber(num) > 1 then
+		vim.fn.system("tmux kill-pane")
+	else
+		print("Only one pane active")
+	end
 end
 
 vim.api.nvim_create_user_command("SplitWindowH", function()

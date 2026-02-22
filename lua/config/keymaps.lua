@@ -1,7 +1,7 @@
 local map = vim.keymap.set
 
 map("n", "<leader>qq", vim.cmd.Ex)
-map("n", "<leader>qb", ":bp|bd #<CR>")
+map("n", "<leader>qb", ":bd<CR>")
 
 map("n", "<leader>w-", function()
 	vim.cmd.SplitWindowV()
@@ -17,6 +17,7 @@ map("n", "<leader>wk", "<C-w><C-k>")
 map("n", "<leader>wl", "<C-w><C-l>")
 map("n", "<leader>wj", "<C-w><C-j>")
 map("n", "<leader>wh", "<C-w><C-h>")
+map("n", "<leader>xx", "<C-w><C-q>")
 
 map("v", "<", "<gv")
 map("v", ">", ">gv")
