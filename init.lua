@@ -34,3 +34,6 @@ vim.api.nvim_set_hl(0, "LineNrAbove", {
 vim.api.nvim_set_hl(0, "BlinkCmpDoc", {
 	bg = "none",
 })
+vim.api.nvim_set_hl(0, "BlinkCmpDocSeparator", {
+	bg = "none",
+})
