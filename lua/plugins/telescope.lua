@@ -84,14 +84,16 @@ return {
 		})
 
 		telescope.load_extension("fzf")
-		vim.keymap.set("n", "<leader>pf", builtin.find_files)
-		vim.keymap.set("n", "<leader>pg", builtin.live_grep)
-		vim.keymap.set("n", "<leader>pb", builtin.buffers)
-		vim.keymap.set("n", "<leader>ph", builtin.help_tags)
-		vim.keymap.set("n", "gd", builtin.lsp_definitions)
-		vim.keymap.set("n", "gr", builtin.lsp_references)
-		vim.keymap.set("n", "gi", builtin.lsp_implementations)
-		vim.keymap.set("n", "<leader>gb", builtin.git_branches)
-		vim.keymap.set("n", "<leader>pt", builtin.treesitter)
+
+		vim.api.nvim_create_user_command("ProjectFiles", builtin.find_files, {})
+		vim.api.nvim_create_user_command("ProjectGrep", builtin.live_grep, {})
+		vim.api.nvim_create_user_command("ProjectBuffers", builtin.buffers, {})
+		vim.api.nvim_create_user_command("ProjectHelp", builtin.help_tags, {})
+		vim.api.nvim_create_user_command("GotoDefinition", builtin.lsp_definitions, {})
+		vim.api.nvim_create_user_command("GotoReferences", builtin.lsp_references, {})
+		vim.api.nvim_create_user_command("GotoImplementations", builtin.lsp_implementations, {})
+		vim.api.nvim_create_user_command("ProjectGitBranch", builtin.git_branches, {})
+		vim.api.nvim_create_user_command("ProjectTreesitter", builtin.treesitter, {})
+		vim.api.nvim_create_user_command("SearchCommands", builtin.keymaps, {})
 	end,
 }

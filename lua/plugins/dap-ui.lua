@@ -22,11 +22,11 @@ return {
 			dapui.close()
 		end
 
-		vim.keymap.set("n", "<leader>ue", function()
+		vim.api.nvim_create_user_command("DapUiEval", function()
 			dapui.eval()
-		end)
-		vim.keymap.set("n", "<leader>uf", function()
+		end, {})
+		vim.api.nvim_create_user_command("DapUiFloatElement", function()
 			dapui.float_element()
-		end)
+		end, {})
 	end,
 }

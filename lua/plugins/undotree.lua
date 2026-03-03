@@ -1,7 +1,6 @@
 return {
 	"mbbill/undotree",
 	config = function()
-		vim.keymap.set("n", "<leader>ut", vim.cmd.UndotreeToggle)
 		-- for windows
 		if vim.fn.has("win32") == 1 then
 			vim.g.undotree_DiffCommand = "FC"
