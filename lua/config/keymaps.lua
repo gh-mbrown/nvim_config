@@ -668,11 +668,55 @@ wk.add({
 		mode = "n",
 	},
 
+	-- Workspace Keys
+	{
+		"<leader>s",
+		group = "Workspace Commands",
+	},
+	{
+		"<leader>sa",
+		vim.lsp.buf.add_workspace_folder,
+		desc = "Adds Workspace To Editor",
+		mode = "n",
+	},
+	{
+		"<leader>sr",
+		vim.lsp.buf.remove_workspace_folder,
+		desc = "Removes Workspace From Editor",
+		mode = "n",
+	},
+	{
+		"<leader>sl",
+		function()
+			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+		end,
+		desc = "Lists Active Workspaces",
+		mode = "n",
+	},
+
+	-- Diagnostic Commands
+	{
+		"<leader>n",
+		group = "Diagnostic Commands",
+	},
+	{
+		"<leader>nl",
+		vim.diagnostic.setloclist,
+		desc = "Opens Diagnostics In Buffer",
+		mode = "n",
+	},
+	{
+		"<leader>nf",
+		vim.diagnostic.open_float,
+		desc = "Opens Diagnostic In Float",
+		mode = "n",
+	},
+
 	-- MISC Keys
 	{
 		"gd",
 		function()
-			vim.cmd.GotoDefintion()
+			vim.cmd.GotoDefinition()
 		end,
 		desc = "Goto Definition",
 		mode = "n",
@@ -783,6 +827,36 @@ wk.add({
 		"<leader>l",
 		":Lazy<CR>",
 		desc = "Open Lazy",
+		mode = "n",
+	},
+	{
+		"<leader>k",
+		vim.lsp.buf.hover,
+		desc = "Hovers Over Symbol",
+		mode = "n",
+	},
+	{
+		"<leader>rr",
+		vim.lsp.buf.rename,
+		desc = "Renames Current Symbol",
+		mode = "n",
+	},
+	{
+		"<leader>ca",
+		vim.lsp.buf.code_action,
+		desc = "Shows Code Actions For Current Line",
+		mode = "n",
+	},
+	{
+		"<leader>qq",
+		vim.cmd.Ex,
+		desc = "Exit To Dir List",
+		mode = "n",
+	},
+	{
+		"<leader>qb",
+		":bd<CR>",
+		desc = "Close Current Buffer",
 		mode = "n",
 	},
 })
