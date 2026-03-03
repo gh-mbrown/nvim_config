@@ -17,7 +17,7 @@ map("n", "<leader>wk", "<C-w><C-k>")
 map("n", "<leader>wl", "<C-w><C-l>")
 map("n", "<leader>wj", "<C-w><C-j>")
 map("n", "<leader>wh", "<C-w><C-h>")
-map("n", "<leader>xx", "<C-w><C-q>")
+map("n", "<leader>wx", "<C-w><C-q>")
 
 map("v", "<", "<gv")
 map("v", ">", ">gv")
