@@ -1,46 +1,303 @@
 local wk = require("which-key")
 
 wk.add({
-	-- Project search keys
-	{ "<leader>p", group = "Project Commands" },
+	{ "<leader>", group = "Commands" },
 	{
-		"<leader>pf",
-		function()
-			vim.cmd.ProjectFiles()
-		end,
-		desc = "Find Files",
+		"<leader>m",
+		":Mason<CR>",
+		desc = "Open Mason",
 		mode = "n",
 	},
 	{
-		"<leader>pg",
-		function()
-			vim.cmd.ProjectGrep()
-		end,
-		desc = "Grep Files",
+		"<leader>l",
+		":Lazy<CR>",
+		desc = "Open Lazy",
 		mode = "n",
 	},
 	{
-		"<leader>pb",
-		function()
-			vim.cmd.ProjectBuffers()
-		end,
-		desc = "Find Buffers",
+		"<leader>k",
+		vim.lsp.buf.hover,
+		desc = "Hover",
 		mode = "n",
 	},
 	{
-		"<leader>ph",
-		function()
-			vim.cmd.ProjectHelp()
-		end,
-		desc = "Find Help",
+		"<leader>a",
+		vim.lsp.buf.code_action,
+		desc = "Code Actions",
+		mode = "n",
+	},
+
+	--  Window Focus Keys
+	{
+		"<leader>1",
+		":1wincmd w<CR>",
+		desc = "Focus Window 1",
 		mode = "n",
 	},
 	{
-		"<leader>pt",
+		"<leader>2",
+		":2wincmd w<CR>",
+		desc = "Focus Window 2",
+		mode = "n",
+	},
+	{
+		"<leader>3",
+		":3wincmd w<CR>",
+		desc = "Focus Window 3",
+		mode = "n",
+	},
+	{
+		"<leader>4",
+		":4wincmd w<CR>",
+		desc = "Focus Window 4",
+		mode = "n",
+	},
+	{
+		"<leader>5",
+		":5wincmd w<CR>",
+		desc = "Focus Window 5",
+		mode = "n",
+	},
+	{
+		"<leader>6",
+		":6wincmd w<CR>",
+		desc = "Focus Window 6",
+		mode = "n",
+	},
+	{
+		"<leader>7",
+		":7wincmd w<CR>",
+		desc = "Focus Window 7",
+		mode = "n",
+	},
+	{
+		"<leader>8",
+		":8wincmd w<CR>",
+		desc = "Focus Window 8",
+		mode = "n",
+	},
+	{
+		"<leader>9",
+		":9wincmd w<CR>",
+		desc = "Focus Window 9",
+		mode = "n",
+	},
+
+	-- Buffer Keys
+	{ "<leader>b", group = "Buffer" },
+	{
+		"<leader>bb",
+		vim.cmd.ProjectBuffers,
+		desc = "Show All Buffers",
+		mode = "n",
+	},
+	{
+		"<leader>bh",
 		function()
-			vim.cmd.ProjectTreesitter()
+			return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>H", true, false, true), "x", true)
 		end,
-		desc = "Query Treesitter",
+		desc = "Move Buffer Into Left Window",
+		mode = "n",
+	},
+	{
+		"<leader>bj",
+		function()
+			return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>J", true, false, true), "x", true)
+		end,
+		desc = "Move Buffer Into Down Window",
+		mode = "n",
+	},
+	{
+		"<leader>bk",
+		function()
+			return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>K", true, false, true), "x", true)
+		end,
+		desc = "Move Buffer Into Above Window",
+		mode = "n",
+	},
+	{
+		"<leader>bl",
+		function()
+			return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>L", true, false, true), "x", true)
+		end,
+		desc = "Move Buffer Into Right Window",
+		mode = "n",
+	},
+
+	-- Comments/Compile
+	{ "<leader>c", group = "Comments/Compile" },
+	{
+		"<leader>cl",
+		function()
+			return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("gcc", true, false, true), "x", true)
+		end,
+		desc = "Toggle Comments",
+		mode = "n",
+	},
+	{
+		"<leader>cl",
+		function()
+			return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("gc", true, false, true), "x", true)
+		end,
+		desc = "Toggle Comments",
+		mode = "v",
+	},
+	{
+		"<leader>cn",
+		function()
+			vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+		end,
+		desc = "Next Error",
+		mode = "n",
+	},
+	{
+		"<leader>cN",
+		function()
+			vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
+		end,
+		desc = "Next Error",
+		mode = "n",
+	},
+	{
+		"<leader>cb",
+		vim.cmd.CMakeBuild,
+		desc = "CMake Build",
+		mode = "n",
+	},
+	{
+		"<leader>cr",
+		vim.cmd.CMakeRun,
+		desc = "CMake Run",
+		mode = "n",
+	},
+	{
+		"<leader>cg",
+		vim.cmd.CMakeGenerate,
+		desc = "CMake Generate",
+		mode = "n",
+	},
+	{
+		"<leader>cd",
+		vim.cmd.CMakeDebug,
+		desc = "CMake Debug",
+		mode = "n",
+	},
+	{
+		"<leader>ca",
+		vim.diagnostic.setloclist,
+		desc = "All Diagnostics",
+		mode = "n",
+	},
+	{
+		"<leader>cf",
+		vim.diagnostic.open_float,
+		desc = "Diagnostic Float",
+		mode = "n",
+	},
+
+	-- Debug Keys
+	{
+		"<leader>d",
+		group = "Debug",
+	},
+	{
+		"<leader>dE",
+		vim.cmd.DapUiEval,
+		desc = "DapUI REPL",
+		mode = "n",
+	},
+	{
+		"<leader>df",
+		vim.cmd.DapUiFloatElement,
+		desc = "DapUI Float",
+		mode = "n",
+	},
+
+	-- DAP
+	{
+		"<leader>de",
+		vim.cmd.DapEval,
+		desc = "Dap REPL",
+		mode = "n",
+	},
+	{
+		"<leader>ds",
+		vim.cmd.DapShowLog,
+		desc = "Dap Log",
+		mode = "n",
+	},
+	{
+		"<leader>dr",
+		vim.cmd.DapToggleRepl,
+		desc = "Toggle REPL",
+		mode = "n",
+	},
+	{
+		"<leader>dk",
+		vim.cmd.DapTerminate,
+		desc = "Dap Kill",
+		mode = "n",
+	},
+	{
+		"<leader>dd",
+		vim.cmd.DapNew,
+		desc = "Dap New",
+		mode = "n",
+	},
+	{
+		"<leader>dc",
+		vim.cmd.DapDisconnect,
+		desc = "Dap Disconnect",
+		mode = "n",
+	},
+	{
+		"<leader>dC",
+		vim.cmd.DapContinue,
+		desc = "Dap Continue",
+		mode = "n",
+	},
+	{
+		"<leader>di",
+		vim.cmd.DapStepInto,
+		desc = "Dap Step Into",
+		mode = "n",
+	},
+	{
+		"<leader>do",
+		vim.cmd.DapStepOver,
+		desc = "Dap Step Over",
+		mode = "n",
+	},
+	{
+		"<leader>dO",
+		vim.cmd.DapStepOut,
+		desc = "Dap Step Out",
+		mode = "n",
+	},
+	{
+		"<leader>dp",
+		vim.cmd.DapPause,
+		desc = "DAP Pause",
+		mode = "n",
+	},
+	{
+		"<leader>dr",
+		vim.cmd.DapRestartFrame,
+		desc = "DAP Restart",
+		mode = "n",
+	},
+	-- Breakpoints
+	{ "<leader>db", group = "Breakpoint" },
+	{
+		"<leader>dbb",
+		vim.cmd.DapToggleBreakpoint,
+		desc = "Toggle Breakpoint",
+		mode = "n",
+	},
+	{
+		"<leader>dbc",
+		vim.cmd.DapClearBreakpoints,
+		desc = "Clear All Breakpoints",
 		mode = "n",
 	},
 
@@ -48,9 +305,7 @@ wk.add({
 	{ "<leader>g", group = "Git Commands" },
 	{
 		"<leader>gb",
-		function()
-			vim.cmd.ProjectGitBranches()
-		end,
+		vim.cmd.ProjectGitBranches,
 		desc = "Find Git Branch",
 		mode = "n",
 	},
@@ -229,7 +484,6 @@ wk.add({
 		desc = "Print Remaining Conflicts",
 		mode = "n",
 	},
-
 	-- Git Stash Keys
 	{ "<leader>gs", group = "Git Stash Commands" },
 	{
@@ -268,184 +522,6 @@ wk.add({
 		mode = "n",
 	},
 
-	-- CMake Keys
-	{
-		"<leader>c",
-		group = "CMake Commands",
-	},
-	{
-		"<leader>cb",
-		function()
-			vim.cmd.CMakeBuild()
-		end,
-		desc = "Build The CMake File",
-		mode = "n",
-	},
-	{
-		"<leader>cr",
-		function()
-			vim.cmd.CMakeRun()
-		end,
-		desc = "Run The CMake File",
-		mode = "n",
-	},
-	{
-		"<leader>cg",
-		function()
-			vim.cmd.CMakeGenerate()
-		end,
-		desc = "Generate CMake File",
-		mode = "n",
-	},
-	{
-		"<leader>cd",
-		function()
-			vim.cmd.CMakeDebug()
-		end,
-		desc = "Debug The CMake File",
-		mode = "n",
-	},
-
-	-- DAP UI
-	{
-		"<leader>u",
-		group = "DAP UI Commands",
-	},
-	{
-		"<leader>ue",
-		function()
-			vim.cmd.DapUiEval()
-		end,
-		desc = "Open A REPL",
-		mode = "n",
-	},
-	{
-		"<leader>uf",
-		function()
-			vim.cmd.DapUiFloatElement()
-		end,
-		desc = "Inspect Element",
-		mode = "n",
-	},
-
-	-- DAP
-	{
-		"<leader>d",
-		group = "DAP Commands",
-	},
-	{
-		"<leader>db",
-		function()
-			vim.cmd.DapToggleBreakpoint()
-		end,
-		desc = "Toggle Breakpoint",
-		mode = "n",
-	},
-	{
-		"<leader>dc",
-		function()
-			vim.cmd.DapClearBreakpoints()
-		end,
-		desc = "Clear All Breakpoints",
-		mode = "n",
-	},
-	{
-		"<leader>de",
-		function()
-			vim.cmd.DapEval()
-		end,
-		desc = "Open REPL",
-		mode = "n",
-	},
-	{
-		"<leader>ds",
-		function()
-			vim.cmd.DapShowLog()
-		end,
-		desc = "Open Log",
-		mode = "n",
-	},
-	{
-		"<leader>dr",
-		function()
-			vim.cmd.DapToggleRepl()
-		end,
-		desc = "Toggle REPL",
-		mode = "n",
-	},
-	{
-		"<leader>dk",
-		function()
-			vim.cmd.DapTerminate()
-		end,
-		desc = "Kill DAP",
-		mode = "n",
-	},
-	{
-		"<leader>dn",
-		function()
-			vim.cmd.DapNew()
-		end,
-		desc = "Create New DAP Instance",
-		mode = "n",
-	},
-	{
-		"<leader>dd",
-		function()
-			vim.cmd.DapDisconnect()
-		end,
-		desc = "Disconnect Current DAP Instance",
-		mode = "n",
-	},
-	{
-		"<leader>dC",
-		function()
-			vim.cmd.DapContinue()
-		end,
-		desc = "Continue To Next Step",
-		mode = "n",
-	},
-	{
-		"<leader>di",
-		function()
-			vim.cmd.DapStepInto()
-		end,
-		desc = "Step Into Function",
-		mode = "n",
-	},
-	{
-		"<leader>do",
-		function()
-			vim.cmd.DapStepOver()
-		end,
-		desc = "Step Over Function",
-		mode = "n",
-	},
-	{
-		"<leader>dO",
-		function()
-			vim.cmd.DapStepOut()
-		end,
-		desc = "Step Out Of Function",
-		mode = "n",
-	},
-	{
-		"<leader>dp",
-		function()
-			vim.cmd.DapStepOut()
-		end,
-		desc = "Pause DAP Instance",
-		mode = "n",
-	},
-	{
-		"<leader>dr",
-		function()
-			vim.cmd.DapRestartFrame()
-		end,
-		desc = "Restart DAP Instance",
-		mode = "n",
-	},
-
 	-- Harpoon Keys
 	{
 		"<leader>h",
@@ -453,89 +529,67 @@ wk.add({
 	},
 	{
 		"<leader>he",
-		function()
-			vim.cmd.HarpoonToggle()
-		end,
+		vim.cmd.HarpoonToggle,
 		desc = "Toggle Harpoon",
 		mode = "n",
 	},
 	{
 		"<leader>ha",
-		function()
-			vim.cmd.HarpoonAdd()
-		end,
+		vim.cmd.HarpoonAdd,
 		desc = "Add To Harpoon",
 		mode = "n",
 	},
 	{
 		"<leader>h1",
-		function()
-			vim.cmd.SelectOne()
-		end,
+		vim.cmd.SelectOne,
 		desc = "Select First Harpoon",
 		mode = "n",
 	},
 	{
 		"<leader>h2",
-		function()
-			vim.cmd.SelectTwo()
-		end,
+		vim.cmd.SelectTwo,
 		desc = "Select Two Harpoon",
 		mode = "n",
 	},
 	{
 		"<leader>h3",
-		function()
-			vim.cmd.SelectThree()
-		end,
+		vim.cmd.SelectThree,
 		desc = "Select Three Harpoon",
 		mode = "n",
 	},
 	{
 		"<leader>h4",
-		function()
-			vim.cmd.SelectFour()
-		end,
+		vim.cmd.SelectFour,
 		desc = "Select Four Harpoon",
 		mode = "n",
 	},
 	{
 		"<leader>h5",
-		function()
-			vim.cmd.SelectFive()
-		end,
+		vim.cmd.SelectFive,
 		desc = "Select Five Harpoon",
 		mode = "n",
 	},
 	{
 		"<leader>h6",
-		function()
-			vim.cmd.SelectSix()
-		end,
+		vim.cmd.SelectSix,
 		desc = "Select Six Harpoon",
 		mode = "n",
 	},
 	{
 		"<leader>h7",
-		function()
-			vim.cmd.SelectSeven()
-		end,
+		vim.cmd.SelectSeven,
 		desc = "Select Seven Harpoon",
 		mode = "n",
 	},
 	{
 		"<leader>h8",
-		function()
-			vim.cmd.SelectEight()
-		end,
+		vim.cmd.SelectEight,
 		desc = "Select Eight Harpoon",
 		mode = "n",
 	},
 	{
 		"<leader>h9",
-		function()
-			vim.cmd.SelectNine()
-		end,
+		vim.cmd.SelectNine,
 		desc = "Select Nine Harpoon",
 		mode = "n",
 	},
@@ -547,49 +601,37 @@ wk.add({
 	},
 	{
 		"<leader>ew",
-		function()
-			vim.cmd.HopWord()
-		end,
+		vim.cmd.HopWord,
 		desc = "Hop Words",
 		mode = "n",
 	},
 	{
 		"<leader>ee",
-		function()
-			vim.cmd.HopWordEnd()
-		end,
+		vim.cmd.HopWordEnd,
 		desc = "Hop Words End",
 		mode = "n",
 	},
 	{
 		"<leader>ec",
-		function()
-			vim.cmd.HopCamelCase()
-		end,
+		vim.cmd.HopCamelCase,
 		desc = "Hop Camel Case",
 		mode = "n",
 	},
 	{
 		"<leader>ef",
-		function()
-			vim.cmd.HopPattern()
-		end,
+		vim.cmd.HopPattern,
 		desc = "Hop Pattern",
 		mode = "n",
 	},
 	{
 		"<leader>e2",
-		function()
-			vim.cmd.HopChar2()
-		end,
+		vim.cmd.HopChar2,
 		desc = "Hop 2 Characters",
 		mode = "n",
 	},
 	{
 		"<leader>ea",
-		function()
-			vim.cmd.HopAnywhere()
-		end,
+		vim.cmd.HopAnywhere,
 		desc = "Hop Anywhere",
 		mode = "n",
 	},
@@ -601,10 +643,79 @@ wk.add({
 	},
 	{
 		"<leader>ut",
-		function()
-			vim.cmd.UndotreeToggle()
-		end,
+		vim.cmd.UndotreeToggle,
 		desc = "Toggle Undotree",
+		mode = "n",
+	},
+
+	-- Project search keys
+	{ "<leader>p", group = "Project" },
+	{
+		"<leader>pf",
+		vim.cmd.ProjectFiles,
+		desc = "Find Files",
+		mode = "n",
+	},
+	{
+		"<leader>/",
+		vim.cmd.ProjectGrep,
+		desc = "Grep Files",
+		mode = "n",
+	},
+	{
+		"<leader>ph",
+		vim.cmd.ProjectHelp,
+		desc = "Find Help",
+		mode = "n",
+	},
+	{
+		"<leader>pt",
+		vim.cmd.ProjectTreesitter,
+		desc = "Query Treesitter",
+		mode = "n",
+	},
+	{
+		"<leader>pa",
+		vim.lsp.buf.add_workspace_folder,
+		desc = "Adds Workspace To Editor",
+		mode = "n",
+	},
+	{
+		"<leader>pr",
+		vim.lsp.buf.remove_workspace_folder,
+		desc = "Removes Workspace From Editor",
+		mode = "n",
+	},
+	{
+		"<leader>pl",
+		function()
+			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+		end,
+		desc = "Lists Active Workspaces",
+		mode = "n",
+	},
+
+	-- Exit Keys
+	{ "<leader>q", group = "Exit" },
+	{
+		"<leader>qq",
+		vim.cmd.Ex,
+		desc = "Exit To Dir List",
+		mode = "n",
+	},
+	{
+		"<leader>qb",
+		":bd<CR>",
+		desc = "Close Current Buffer",
+		mode = "n",
+	},
+
+	-- Symbol Keys
+	{ "<leader>s", group = "Symbol" },
+	{
+		"<leader>se",
+		vim.lsp.buf.rename,
+		desc = "Symbol Edit",
 		mode = "n",
 	},
 
@@ -615,133 +726,45 @@ wk.add({
 	},
 	{
 		"<leader>w-",
-		function()
-			vim.cmd.SplitWindowV()
-		end,
-		desc = "Splits Window Using Tmux Hor",
+		":split<CR>",
+		desc = "Split Window Below",
 		mode = "n",
 	},
 	{
-		"<leader>w\\",
-		function()
-			vim.cmd.SplitWindowH()
-		end,
-		desc = "Splits Window Using Tmux Vert",
+		"<leader>w/",
+		":vsplit<CR>",
+		desc = "Split Window Right",
 		mode = "n",
 	},
 	{
 		"<leader>wq",
-		function()
-			vim.cmd.KillPane()
-		end,
-		desc = "Kills Tmux Pane",
-		mode = "n",
-	},
-	{
-		"<leader>wk",
-		"<C-w><C-k>",
-		desc = "Moves To The Above Buffer",
-		mode = "n",
-	},
-	{
-		"<leader>wl",
-		"<C-w><C-l>",
-		desc = "Moves To The Right Buffer",
-		mode = "n",
-	},
-	{
-		"<leader>wj",
-		"<C-w><C-j>",
-		desc = "Moves To The Below Buffer",
-		mode = "n",
-	},
-	{
-		"<leader>wh",
-		"<C-w><C-h>",
-		desc = "Moves To The Left Buffer",
-		mode = "n",
-	},
-	{
-		"<leader>wx",
 		"<C-w><C-q>",
 		desc = "Closes Current Buffer",
-		mode = "n",
-	},
-
-	-- Workspace Keys
-	{
-		"<leader>s",
-		group = "Workspace Commands",
-	},
-	{
-		"<leader>sa",
-		vim.lsp.buf.add_workspace_folder,
-		desc = "Adds Workspace To Editor",
-		mode = "n",
-	},
-	{
-		"<leader>sr",
-		vim.lsp.buf.remove_workspace_folder,
-		desc = "Removes Workspace From Editor",
-		mode = "n",
-	},
-	{
-		"<leader>sl",
-		function()
-			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-		end,
-		desc = "Lists Active Workspaces",
-		mode = "n",
-	},
-
-	-- Diagnostic Commands
-	{
-		"<leader>n",
-		group = "Diagnostic Commands",
-	},
-	{
-		"<leader>nl",
-		vim.diagnostic.setloclist,
-		desc = "Opens Diagnostics In Buffer",
-		mode = "n",
-	},
-	{
-		"<leader>nf",
-		vim.diagnostic.open_float,
-		desc = "Opens Diagnostic In Float",
 		mode = "n",
 	},
 
 	-- MISC Keys
 	{
 		"gd",
-		function()
-			vim.cmd.GotoDefinition()
-		end,
+		vim.cmd.GotoDefinition,
 		desc = "Goto Definition",
 		mode = "n",
 	},
 	{
 		"gr",
-		function()
-			vim.cmd.GotoReferences()
-		end,
+		vim.cmd.GotoReferences,
 		desc = "Goto References",
 		mode = "n",
 	},
 	{
 		"gi",
-		function()
-			vim.cmd.GotoImplementations()
-		end,
+		vim.cmd.GotoImplementations,
 		desc = "Goto Implementations",
 		mode = "n",
 	},
 	{
 		"<leader>?",
-		function()
-			vim.cmd.SearchCommands()
-		end,
+		vim.cmd.SearchKeymaps,
 		desc = "Search All Commands",
 		mode = "n",
 	},
@@ -795,15 +818,15 @@ wk.add({
 	},
 	{
 		"J",
-		":m `>+1<CR>gv=gv",
+		":m '>+1<CR>gv=gv",
 		desc = "Move Selected Lines Down",
 		mode = "v",
 	},
 	{
 		"K",
-		":m <-2<CR>gv=gv",
+		":m '<-2<CR>gv=gv",
 		desc = "Move Selected Lines Up",
-		mode = "n",
+		mode = "v",
 	},
 	{
 		"<C-p>",
@@ -812,51 +835,21 @@ wk.add({
 		mode = "n",
 	},
 	{
+		"<C-p>",
+		'"*p',
+		desc = "Paste From Clipboard",
+		mode = "v",
+	},
+	{
 		"<leader>y",
 		'"+y',
 		desc = "Yank To Clipboard",
 		mode = "n",
 	},
 	{
-		"<leader>m",
-		":Mason<CR>",
-		desc = "Open Mason",
-		mode = "n",
-	},
-	{
-		"<leader>l",
-		":Lazy<CR>",
-		desc = "Open Lazy",
-		mode = "n",
-	},
-	{
-		"<leader>k",
-		vim.lsp.buf.hover,
-		desc = "Hovers Over Symbol",
-		mode = "n",
-	},
-	{
-		"<leader>rr",
-		vim.lsp.buf.rename,
-		desc = "Renames Current Symbol",
-		mode = "n",
-	},
-	{
-		"<leader>ca",
-		vim.lsp.buf.code_action,
-		desc = "Shows Code Actions For Current Line",
-		mode = "n",
-	},
-	{
-		"<leader>qq",
-		vim.cmd.Ex,
-		desc = "Exit To Dir List",
-		mode = "n",
-	},
-	{
-		"<leader>qb",
-		":bd<CR>",
-		desc = "Close Current Buffer",
-		mode = "n",
+		"<leader>y",
+		'"+y',
+		desc = "Yank To Clipboard",
+		mode = "v",
 	},
 })

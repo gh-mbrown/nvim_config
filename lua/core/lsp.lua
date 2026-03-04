@@ -25,12 +25,6 @@ M.setup = function()
 	})
 
 	vim.lsp.set_log_level("info")
-
-	vim.api.nvim_create_autocmd("LspAttach", {
-		callback = function(args)
-			_ = vim.lsp.get_client_by_id(args.data.client_id)
-		end,
-	})
 end
 
 return M

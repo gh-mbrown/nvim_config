@@ -94,6 +94,7 @@ return {
 		vim.api.nvim_create_user_command("GotoImplementations", builtin.lsp_implementations, {})
 		vim.api.nvim_create_user_command("ProjectGitBranch", builtin.git_branches, {})
 		vim.api.nvim_create_user_command("ProjectTreesitter", builtin.treesitter, {})
-		vim.api.nvim_create_user_command("SearchCommands", builtin.keymaps, {})
+		vim.api.nvim_create_user_command("SearchKeymaps", builtin.keymaps, {})
+		vim.api.nvim_create_user_command("SearchCommands", builtin.commands, {})
 	end,
 }

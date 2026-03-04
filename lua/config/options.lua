@@ -30,3 +30,4 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 vim.o.winborder = "rounded"
 vim.opt.wrap = true
+vim.o.winbar = "%{winnr()}"
