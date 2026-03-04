@@ -155,7 +155,7 @@ wk.add({
 		function()
 			vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
 		end,
-		desc = "Next Error",
+		desc = "Previous Error",
 		mode = "n",
 	},
 	{
@@ -716,6 +716,15 @@ wk.add({
 		"<leader>se",
 		vim.lsp.buf.rename,
 		desc = "Symbol Edit",
+		mode = "n",
+	},
+	{
+		"<leader>sc",
+		function()
+			vim.cmd("let @/ = ''")
+			vim.cmd("nohlsearch")
+		end,
+		desc = "Clear Highlight",
 		mode = "n",
 	},
 
