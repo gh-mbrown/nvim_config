@@ -124,40 +124,8 @@ wk.add({
 		mode = "n",
 	},
 
-	-- Comments/Compile
-	{ "<leader>c", group = "Comments/Compile" },
-	{
-		"<leader>cl",
-		function()
-			return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("gcc", true, false, true), "x", true)
-		end,
-		desc = "Toggle Comments",
-		mode = "n",
-	},
-	{
-		"<leader>cl",
-		function()
-			return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("gc", true, false, true), "x", true)
-		end,
-		desc = "Toggle Comments",
-		mode = "v",
-	},
-	{
-		"<leader>cn",
-		function()
-			vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
-		end,
-		desc = "Next Error",
-		mode = "n",
-	},
-	{
-		"<leader>cN",
-		function()
-			vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
-		end,
-		desc = "Previous Error",
-		mode = "n",
-	},
+	-- CMake
+	{ "<leader>c", group = "CMake" },
 	{
 		"<leader>cb",
 		vim.cmd.CMakeBuild,
@@ -180,18 +148,6 @@ wk.add({
 		"<leader>cd",
 		vim.cmd.CMakeDebug,
 		desc = "CMake Debug",
-		mode = "n",
-	},
-	{
-		"<leader>ca",
-		vim.diagnostic.setloclist,
-		desc = "All Diagnostics",
-		mode = "n",
-	},
-	{
-		"<leader>cf",
-		vim.diagnostic.open_float,
-		desc = "Diagnostic Float",
 		mode = "n",
 	},
 
@@ -648,7 +604,7 @@ wk.add({
 		mode = "n",
 	},
 
-	-- Project search keys
+	-- Project keys
 	{ "<leader>p", group = "Project" },
 	{
 		"<leader>pf",
@@ -657,7 +613,7 @@ wk.add({
 		mode = "n",
 	},
 	{
-		"<leader>/",
+		"<leader>pg",
 		vim.cmd.ProjectGrep,
 		desc = "Grep Files",
 		mode = "n",
@@ -710,21 +666,18 @@ wk.add({
 		mode = "n",
 	},
 
-	-- Symbol Keys
-	{ "<leader>s", group = "Symbol" },
+	-- Diagnostic
+	{ "<leader>n", group = "Diagnostic" },
 	{
-		"<leader>se",
-		vim.lsp.buf.rename,
-		desc = "Symbol Edit",
+		"<leader>nl",
+		vim.diagnostic.setloclist,
+		desc = "All Diagnostics",
 		mode = "n",
 	},
 	{
-		"<leader>sc",
-		function()
-			vim.cmd("let @/ = ''")
-			vim.cmd("nohlsearch")
-		end,
-		desc = "Clear Highlight",
+		"<leader>nf",
+		vim.diagnostic.open_float,
+		desc = "Diagnostic Float",
 		mode = "n",
 	},
 
@@ -809,7 +762,10 @@ wk.add({
 	},
 	{
 		"<C-n>",
-		":nohlsearch<Bar>:echo<CR>",
+		function()
+			vim.cmd("let @/ = ''")
+			vim.cmd("nohlsearch")
+		end,
 		desc = "Clear Search Highlight",
 		mode = "n",
 	},
@@ -860,5 +816,11 @@ wk.add({
 		'"+y',
 		desc = "Yank To Clipboard",
 		mode = "v",
+	},
+	{
+		"<leader>rr",
+		vim.lsp.buf.rename,
+		desc = "Symbol Edit",
+		mode = "n",
 	},
 })

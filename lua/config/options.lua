@@ -1,7 +1,7 @@
 vim.opt.mouse = "a"
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.cindent = true
@@ -31,3 +31,4 @@ vim.opt.updatetime = 50
 vim.o.winborder = "rounded"
 vim.opt.wrap = true
 vim.o.winbar = "%{winnr()}"
+vim.o.laststatus = 2

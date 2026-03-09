@@ -16,10 +16,10 @@ return {
 			defaults = {
 				file_ignore_patterns = {
 					"%__virtual.cs$",
-					"obj",
-					"_build",
-					"bin",
-					"out",
+					-- "obj",
+					-- "_build",
+					-- "bin",
+					-- "out",
 				},
 				layout_strategy = "flex",
 				layout_config = {
@@ -84,6 +84,7 @@ return {
 		})
 
 		telescope.load_extension("fzf")
+		telescope.load_extension("project")
 
 		vim.api.nvim_create_user_command("ProjectFiles", builtin.find_files, {})
 		vim.api.nvim_create_user_command("ProjectGrep", builtin.live_grep, {})
@@ -96,5 +97,8 @@ return {
 		vim.api.nvim_create_user_command("ProjectTreesitter", builtin.treesitter, {})
 		vim.api.nvim_create_user_command("SearchKeymaps", builtin.keymaps, {})
 		vim.api.nvim_create_user_command("SearchCommands", builtin.commands, {})
+		vim.api.nvim_create_user_command("TelescopeProjects", function()
+			telescope.extensions.project.project({})
+		end, {})
 	end,
 }
