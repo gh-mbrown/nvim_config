@@ -416,7 +416,7 @@ wk.add({
 		mode = "n",
 	},
 
-	{ "<leader>f", "File" },
+	{ "<leader>f", group = "File" },
 	{
 		"<leader>ff",
 		vim.cmd.ToggleOilCurrent,
