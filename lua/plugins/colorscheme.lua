@@ -1,14 +1,45 @@
 return {
-	"Mofiqul/vscode.nvim",
+	"Shatur/neovim-ayu",
 	config = function()
-		vim.o.background = "dark"
-		require("vscode").setup({
-			color_overrides = {
-				vscBack = "none",
-				vscPopupBack = "none",
+		require("ayu").setup({
+			mirage = false,
+			overrides = {
+				Normal = {
+					bg = "None",
+				},
+				NormalFloat = {
+					bg = "None",
+				},
+				ColorColumn = {
+					bg = "None",
+				},
+				SignColumn = {
+					bg = "None",
+				},
+				Folded = {
+					bg = "None",
+				},
+				FoldedColumn = {
+					bg = "None",
+				},
+				CursorLine = {
+					bg = "None",
+				},
+				CursorColumn = {
+					bg = "None",
+				},
+				VertSplit = {
+					bg = "None",
+				},
+				LineNr = {
+					fg = "#ffffff",
+				},
+				CursorLineNr = {
+					bg = "None",
+				},
 			},
 		})
 
-		vim.cmd.colorscheme("vscode")
+		vim.cmd.colorscheme("ayu")
 	end,
 }

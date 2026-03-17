@@ -11,15 +11,12 @@ return {
 		local telescope = require("telescope")
 		local builtin = require("telescope.builtin")
 		local actions = require("telescope.actions")
+		local pa = require("telescope._extensions.project.actions")
 
 		telescope.setup({
 			defaults = {
 				file_ignore_patterns = {
 					"%__virtual.cs$",
-					-- "obj",
-					-- "_build",
-					-- "bin",
-					-- "out",
 				},
 				layout_strategy = "flex",
 				layout_config = {
@@ -58,19 +55,27 @@ return {
 						"--strip-cwd-prefix",
 					},
 					theme = "ivy",
-					preview = false,
 				},
 				buffers = {
 					theme = "ivy",
-					preview = false,
 				},
 				help_tags = {
 					theme = "ivy",
-					preview = false,
 				},
 				git_branches = {
 					theme = "ivy",
-					preview = false,
+				},
+				treesitter = {
+					theme = "ivy",
+				},
+				keymaps = {
+					theme = "ivy",
+				},
+				commands = {
+					theme = "ivy",
+				},
+				live_grep = {
+					theme = "ivy",
 				},
 			},
 			extensions = {
@@ -79,6 +84,14 @@ return {
 					override_generic_sorter = true,
 					override_file_sorter = true,
 					case_mode = "smart_case",
+				},
+				project = {
+					theme = "ivy",
+					mappings = {
+						i = {
+							["<C-c>"] = pa.add_project,
+						},
+					},
 				},
 			},
 		})

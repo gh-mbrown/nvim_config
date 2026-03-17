@@ -11,6 +11,3 @@ vim.api.nvim_set_hl(0, "BlinkCmpDoc", {
 vim.api.nvim_set_hl(0, "BlinkCmpDocSeparator", {
 	bg = "none",
 })
-vim.api.nvim_set_hl(0, "Cursorline", {
-	bg = "none",
-})

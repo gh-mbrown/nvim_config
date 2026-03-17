@@ -3,84 +3,28 @@ local wk = require("which-key")
 wk.add({
 	{ "<leader>", group = "Commands" },
 	{
-		"<leader>m",
-		":Mason<CR>",
-		desc = "Open Mason",
+		"<leader>/",
+		vim.cmd.ProjectGrep,
+		desc = "Grep Files",
 		mode = "n",
 	},
 	{
-		"<leader>l",
-		":Lazy<CR>",
-		desc = "Open Lazy",
+		"<leader>?",
+		vim.cmd.SearchKeymaps,
+		desc = "Search All Commands",
 		mode = "n",
 	},
 	{
-		"<leader>k",
-		vim.lsp.buf.hover,
-		desc = "Hover",
+		"<leader>y",
+		'"+y',
+		desc = "Yank To Clipboard",
 		mode = "n",
 	},
 	{
-		"<leader>a",
-		vim.lsp.buf.code_action,
-		desc = "Code Actions",
-		mode = "n",
-	},
-
-	--  Window Focus Keys
-	{
-		"<leader>1",
-		":1wincmd w<CR>",
-		desc = "Focus Window 1",
-		mode = "n",
-	},
-	{
-		"<leader>2",
-		":2wincmd w<CR>",
-		desc = "Focus Window 2",
-		mode = "n",
-	},
-	{
-		"<leader>3",
-		":3wincmd w<CR>",
-		desc = "Focus Window 3",
-		mode = "n",
-	},
-	{
-		"<leader>4",
-		":4wincmd w<CR>",
-		desc = "Focus Window 4",
-		mode = "n",
-	},
-	{
-		"<leader>5",
-		":5wincmd w<CR>",
-		desc = "Focus Window 5",
-		mode = "n",
-	},
-	{
-		"<leader>6",
-		":6wincmd w<CR>",
-		desc = "Focus Window 6",
-		mode = "n",
-	},
-	{
-		"<leader>7",
-		":7wincmd w<CR>",
-		desc = "Focus Window 7",
-		mode = "n",
-	},
-	{
-		"<leader>8",
-		":8wincmd w<CR>",
-		desc = "Focus Window 8",
-		mode = "n",
-	},
-	{
-		"<leader>9",
-		":9wincmd w<CR>",
-		desc = "Focus Window 9",
-		mode = "n",
+		"<leader>y",
+		'"+y',
+		desc = "Yank To Clipboard",
+		mode = "v",
 	},
 
 	-- Buffer Keys
@@ -92,40 +36,32 @@ wk.add({
 		mode = "n",
 	},
 	{
-		"<leader>bh",
-		function()
-			return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>H", true, false, true), "x", true)
-		end,
-		desc = "Move Buffer Into Left Window",
-		mode = "n",
-	},
-	{
-		"<leader>bj",
-		function()
-			return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>J", true, false, true), "x", true)
-		end,
-		desc = "Move Buffer Into Down Window",
-		mode = "n",
-	},
-	{
-		"<leader>bk",
-		function()
-			return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>K", true, false, true), "x", true)
-		end,
-		desc = "Move Buffer Into Above Window",
-		mode = "n",
-	},
-	{
-		"<leader>bl",
-		function()
-			return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>L", true, false, true), "x", true)
-		end,
-		desc = "Move Buffer Into Right Window",
+		"<leader>bd",
+		":bd<CR>",
+		desc = "Delete Current Buffer",
 		mode = "n",
 	},
 
-	-- CMake
-	{ "<leader>c", group = "CMake" },
+	-- Code/Compile
+	{ "<leader>c", group = "Code/Compile" },
+	{
+		"<leader>ca",
+		vim.lsp.buf.code_action,
+		desc = "Code Actions",
+		mode = "n",
+	},
+	{
+		"<leader>cs",
+		vim.cmd.ProjectTreesitter,
+		desc = "Query Treesitter",
+		mode = "n",
+	},
+	{
+		"<leader>cr",
+		vim.lsp.buf.rename,
+		desc = "Symbol Edit",
+		mode = "n",
+	},
 	{
 		"<leader>cb",
 		vim.cmd.CMakeBuild,
@@ -133,7 +69,7 @@ wk.add({
 		mode = "n",
 	},
 	{
-		"<leader>cr",
+		"<leader>cR",
 		vim.cmd.CMakeRun,
 		desc = "CMake Run",
 		mode = "n",
@@ -242,6 +178,7 @@ wk.add({
 		desc = "DAP Restart",
 		mode = "n",
 	},
+
 	-- Breakpoints
 	{ "<leader>db", group = "Breakpoint" },
 	{
@@ -261,7 +198,7 @@ wk.add({
 	{ "<leader>g", group = "Git Commands" },
 	{
 		"<leader>gb",
-		vim.cmd.ProjectGitBranches,
+		vim.cmd.ProjectGitBranch,
 		desc = "Find Git Branch",
 		mode = "n",
 	},
@@ -440,6 +377,7 @@ wk.add({
 		desc = "Print Remaining Conflicts",
 		mode = "n",
 	},
+
 	-- Git Stash Keys
 	{ "<leader>gs", group = "Git Stash Commands" },
 	{
@@ -478,10 +416,54 @@ wk.add({
 		mode = "n",
 	},
 
+	{ "<leader>f", "File" },
+	{
+		"<leader>ff",
+		vim.cmd.ToggleOilCurrent,
+		desc = "Manage Files",
+		mode = "n",
+	},
+	{
+		"<leader>fF",
+		vim.cmd.ToggleOilRoot,
+		desc = "Manage Files Root",
+		mode = "n",
+	},
+	{
+		"<leader>fp",
+		vim.cmd.PreviewOil,
+		desc = "Preview File In Oil",
+		mode = "n",
+	},
+	{
+		"<leader>fc",
+		vim.cmd.CloseOil,
+		desc = "Close Oil",
+		mode = "n",
+	},
+	{
+		"<leader>fS",
+		vim.cmd.SaveOil,
+		desc = "Save Oil",
+		mode = "n",
+	},
+	{
+		"<leader>fs",
+		vim.cmd.write,
+		desc = "Write File",
+		mode = "n",
+	},
+	{
+		"<leader>fd",
+		vim.cmd.DiscardOil,
+		desc = "Discard Oil Changes",
+		mode = "n",
+	},
+
 	-- Harpoon Keys
 	{
 		"<leader>h",
-		group = "Harpoon Commands",
+		group = "Harpoon",
 	},
 	{
 		"<leader>he",
@@ -550,10 +532,10 @@ wk.add({
 		mode = "n",
 	},
 
-	-- Hop Keys
+	-- Hop/Easymotion Keys
 	{
 		"<leader>e",
-		group = "Hop Commands",
+		group = "Hop/Easymotion",
 	},
 	{
 		"<leader>ew",
@@ -592,10 +574,25 @@ wk.add({
 		mode = "n",
 	},
 
+	-- Insert Commands
+	{ "<leader>i", group = "Insert" },
+	{
+		"<leader>ij",
+		"m`o<Esc>``",
+		desc = "Break Space Below",
+		mode = "n",
+	},
+	{
+		"<leader>ik",
+		"m`O<Esc>``",
+		desc = "Break Space Above",
+		mode = "n",
+	},
+
 	-- Undotree Keys
 	{
 		"<leader>u",
-		group = "Undotree Commands",
+		group = "Undotree",
 	},
 	{
 		"<leader>ut",
@@ -613,41 +610,15 @@ wk.add({
 		mode = "n",
 	},
 	{
-		"<leader>pg",
-		vim.cmd.ProjectGrep,
-		desc = "Grep Files",
-		mode = "n",
-	},
-	{
 		"<leader>ph",
 		vim.cmd.ProjectHelp,
 		desc = "Find Help",
 		mode = "n",
 	},
 	{
-		"<leader>pt",
-		vim.cmd.ProjectTreesitter,
-		desc = "Query Treesitter",
-		mode = "n",
-	},
-	{
-		"<leader>pa",
-		vim.lsp.buf.add_workspace_folder,
-		desc = "Adds Workspace To Editor",
-		mode = "n",
-	},
-	{
-		"<leader>pr",
-		vim.lsp.buf.remove_workspace_folder,
-		desc = "Removes Workspace From Editor",
-		mode = "n",
-	},
-	{
-		"<leader>pl",
-		function()
-			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-		end,
-		desc = "Lists Active Workspaces",
+		"<leader>pp",
+		vim.cmd.TelescopeProjects,
+		desc = "Open Projects",
 		mode = "n",
 	},
 
@@ -655,14 +626,8 @@ wk.add({
 	{ "<leader>q", group = "Exit" },
 	{
 		"<leader>qq",
-		vim.cmd.Ex,
+		vim.cmd.Oil,
 		desc = "Exit To Dir List",
-		mode = "n",
-	},
-	{
-		"<leader>qb",
-		":bd<CR>",
-		desc = "Close Current Buffer",
 		mode = "n",
 	},
 
@@ -684,24 +649,48 @@ wk.add({
 	-- Windows Keys
 	{
 		"<leader>w",
-		group = "Window Commands",
+		group = "Window",
 	},
 	{
-		"<leader>w-",
-		":split<CR>",
-		desc = "Split Window Below",
+		"<leader>ws",
+		vim.cmd.split,
+		desc = "Split Window Horizontal",
 		mode = "n",
 	},
 	{
-		"<leader>w/",
-		":vsplit<CR>",
-		desc = "Split Window Right",
+		"<leader>wv",
+		vim.cmd.vsplit,
+		desc = "Split Window Vertical",
 		mode = "n",
 	},
 	{
 		"<leader>wq",
 		"<C-w><C-q>",
 		desc = "Closes Current Buffer",
+		mode = "n",
+	},
+	{
+		"<leader>wl",
+		"<C-w><C-l>",
+		desc = "Left Buffer",
+		mode = "n",
+	},
+	{
+		"<leader>wk",
+		"<C-w><C-k>",
+		desc = "Up Buffer",
+		mode = "n",
+	},
+	{
+		"<leader>wj",
+		"<C-w><C-j>",
+		desc = "Down Buffer",
+		mode = "n",
+	},
+	{
+		"<leader>wh",
+		"<C-w><C-h>",
+		desc = "Down Buffer",
 		mode = "n",
 	},
 
@@ -722,12 +711,6 @@ wk.add({
 		"gi",
 		vim.cmd.GotoImplementations,
 		desc = "Goto Implementations",
-		mode = "n",
-	},
-	{
-		"<leader>?",
-		vim.cmd.SearchKeymaps,
-		desc = "Search All Commands",
 		mode = "n",
 	},
 	{
@@ -771,18 +754,6 @@ wk.add({
 	},
 	{
 		"J",
-		"m`o<Esc>``",
-		desc = "Break Space Below",
-		mode = "n",
-	},
-	{
-		"K",
-		"m`O<Esc>``",
-		desc = "Break Space Above",
-		mode = "n",
-	},
-	{
-		"J",
 		":m '>+1<CR>gv=gv",
 		desc = "Move Selected Lines Down",
 		mode = "v",
@@ -806,21 +777,9 @@ wk.add({
 		mode = "v",
 	},
 	{
-		"<leader>y",
-		'"+y',
-		desc = "Yank To Clipboard",
-		mode = "n",
-	},
-	{
-		"<leader>y",
-		'"+y',
-		desc = "Yank To Clipboard",
-		mode = "v",
-	},
-	{
-		"<leader>rr",
-		vim.lsp.buf.rename,
-		desc = "Symbol Edit",
+		"K",
+		vim.lsp.buf.hover,
+		desc = "Hover",
 		mode = "n",
 	},
 })

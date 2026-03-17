@@ -14,7 +14,7 @@ vim.opt.cinoptions = {
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.nu = true
-vim.opt.cursorline = false
+vim.opt.cursorline = true
 vim.opt.splitbelow = true
 vim.opt.showmode = false
 vim.opt.splitright = true
@@ -30,5 +30,5 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 vim.o.winborder = "rounded"
 vim.opt.wrap = true
-vim.o.winbar = "%{winnr()}"
+-- vim.o.winbar = "%{winnr()}"
 vim.o.laststatus = 2
