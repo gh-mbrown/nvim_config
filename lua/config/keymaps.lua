@@ -37,7 +37,10 @@ wk.add({
 	},
 	{
 		"<leader>bd",
-		":bd<CR>",
+		function()
+			vim.cmd("bp | sp | bn | bd")
+		end,
+		-- ":bd<CR>",
 		desc = "Delete Current Buffer",
 		mode = "n",
 	},
