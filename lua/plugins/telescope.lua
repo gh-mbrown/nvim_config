@@ -9,9 +9,11 @@ return {
 	},
 	config = function()
 		local telescope = require("telescope")
-		local builtin = require("telescope.builtin")
 		local actions = require("telescope.actions")
 		local pa = require("telescope._extensions.project.actions")
+		local theme = {
+			theme = "ivy",
+		}
 
 		telescope.setup({
 			defaults = {
@@ -56,27 +58,14 @@ return {
 					},
 					theme = "ivy",
 				},
-				buffers = {
-					theme = "ivy",
-				},
-				help_tags = {
-					theme = "ivy",
-				},
-				git_branches = {
-					theme = "ivy",
-				},
-				treesitter = {
-					theme = "ivy",
-				},
-				keymaps = {
-					theme = "ivy",
-				},
-				commands = {
-					theme = "ivy",
-				},
-				live_grep = {
-					theme = "ivy",
-				},
+				buffers = theme,
+				help_tags = theme,
+				git_branches = theme,
+				treesitter = theme,
+				keymaps = theme,
+				commands = theme,
+				live_grep = theme,
+				diagnostics = theme,
 			},
 			extensions = {
 				fzf = {

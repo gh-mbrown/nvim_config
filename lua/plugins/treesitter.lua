@@ -5,6 +5,7 @@ return {
 	build = ":TSUpdate",
 	config = function()
 		local config = require("nvim-treesitter.configs")
+		local utils = require("nvim-treesitter.ts_utils")
 		config.setup({
 			ensure_installed = {
 				"lua",
@@ -36,5 +37,15 @@ return {
 				},
 			},
 		})
+
+		vim.api.nvim_create_user_command("TSNode", function()
+			local node = utils.get_node_at_cursor(0)
+
+			if node ~= nil then
+				print("Node type: " .. node:type())
+			else
+				print("No node found")
+			end
+		end, {})
 	end,
 }

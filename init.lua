@@ -4,16 +4,3 @@ require("config")
 require("core.lsp").setup()
 require("core.diagnostics")
 require("languages")
-
-vim.api.nvim_set_hl(0, "BlinkCmpDocSeparator", {
-	bg = "none",
-})
-vim.api.nvim_set_hl(0, "BlinkCmpMenu", {
-	bg = "none",
-})
-vim.api.nvim_set_hl(0, "BlinkCmpLabel", {
-	bg = "none",
-})
-vim.api.nvim_set_hl(0, "BlinkCmpDoc", {
-	bg = "none",
-})

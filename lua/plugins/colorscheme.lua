@@ -1,22 +1,47 @@
 return {
-	"morhetz/gruvbox",
+	"folke/tokyonight.nvim",
+	lazy = false,
+	priority = 1000,
+	opts = {},
 	config = function()
-		vim.g.gruvbox_transparent_bg = 1
-		vim.cmd.colorscheme("gruvbox")
-		vim.api.nvim_set_hl(0, "Normal", {
-			bg = "none",
+		require("tokyonight").setup({
+			on_highlights = function(hl, _)
+				hl.Normal = {
+					bg = "none",
+				}
+				hl.NormalNC = {
+					bg = "none",
+				}
+				hl.TelescopeNormal = {
+					bg = "none",
+				}
+				hl.TelescopeBorder = {
+					bg = "none",
+				}
+				hl.TelescopePromptTitle = {
+					bg = "none",
+				}
+				hl.TelescopePromptBorder = {
+					bg = "none",
+				}
+				hl.SignColumn = {
+					bg = "none",
+				}
+				hl.CursorLineNr = {
+					fg = "#ff9e64",
+				}
+				hl.LineNrAbove = {
+					fg = "#7aa2f7",
+				}
+				hl.LineNrBelow = {
+					fg = "#7aa2f7",
+				}
+				hl.CursorLine = {
+					bg = "none",
+				}
+			end,
 		})
-		vim.api.nvim_set_hl(0, "NormalFloat", {
-			bg = "none",
-		})
-		vim.api.nvim_set_hl(0, "SignColumn", {
-			bg = "none",
-		})
-		vim.api.nvim_set_hl(0, "StatusLine", {
-			bg = "#000000",
-		})
-		vim.api.nvim_set_hl(0, "StatusLineNC", {
-			bg = "none",
-		})
+
+		vim.cmd.colorscheme("tokyonight-night")
 	end,
 }
