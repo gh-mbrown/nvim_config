@@ -1,45 +1,22 @@
 return {
-	"Shatur/neovim-ayu",
+	"morhetz/gruvbox",
 	config = function()
-		require("ayu").setup({
-			mirage = false,
-			overrides = {
-				Normal = {
-					bg = "None",
-				},
-				NormalFloat = {
-					bg = "None",
-				},
-				ColorColumn = {
-					bg = "None",
-				},
-				SignColumn = {
-					bg = "None",
-				},
-				Folded = {
-					bg = "None",
-				},
-				FoldedColumn = {
-					bg = "None",
-				},
-				CursorLine = {
-					bg = "None",
-				},
-				CursorColumn = {
-					bg = "None",
-				},
-				VertSplit = {
-					bg = "None",
-				},
-				LineNr = {
-					fg = "#ffffff",
-				},
-				CursorLineNr = {
-					bg = "None",
-				},
-			},
+		vim.g.gruvbox_transparent_bg = 1
+		vim.cmd.colorscheme("gruvbox")
+		vim.api.nvim_set_hl(0, "Normal", {
+			bg = "none",
 		})
-
-		vim.cmd.colorscheme("ayu")
+		vim.api.nvim_set_hl(0, "NormalFloat", {
+			bg = "none",
+		})
+		vim.api.nvim_set_hl(0, "SignColumn", {
+			bg = "none",
+		})
+		vim.api.nvim_set_hl(0, "StatusLine", {
+			bg = "#000000",
+		})
+		vim.api.nvim_set_hl(0, "StatusLineNC", {
+			bg = "none",
+		})
 	end,
 }

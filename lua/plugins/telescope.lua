@@ -98,20 +98,5 @@ return {
 
 		telescope.load_extension("fzf")
 		telescope.load_extension("project")
-
-		vim.api.nvim_create_user_command("ProjectFiles", builtin.find_files, {})
-		vim.api.nvim_create_user_command("ProjectGrep", builtin.live_grep, {})
-		vim.api.nvim_create_user_command("ProjectBuffers", builtin.buffers, {})
-		vim.api.nvim_create_user_command("ProjectHelp", builtin.help_tags, {})
-		vim.api.nvim_create_user_command("GotoDefinition", builtin.lsp_definitions, {})
-		vim.api.nvim_create_user_command("GotoReferences", builtin.lsp_references, {})
-		vim.api.nvim_create_user_command("GotoImplementations", builtin.lsp_implementations, {})
-		vim.api.nvim_create_user_command("ProjectGitBranch", builtin.git_branches, {})
-		vim.api.nvim_create_user_command("ProjectTreesitter", builtin.treesitter, {})
-		vim.api.nvim_create_user_command("SearchKeymaps", builtin.keymaps, {})
-		vim.api.nvim_create_user_command("SearchCommands", builtin.commands, {})
-		vim.api.nvim_create_user_command("TelescopeProjects", function()
-			telescope.extensions.project.project({})
-		end, {})
 	end,
 }
