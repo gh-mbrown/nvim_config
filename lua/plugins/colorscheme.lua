@@ -12,18 +12,6 @@ return {
 				hl.NormalNC = {
 					bg = "none",
 				}
-				hl.TelescopeNormal = {
-					bg = "none",
-				}
-				hl.TelescopeBorder = {
-					bg = "none",
-				}
-				hl.TelescopePromptTitle = {
-					bg = "none",
-				}
-				hl.TelescopePromptBorder = {
-					bg = "none",
-				}
 				hl.SignColumn = {
 					bg = "none",
 				}
