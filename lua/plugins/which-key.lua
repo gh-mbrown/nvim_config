@@ -341,50 +341,6 @@ return {
 			mode = "n",
 		},
 
-		{ "<leader>f", group = "File" },
-		{
-			"<leader>ff",
-			vim.cmd.ToggleOilCurrent,
-			desc = "Manage Files",
-			mode = "n",
-		},
-		{
-			"<leader>fF",
-			vim.cmd.ToggleOilRoot,
-			desc = "Manage Files Root",
-			mode = "n",
-		},
-		{
-			"<leader>fp",
-			vim.cmd.PreviewOil,
-			desc = "Preview File In Oil",
-			mode = "n",
-		},
-		{
-			"<leader>fc",
-			vim.cmd.CloseOil,
-			desc = "Close Oil",
-			mode = "n",
-		},
-		{
-			"<leader>fS",
-			vim.cmd.SaveOil,
-			desc = "Save Oil",
-			mode = "n",
-		},
-		{
-			"<leader>fs",
-			vim.cmd.write,
-			desc = "Write File",
-			mode = "n",
-		},
-		{
-			"<leader>fd",
-			vim.cmd.DiscardOil,
-			desc = "Discard Oil Changes",
-			mode = "n",
-		},
-
 		-- Harpoon Keys
 		{
 			"<leader>h",
