@@ -521,7 +521,7 @@ return {
 		{ "<leader>q", group = "Exit" },
 		{
 			"<leader>qq",
-			vim.cmd.Oil,
+			vim.cmd.Ex,
 			desc = "Exit To Dir List",
 			mode = "n",
 		},
