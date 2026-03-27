@@ -64,9 +64,7 @@ return {
 		},
 		{
 			"<leader>bd",
-			function()
-				vim.cmd("bd")
-			end,
+			vim.cmd.CloseBuffer,
 			desc = "Delete Current Buffer",
 			mode = "n",
 		},
@@ -593,30 +591,6 @@ return {
 			"<leader>wq",
 			"<C-w><C-q>",
 			desc = "Closes Current Buffer",
-			mode = "n",
-		},
-		{
-			"<leader>wl",
-			"<C-w><C-l>",
-			desc = "Left Buffer",
-			mode = "n",
-		},
-		{
-			"<leader>wk",
-			"<C-w><C-k>",
-			desc = "Up Buffer",
-			mode = "n",
-		},
-		{
-			"<leader>wj",
-			"<C-w><C-j>",
-			desc = "Down Buffer",
-			mode = "n",
-		},
-		{
-			"<leader>wh",
-			"<C-w><C-h>",
-			desc = "Down Buffer",
 			mode = "n",
 		},
 
