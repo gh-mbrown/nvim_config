@@ -20,24 +20,6 @@ return {
 				file_ignore_patterns = {
 					"%__virtual.cs$",
 				},
-				layout_strategy = "flex",
-				layout_config = {
-					flex = {
-						flip_columns = 100,
-					},
-					horizontal = {
-						mirror = false,
-						prompt_position = "top",
-						preview_cutoff = 10,
-						preview_width = 0.5,
-					},
-					vertical = {
-						mirror = true,
-						prompt_position = "top",
-						preview_cutoff = 10,
-						preview_height = 0.5,
-					},
-				},
 				sorting_strategy = "ascending",
 				path_display = {
 					"filename_first",
@@ -55,6 +37,9 @@ return {
 						"--type",
 						"f",
 						"--strip-cwd-prefix",
+						"-H",
+						"-E",
+						".git",
 					},
 					theme = "ivy",
 				},
