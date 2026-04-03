@@ -99,24 +99,6 @@ return {
 			desc = "Command History",
 			mode = "n",
 		},
-		{
-			"<leader>cb",
-			vim.cmd.CMakeBuild,
-			desc = "CMake Build",
-			mode = "n",
-		},
-		{
-			"<leader>cR",
-			vim.cmd.CMakeRun,
-			desc = "CMake Run",
-			mode = "n",
-		},
-		{
-			"<leader>cg",
-			vim.cmd.CMakeGenerate,
-			desc = "CMake Generate",
-			mode = "n",
-		},
 
 		-- Git keys
 		{ "<leader>g", group = "Git Commands" },
@@ -347,7 +329,7 @@ return {
 			group = "Harpoon",
 		},
 		{
-			"<leader>he",
+			"<leader>hh",
 			vim.cmd.HarpoonToggle,
 			desc = "Toggle Harpoon",
 			mode = "n",
