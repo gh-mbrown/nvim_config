@@ -11,12 +11,17 @@ return {
 		local telescope = require("telescope")
 		local actions = require("telescope.actions")
 		local pa = require("telescope._extensions.project.actions")
-		local theme = {
-			theme = "ivy",
-		}
 
 		telescope.setup({
 			defaults = {
+				layout_config = {
+					horizontal = {
+						prompt_position = "top",
+					},
+					vertical = {
+						prompt_position = "top",
+					},
+				},
 				file_ignore_patterns = {
 					"%__virtual.cs$",
 				},
@@ -41,16 +46,7 @@ return {
 						"-E",
 						".git",
 					},
-					theme = "ivy",
 				},
-				buffers = theme,
-				help_tags = theme,
-				git_branches = theme,
-				treesitter = theme,
-				keymaps = theme,
-				commands = theme,
-				live_grep = theme,
-				diagnostics = theme,
 			},
 			extensions = {
 				fzf = {

@@ -650,5 +650,13 @@ return {
 			desc = "Diagnostic Float",
 			mode = "n",
 		},
+		{
+			"gp",
+			function()
+				vim.lsp.buf.definition({ reuse_win = false })
+			end,
+			desc = "Peek Definition",
+			mode = "n",
+		},
 	},
 }
