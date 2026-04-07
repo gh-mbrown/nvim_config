@@ -4,15 +4,6 @@ return {
 	priority = 1000,
 	config = function()
 		require("catppuccin").setup({
-			highlight_overrides = {
-				all = function(colors)
-					return {
-						WinSeparator = {
-							fg = colors.pink,
-						},
-					}
-				end,
-			},
 			flavour = "mocha",
 			transparent_background = true,
 			float = {

@@ -27,3 +27,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.lsp.inlay_hint.enable(false, { bufnr = args.buf })
 	end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "netrw",
+	callback = function()
+		vim.opt_local.cursorline = false
+	end,
+})

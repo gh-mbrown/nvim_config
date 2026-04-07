@@ -33,4 +33,3 @@ vim.opt.wrap = true
 vim.o.laststatus = 2
 vim.o.statusline = "%<%f %h%m%r%{FugitiveStatusline()}%=%-14.(%l,%c%V%) %P"
 vim.g.netrw_bufsettings = "noma nomod nu nobl nowrap ro"
-vim.opt.laststatus = 3
