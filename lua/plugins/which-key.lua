@@ -2,7 +2,7 @@ return {
 	"folke/which-key.nvim",
 	event = "VeryLazy",
 	opts = {
-		preset = "helix",
+		preset = "classic",
 		delay = 0,
 	},
 	keys = {
@@ -452,15 +452,18 @@ return {
 			mode = "n",
 		},
 
-		-- Undotree Keys
+		-- Toggle Commands
+		{ "<leader>t", group = "Toggle" },
 		{
-			"<leader>u",
-			group = "Undotree",
-		},
-		{
-			"<leader>ut",
+			"<leader>tu",
 			vim.cmd.UndotreeToggle,
 			desc = "Toggle Undotree",
+			mode = "n",
+		},
+		{
+			"<leader>tc",
+			vim.cmd.NoNeckPain,
+			desc = "Toggle Center",
 			mode = "n",
 		},
 
