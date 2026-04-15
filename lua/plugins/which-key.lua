@@ -437,6 +437,39 @@ return {
 			mode = "n",
 		},
 
+		-- File/Oil Commands
+		{ "<leader>f", group = "File" },
+		{
+			"<leader>ff",
+			vim.cmd.ToggleFloatOil,
+			desc = "Open Oil Float",
+			mode = "n",
+		},
+		{
+			"<leader>ft",
+			vim.cmd.ToggleHiddenOil,
+			desc = "Toggle Hidden Files Oil",
+			mode = "n",
+		},
+		{
+			"<leader>fo",
+			vim.cmd.OpenOil,
+			desc = "Open Oil",
+			mode = "n",
+		},
+		{
+			"<leader>fc",
+			vim.cmd.CloseOil,
+			desc = "Close Oil",
+			mode = "n",
+		},
+		{
+			"<leader>fp",
+			vim.cmd.PreviewOil,
+			desc = "Preview Oil",
+			mode = "n",
+		},
+
 		-- Insert Commands
 		{ "<leader>i", group = "Insert" },
 		{
@@ -503,13 +536,13 @@ return {
 		},
 
 		-- Exit Keys
-		{ "<leader>q", group = "Exit" },
-		{
-			"<leader>qq",
-			vim.cmd.Ex,
-			desc = "Exit To Dir List",
-			mode = "n",
-		},
+		-- { "<leader>q", group = "Exit" },
+		-- {
+		-- 	"<leader>qq",
+		-- 	vim.cmd.Ex,
+		-- 	desc = "Exit To Dir List",
+		-- 	mode = "n",
+		-- },
 
 		-- Windows Keys
 		{
