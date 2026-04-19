@@ -27,12 +27,6 @@ return {
 			"<leader>y",
 			'"+y',
 			desc = "Yank To Clipboard",
-			mode = "n",
-		},
-		{
-			"<leader>y",
-			'"+y',
-			desc = "Yank To Clipboard",
 			mode = "v",
 		},
 		{
@@ -285,19 +279,11 @@ return {
 			desc = "Print Remaining Conflicts",
 			mode = "n",
 		},
-		{
-			"<leader>gs",
-			function()
-				vim.cmd.Telescope("git_status")
-			end,
-			desc = "Files Changed",
-			mode = "n",
-		},
 
 		-- Git Stash Keys
-		{ "<leader>gS", group = "Git Stash Commands" },
+		{ "<leader>gs", group = "Git Stash Commands" },
 		{
-			"<leader>gSp",
+			"<leader>gsp",
 			function()
 				local message = vim.fn.input("Stash Message: ")
 				local file = vim.fn.expand("%")
@@ -307,7 +293,7 @@ return {
 			mode = "n",
 		},
 		{
-			"<leader>gSl",
+			"<leader>gsl",
 			function()
 				vim.cmd.Telescope("git_stash")
 			end,
@@ -315,7 +301,7 @@ return {
 			mode = "n",
 		},
 		{
-			"<leader>gSc",
+			"<leader>gsc",
 			function()
 				vim.cmd.Git("stash clear")
 			end,
