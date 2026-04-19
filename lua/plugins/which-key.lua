@@ -309,7 +309,7 @@ return {
 		{
 			"<leader>gSl",
 			function()
-				vim.cmd.Telescope("git_stashes")
+				vim.cmd.Telescope("git_stash")
 			end,
 			desc = "List Stashes",
 			mode = "n",
@@ -437,36 +437,14 @@ return {
 			mode = "n",
 		},
 
-		-- File/Oil Commands
+		-- File Commands
 		{ "<leader>f", group = "File" },
 		{
 			"<leader>ff",
-			vim.cmd.ToggleFloatOil,
-			desc = "Open Oil Float",
-			mode = "n",
-		},
-		{
-			"<leader>ft",
-			vim.cmd.ToggleHiddenOil,
-			desc = "Toggle Hidden Files Oil",
-			mode = "n",
-		},
-		{
-			"<leader>fo",
-			vim.cmd.OpenOil,
-			desc = "Open Oil",
-			mode = "n",
-		},
-		{
-			"<leader>fc",
-			vim.cmd.CloseOil,
-			desc = "Close Oil",
-			mode = "n",
-		},
-		{
-			"<leader>fp",
-			vim.cmd.PreviewOil,
-			desc = "Preview Oil",
+			function()
+				vim.cmd.Telescope("find_files")
+			end,
+			desc = "Search Files",
 			mode = "n",
 		},
 
@@ -493,21 +471,15 @@ return {
 			desc = "Toggle Undotree",
 			mode = "n",
 		},
-		{
-			"<leader>tc",
-			vim.cmd.NoNeckPain,
-			desc = "Toggle Center",
-			mode = "n",
-		},
 
 		-- Project keys
 		{ "<leader>p", group = "Project" },
 		{
 			"<leader>pf",
 			function()
-				vim.cmd.Telescope("find_files")
+				vim.cmd.Telescope("git_files")
 			end,
-			desc = "Find Files",
+			desc = "Search Project Files",
 			mode = "n",
 		},
 		{
@@ -536,13 +508,13 @@ return {
 		},
 
 		-- Exit Keys
-		-- { "<leader>q", group = "Exit" },
-		-- {
-		-- 	"<leader>qq",
-		-- 	vim.cmd.Ex,
-		-- 	desc = "Exit To Dir List",
-		-- 	mode = "n",
-		-- },
+		{ "<leader>q", group = "Exit" },
+		{
+			"<leader>qq",
+			vim.cmd.Ex,
+			desc = "Exit To Dir List",
+			mode = "n",
+		},
 
 		-- Windows Keys
 		{

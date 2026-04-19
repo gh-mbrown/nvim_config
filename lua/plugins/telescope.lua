@@ -12,6 +12,11 @@ return {
 		local actions = require("telescope.actions")
 		local pa = require("telescope._extensions.project.actions")
 
+		local picker_options = {
+			theme = "ivy",
+			preview = false,
+		}
+
 		telescope.setup({
 			defaults = {
 				layout_config = {
@@ -36,17 +41,24 @@ return {
 				},
 			},
 			pickers = {
-				find_files = {
-					find_command = {
-						"fd",
-						"--type",
-						"f",
-						"--strip-cwd-prefix",
-						"-H",
-						"-E",
-						".git",
-					},
-				},
+				find_files = picker_options,
+				git_files = picker_options,
+				live_grep = picker_options,
+				buffers = picker_options,
+				help_tags = picker_options,
+				man_pages = picker_options,
+				quickfix = picker_options,
+				keymaps = picker_options,
+				autocommands = picker_options,
+				treesitter = picker_options,
+				command_history = picker_options,
+				git_branches = picker_options,
+				git_status = picker_options,
+				git_stash = picker_options,
+				diagnostics = picker_options,
+				lsp_definitions = picker_options,
+				lsp_references = picker_options,
+				lsp_implementations = picker_options,
 			},
 			extensions = {
 				fzf = {

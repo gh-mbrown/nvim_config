@@ -14,7 +14,7 @@ vim.opt.cinoptions = {
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.nu = true
-vim.opt.cursorline = false
+vim.opt.cursorline = true
 vim.opt.splitbelow = true
 vim.opt.showmode = true
 vim.opt.splitright = true
@@ -31,6 +31,6 @@ vim.opt.updatetime = 50
 vim.o.winborder = "rounded"
 vim.opt.wrap = true
 vim.o.laststatus = 2
-vim.o.statusline = "%<%f %h%m%r%{FugitiveStatusline()}%=%-14.(%l,%c%V%) %P"
+-- vim.o.statusline = "%<%f %h%m%r%{FugitiveStatusline()}%=%-14.(%l,%c%V%) %P"
 vim.g.netrw_bufsettings = "noma nomod nu nobl nowrap ro"
 vim.opt.guicursor = "n-v-c-i:block"

@@ -1,40 +1,32 @@
 return {
-	"catppuccin/nvim",
-	name = "catppuccin",
-	priority = 1000,
+	"rose-pine/neovim",
+	name = "rose-pine",
 	config = function()
-		require("catppuccin").setup({
-			flavour = "mocha",
-			transparent_background = true,
-			float = {
-				solid = true,
+		require("rose-pine").setup({
+			styles = {
+				transparency = true,
 			},
-			term_colors = false,
-			default_integrations = false,
-			auto_integrations = true,
-			integrations = {
-				blink_cmp = {
-					style = "bordered",
+			highlight_groups = {
+				CursorLine = {
+					bg = "none",
 				},
-				harpoon = true,
-				hop = true,
-				mason = true,
-				telescope = {
-					enabled = true,
+				StatusLine = { fg = "gold", bg = "gold", blend = 10 },
+				StatusLineNC = { fg = "subtle", bg = "surface" },
+				HopNextKey = {
+					bg = "none",
+					blend = 0,
 				},
-				which_key = true,
-				lualine = {
-					all = function(colors)
-						---@type CtpIntegrationLualineOverride
-						return {
-							normal = {
-								c = { bg = colors.surface0 },
-							},
-						}
-					end,
+				HopNextKey1 = {
+					bg = "none",
+					blend = 0,
+				},
+				HopNextKey2 = {
+					bg = "none",
+					blend = 0,
 				},
 			},
 		})
-		vim.cmd.colorscheme("catppuccin-nvim")
+
+		vim.cmd("colorscheme rose-pine")
 	end,
 }
