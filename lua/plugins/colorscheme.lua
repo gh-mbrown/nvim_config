@@ -10,8 +10,6 @@ return {
 				CursorLine = {
 					bg = "none",
 				},
-				StatusLine = { fg = "gold", bg = "gold", blend = 10 },
-				StatusLineNC = { fg = "subtle", bg = "surface" },
 				HopNextKey = {
 					bg = "none",
 					blend = 0,
