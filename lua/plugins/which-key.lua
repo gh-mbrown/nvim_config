@@ -434,21 +434,6 @@ return {
 			mode = "n",
 		},
 
-		-- Insert Commands
-		{ "<leader>i", group = "Insert" },
-		{
-			"<leader>ij",
-			"m`o<Esc>``",
-			desc = "Break Space Below",
-			mode = "n",
-		},
-		{
-			"<leader>ik",
-			"m`O<Esc>``",
-			desc = "Break Space Above",
-			mode = "n",
-		},
-
 		-- Toggle Commands
 		{ "<leader>t", group = "Toggle" },
 		{

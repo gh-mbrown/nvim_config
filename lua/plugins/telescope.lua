@@ -6,6 +6,7 @@ return {
 			"nvim-telescope/telescope-fzf-native.nvim",
 			build = "cmake -S . -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
 		},
+		"nvim-telescope/telescope-project.nvim",
 	},
 	config = function()
 		local telescope = require("telescope")
@@ -14,7 +15,7 @@ return {
 
 		local picker_options = {
 			theme = "ivy",
-			preview = false,
+			preview = true,
 		}
 
 		telescope.setup({
