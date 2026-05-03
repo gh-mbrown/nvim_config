@@ -24,7 +24,7 @@ M.setup = function()
 		},
 	})
 
-	vim.lsp.set_log_level("info")
+	vim.lsp.log.set_level("info")
 end
 
 return M

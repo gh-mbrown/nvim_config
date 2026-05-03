@@ -26,7 +26,6 @@ return {
 			"rust_analyzer",
 			"zls",
 			"clangd",
-			"fsautocomplete",
 			"neocmake",
 			"ruff",
 		},
