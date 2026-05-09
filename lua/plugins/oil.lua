@@ -8,6 +8,9 @@ return {
 			"nvim-mini/mini.icons",
 			opts = {},
 		},
+		{
+			"benomahony/oil-git.nvim",
+		},
 	},
 	lazy = false,
 	config = function()
