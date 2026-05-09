@@ -530,7 +530,7 @@ return {
 		},
 		{
 			"<leader>wq",
-			"<C-w><C-q>",
+			vim.cmd.close,
 			desc = "Closes Current Buffer",
 			mode = "n",
 		},
