@@ -6,14 +6,6 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 	end,
 })
 
--- Start Treesitter
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "<filetype>" },
-	callback = function()
-		vim.treesitter.start()
-	end,
-})
-
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
 	callback = function()
@@ -29,8 +21,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "netrw",
-	callback = function()
-		vim.opt_local.cursorline = false
+	pattern = "*",
+	callback = function(args)
+		if vim.bo[args.buf].buftype == "" then
+			pcall(vim.treesitter.start)
+		end
 	end,
 })

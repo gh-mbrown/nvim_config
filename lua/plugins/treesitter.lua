@@ -3,36 +3,29 @@ return {
 	lazy = false,
 	build = ":TSUpdate",
 	config = function()
-		require("nvim-treesitter").setup({
-			ensure_installed = {
-				"lua",
-				"markdown",
-				"markdown_inline",
-				"zig",
-				"go",
-				"c_sharp",
-				"powershell",
-				"html",
-				"razor",
-			},
-			auto_install = true,
-			sync_install = false,
-			highlight = {
-				enable = true,
-				additional_vim_regex_highlighting = false,
-			},
-			indent = {
-				enable = true,
-			},
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					init_selection = "<C-s>",
-					node_incremental = "<C-s>",
-					scope_incremental = false,
-					node_decremental = "<C-bs>",
-				},
-			},
+		local ts = require("nvim-treesitter")
+		vim.api.nvim_create_user_command("TSInstalled", function()
+			local installed = vim.api.nvim_get_runtime_file("parser/*", true)
+			for _, v in pairs(installed) do
+				print(v)
+			end
+		end, {})
+		ts.install({
+			"lua",
+			"markdown",
+			"markdown_inline",
+			"zig",
+			"go",
+			"c_sharp",
+			"powershell",
+			"html",
+			"razor",
+			"rust",
+			"fsharp",
+			"ocaml",
+		})
+		ts.setup({
+			install_dir = vim.fn.stdpath("data") .. "/site/parser",
 		})
 	end,
 }
