@@ -32,3 +32,4 @@ vim.o.winborder = "rounded"
 vim.opt.wrap = true
 vim.o.laststatus = 2
 vim.opt.guicursor = "n-v-c-i:block"
+vim.g.netrw_bufsettings = "noma nomod nu nobl nowrap ro"

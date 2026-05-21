@@ -28,6 +28,7 @@ return {
 			"clangd",
 			"neocmake",
 			"ruff",
+			"html",
 		},
 	},
 	highlight = {

@@ -1,23 +1,16 @@
 return {
-	"catppuccin/nvim",
-	name = "catppuccin",
-	priority = 1000,
+	"rose-pine/neovim",
+	name = "rose-pine",
 	config = function()
-		require("catppuccin").setup({
-			flavour = "mocha",
-			transparent_background = true,
-			custom_highlights = {
-				CursorLine = {
-					bg = "none",
-				},
+		require("rose-pine").setup({
+			variant = "main",
+			styles = {
+				transparency = true,
 			},
-			integrations = {
-				hop = true,
-				which_key = true,
-				mason = true,
-				harpoon = true,
+			highlight_groups = {
+				CursorLine = { bg = "none" },
 			},
 		})
-		vim.cmd.colorscheme("catppuccin-nvim")
+		vim.cmd.colorscheme("rose-pine")
 	end,
 }

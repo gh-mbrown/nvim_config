@@ -433,30 +433,6 @@ return {
 			desc = "Search Files",
 			mode = "n",
 		},
-		{
-			"<leader>fo",
-			vim.cmd.OilToggleFloat,
-			desc = "Toggle Oil Float",
-			mode = "n",
-		},
-		{
-			"<leader>fh",
-			vim.cmd.OilToggleHidden,
-			desc = "Toggle Hidden Files",
-			mode = "n",
-		},
-		{
-			"<leader>fc",
-			vim.cmd.OilClose,
-			desc = "Close Oil",
-			mode = "n",
-		},
-		{
-			"<leader>fp",
-			vim.cmd.OilPreview,
-			desc = "Preview In Oil",
-			mode = "n",
-		},
 
 		-- Toggle Commands
 		{ "<leader>t", group = "Toggle" },
