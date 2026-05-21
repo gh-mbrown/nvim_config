@@ -482,7 +482,7 @@ return {
 		{ "<leader>q", group = "Exit" },
 		{
 			"<leader>qq",
-			vim.cmd.OilOpen,
+			vim.cmd.Ex,
 			desc = "Exit To Dir List",
 			mode = "n",
 		},
