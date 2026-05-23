@@ -381,48 +381,6 @@ return {
 			mode = "n",
 		},
 
-		-- Hop/Easymotion Keys
-		{
-			"<leader>e",
-			group = "Hop/Easymotion",
-		},
-		{
-			"<leader>ew",
-			vim.cmd.HopWord,
-			desc = "Hop Words",
-			mode = "n",
-		},
-		{
-			"<leader>ee",
-			vim.cmd.HopWordEnd,
-			desc = "Hop Words End",
-			mode = "n",
-		},
-		{
-			"<leader>ec",
-			vim.cmd.HopCamelCase,
-			desc = "Hop Camel Case",
-			mode = "n",
-		},
-		{
-			"<leader>ef",
-			vim.cmd.HopPattern,
-			desc = "Hop Pattern",
-			mode = "n",
-		},
-		{
-			"<leader>e2",
-			vim.cmd.HopChar2,
-			desc = "Hop 2 Characters",
-			mode = "n",
-		},
-		{
-			"<leader>ea",
-			vim.cmd.HopAnywhere,
-			desc = "Hop Anywhere",
-			mode = "n",
-		},
-
 		-- File Commands
 		{ "<leader>f", group = "File" },
 		{
