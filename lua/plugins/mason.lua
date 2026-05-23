@@ -16,22 +16,6 @@ return {
 		"neovim/nvim-lspconfig",
 	},
 	opts = {
-		ensure_installed = {
-			"gopls",
-			"lua_ls",
-			"bashls",
-			"jsonls",
-			"stylua",
-			"pyright",
-			"rust_analyzer",
-			"zls",
-			"clangd",
-			"neocmake",
-			"ruff",
-			"html",
-		},
-	},
-	highlight = {
-		enable = true,
+		ensure_installed = {},
 	},
 }

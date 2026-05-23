@@ -32,30 +32,18 @@ end
 
 vim.opt.rtp:prepend(path)
 
-local plugins = {}
-
-local cwDir = vim.fn.stdpath("config")
-local files = vim.split(vim.fn.glob(cwDir .. "/lua/plugins/*"), "\n", { trimempty = true })
-
-for _, f in pairs(files) do
-	local file = vim.fn.fnamemodify(f, ":t")
-	local plugin = vim.fn.fnamemodify(file, ":r")
-
-	if plugin == "init" then
-		goto continue
-	end
-
-	vim.list_extend(plugins, { require("plugins." .. plugin) })
-
-	::continue::
-end
-
 require("lazy").setup({
-	spec = plugins,
+	spec = {
+		{
+			import = "plugins",
+		},
+	},
+	defaults = {
+		lazy = false,
+		version = false,
+	},
 	checker = {
 		enabled = true,
-	},
-	ui = {
-		border = "single",
+		notify = false,
 	},
 })

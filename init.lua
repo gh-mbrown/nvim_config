@@ -1,6 +1,8 @@
 vim.g.mapleader = " "
-require("plugins")
-require("config")
-require("core.lsp").setup()
-require("core.diagnostics")
-require("languages")
+if vim.g.vscode then
+	require("vsc")
+else
+	require("config.lazy")
+	require("core")
+	require("languages")
+end
