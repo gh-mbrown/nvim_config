@@ -2,7 +2,7 @@ vim.g.mapleader = " "
 if vim.g.vscode then
 	require("vsc")
 else
-	require("config.lazy")
+	require("config")
 	require("core")
 	require("languages")
 end
