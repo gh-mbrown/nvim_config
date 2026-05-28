@@ -1,12 +1,27 @@
 return {
-	"sainnhe/gruvbox-material",
-	lazy = false,
-	priority = 1000,
+	"rebelot/kanagawa.nvim",
 	config = function()
-		vim.g.grubbox_material_enable_italic = true
-		vim.g.gruvbox_material_background = "soft"
-		vim.g.gruvbox_material_better_performance = 1
-		vim.g.gruvbox_material_transparent_background = 1
-		vim.cmd.colorscheme("gruvbox-material")
+		require("kanagawa").setup({
+			transparent = true,
+			theme = "wave",
+			overrides = function(colors)
+				local theme = colors.theme
+				return {
+					TelescopeTitle = { fg = theme.ui.special, bold = true },
+					TelescopePromptNormal = { bg = theme.ui.bg_p1 },
+					TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
+					TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
+					TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
+					TelescopePreviewNormal = { bg = theme.ui.bg_dim },
+					TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
+					CursorLine = { bg = "none" },
+					SignColumn = { bg = "none" },
+					LineNr = { bg = "none", fg = "#54546d" },
+					CursorLineNr = { bg = "none", fg = "#ff9e3b" },
+					BlinkCmpMenu = { bg = "none" },
+				}
+			end,
+		})
+		vim.cmd.colorscheme("kanagawa")
 	end,
 }
