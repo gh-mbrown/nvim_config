@@ -1,3 +1,9 @@
+local config = require("telescope.config").values
+local pickers = require("telescope.pickers")
+local finders = require("telescope.finders")
+local actions = require("telescope.actions")
+local action_state = require("telescope.actions.state")
+
 local function close_buffer()
 	local buf = vim.fn.bufnr("%")
 
@@ -23,15 +29,14 @@ end
 
 local function restore_file()
 	local list = vim.fn.systemlist("git diff --name-only | awk '{ print $1 }'")
-	if #list == 0 then
-		vim.notify("No changed git files", vim.log.levels.WARN)
-		return
-	end
-	vim.ui.select(list, { prompt = "Restore File: " }, function(choice)
-		if choice then
-			vim.cmd.Git("restore " .. choice)
-		end
-	end)
+	pickers.new({}, {
+		prompt_title = "Restore File",
+		finder = finders.new_table({
+			results = list,
+		}),
+		previewer = config.file_previewer({}),
+		sorter = config.generic_sorter({}),
+	})
 end
 
 local function restore_all_files()
