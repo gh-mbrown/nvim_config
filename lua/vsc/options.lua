@@ -1,18 +1,18 @@
 local vscode = require("vscode")
 vim.opt.cursorline = false
-vim.showmode = false
-vim.opt.splitright = true
+vim.showmode = true
 vim.opt.incsearch = true
 vim.opt.hlsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.backup = false
 vim.opt.scrolloff = 8
-vim.opt.signcolumn = "yes"
 vim.o.laststatus = 2
 vim.opt.guicursor = "n-v-c-i:block"
 vim.opt.autoindent = true
 vim.opt.cindent = true
+vim.g.clipboard = vim.g.vscode_clipboard
+vim.notify = vscode.notify
 
 -- Editor Config
 vscode.update_config("editor.lineNumbers", "relative", "global")
@@ -52,12 +52,12 @@ vscode.update_config("workbench.editor.titleScrollbarVisibility", "hidden", "glo
 vscode.update_config("workbench.activityBar.autoHide", true, "global")
 vscode.update_config("workbench.secondarySideBar.defaultVisibility", "hidden", "global")
 vscode.update_config("workbench.browser.showInTitleBar", false, "global")
-vscode.update_config("workbench.colorTheme", "Gruvbox Dark Hard", "global")
+vscode.update_config("workbench.colorTheme", "Kanagawa", "global")
 vscode.update_config("workbench.iconTheme", "material-icon-theme", "global")
 -- Window Config
 vscode.update_config("window.menuBarVisibility", "compact", "global")
 vscode.update_config("window.titleBarStyle", "custom", "global")
-vscode.update_config("window.title", "${activeRepositoryBranchName}${separator}${activeFolderMedium}${separator}${activeEditorShort} ${dirty}", "global")
+vscode.update_config("window.title", "${activeFolderMedium}${separator}${activeEditorShort}${separator}${activeRepositoryBranchName} ${dirty}", "global")
 vscode.update_config("window.commandCenter", false, "global")
 -- Terminal Config
 vscode.update_config("terminal.integrated.allowChords", false, "global")
