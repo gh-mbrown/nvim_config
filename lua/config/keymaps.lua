@@ -136,8 +136,6 @@ end)
 set("n", "<leader>h9", function ()
     harpoon:list():select(9)
 end)
-set("n", "<leader>hr", function ()
-end)
 -- Toggle Actions
 set("n", "<leader>tu", vim.cmd.UndotreeToggle)
 -- Project Actions
