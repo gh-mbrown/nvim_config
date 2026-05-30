@@ -71,7 +71,8 @@ M.read_cmd = function(cmd)
 	if cmd == "" then
 		return
 	end
-	vim.cmd("botright new | term " .. cmd)
+    local shell = (vim.fn.has("win32") == 1 and "pwsh" or os.getenv("SHELL"))
+	vim.cmd("botright new | term " .. shell .. " -i -c '" .. cmd .. "'")
 end
 
 M.create_branch = function()
