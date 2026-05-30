@@ -6,19 +6,19 @@ return {
 	version = "1.*",
 	opts = {
 		keymap = {
-			["<C-j>"] = {
+			["<C-n>"] = {
 				"select_next",
 				"fallback_to_mappings",
 			},
-			["<C-k>"] = {
+			["<C-p>"] = {
 				"select_prev",
 				"fallback_to_mappings",
 			},
-			["<CR>"] = {
+			["<C-y>"] = {
 				"select_and_accept",
 				"fallback",
 			},
-			["<C-;>"] = {
+			["<C-e>"] = {
 				"hide",
 				"fallback",
 			},
