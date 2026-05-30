@@ -3,8 +3,56 @@ local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
+local themes = require("telescope.themes")
 
-local function close_buffer()
+local M = {}
+M.__index = M
+
+local function create_picker(name, list, func)
+	local opts = {
+		prompt_title = name,
+		finder = finders.new_table({
+			results = list,
+		}),
+		previewer = config.file_previewer({}),
+		sorter = config.generic_sorter({}),
+	}
+
+	if func then
+		opts.attach_mappings = function(prompt_bufnr, map)
+			actions.select_default:replace(function()
+				actions.close(prompt_bufnr)
+				local selection = action_state.get_selected_entry()
+				func(selection[1])
+			end)
+			return true
+		end
+	end
+	pickers.new(themes.get_ivy({}), opts):find()
+end
+
+local function get_diff_files(staged)
+	return vim.fn.systemlist("git diff --name-only " .. (staged and "--staged" or "") .. "| awk '{ print $1 }'")
+end
+
+local function get_all_dirs(path, dirs)
+	local content = vim.split(vim.fn.glob(path .. "/*"), "\n", { trimempty = true })
+	for _, f in pairs(content) do
+		if vim.fn.isdirectory(f) == 1 then
+			vim.list_extend(dirs, { f })
+			dirs = get_all_dirs(f, dirs)
+		end
+	end
+	return dirs
+end
+
+M.print_conflicts = function()
+	local conflict_pattern = "^<<<<<<< "
+	local conflicts = vim.fn.search(conflict_pattern, "n")
+	print("Remaining Conflicts: " .. conflicts)
+end
+
+M.close_buffer = function()
 	local buf = vim.fn.bufnr("%")
 
 	local buffers = vim.tbl_filter(function(b)
@@ -19,7 +67,14 @@ local function close_buffer()
 	end
 end
 
-local function create_branch()
+M.read_cmd = function(cmd)
+	if cmd == "" then
+		return
+	end
+	vim.cmd("botright new | term " .. cmd)
+end
+
+M.create_branch = function()
 	local branch = vim.fn.input("Branch name: ")
 	if branch ~= "" then
 		vim.cmd.Git("checkout -b " .. branch)
@@ -27,148 +82,79 @@ local function create_branch()
 	end
 end
 
-local function restore_file()
-	local list = vim.fn.systemlist("git diff --name-only | awk '{ print $1 }'")
-	pickers.new({}, {
-		prompt_title = "Restore File",
-		finder = finders.new_table({
-			results = list,
-		}),
-		previewer = config.file_previewer({}),
-		sorter = config.generic_sorter({}),
-	})
+M.restore_file = function()
+	local list = get_diff_files(false)
+	create_picker("Restore File", list, function(sel)
+		vim.cmd.Git("restore " .. sel)
+	end)
 end
 
-local function restore_all_files()
+M.restore_all_files = function()
 	local confirm = vim.fn.input("Do you want to restore ALL files(yes/no): ")
 	if confirm == "yes" then
 		vim.cmd.Git("restore :/")
 	end
 end
 
-local function print_conflicts()
-	local conflict_pattern = "^<<<<<<< "
-	local conflicts = vim.fn.search(conflict_pattern, "n")
-	print("Remaining Conflicts: " .. conflicts)
+M.stash_changes = function()
+	local list = get_diff_files(false)
+	create_picker("Stash File", list, function(sel)
+		local message = vim.fn.input("Stash Message: ")
+		vim.cmd.Git("stash push --message '" .. message .. "' " .. sel)
+	end)
 end
 
-local function stash_changes()
-	local message = vim.fn.input("Stash Message: ")
-	local file = vim.fn.expand("%")
-	vim.cmd.Git("stash push --message '" .. message .. "' " .. file)
-end
-
-local function read_cmd(cmd)
-	if cmd == "" then
-		return
-	end
-	vim.cmd("botright new | term " .. cmd)
-end
-
-local function update_submodules()
+M.update_submodules = function()
 	local list = vim.fn.systemlist("git config --file .gitmodules --get-regexp path | awk '{ print $2 }'")
-	if #list == 0 then
-		vim.notify("No git modules", vim.log.levels.WARN)
-		return
-	end
-	vim.ui.select(list, { prompt = "Update Submodule:" }, function(choice)
-		if choice then
-			vim.cmd.Git("submodule update --remote " .. choice)
-		end
+	create_picker("Update Submodule", list, function(sel)
+		vim.cmd.Git("submodule update --remote " .. sel)
 	end)
 end
 
-local function rebase_branch()
+M.rebase_branch = function()
 	local list = vim.fn.systemlist("git branch | awk '{ print $2 }'")
-	if #list == 0 then
-		vim.notify("No git branches", vim.log.levels.WARN)
-		return
-	end
-	vim.ui.select(list, { prompt = "Rebase Branch: " }, function(choice)
-		if choice then
-			vim.cmd.Git("rebase " .. choice)
-		end
+	create_picker("Rebase Branch", list, function(sel)
+		vim.cmd.Git("rebase " .. sel)
 	end)
 end
 
-local function git_add()
-	local list = vim.fn.systemlist("git diff --name-only | awk '{ print $1 }'")
-	if #list == 0 then
-		vim.notify("No changed git files", vim.log.levels.WARN)
-		return
-	end
-	vim.ui.select(list, { prompt = "Add File: " }, function(choice)
-		if choice then
-			vim.cmd.Git("add " .. choice)
-		end
+M.git_add = function()
+	local list = get_diff_files(false)
+	create_picker("Add File", list, function(sel)
+		vim.cmd.Git("add " .. sel)
 	end)
 end
 
-local function get_all_dirs(path, dirs)
-	local content = vim.split(vim.fn.glob(path .. "/*"), "\n", { trimempty = true })
-	for _, f in pairs(content) do
-		if vim.fn.isdirectory(f) == 1 then
-			vim.list_extend(dirs, { f })
-			dirs = get_all_dirs(f, dirs)
-		end
-	end
-
-	return dirs
-end
-
-local function create_file()
-	local dirs = get_all_dirs(vim.fn.getcwd(), {})
-	vim.ui.select(dirs, { prompt = "Create File: " }, function(choice)
-		if choice then
-			local file = vim.fn.input("File name: ")
-			if vim.fn.writefile({}, file) == 0 then
-				vim.cmd.edit(file)
-			else
-				vim.notify("Failed to create file " .. file, vim.logs.level.ERROR)
-			end
-		end
+M.git_unstage = function()
+	local list = get_diff_files(true)
+	create_picker("Unstage File", list, function(sel)
+		vim.cmd.Git("restore --staged " .. sel)
 	end)
 end
 
-vim.api.nvim_create_user_command("CreateBranch", function()
-	create_branch()
-end, {})
+M.create_file = function()
+	local dirs = get_all_dirs(".", {})
+	create_picker("Create File", dirs, function(sel)
+		local file = vim.fn.input("File name: ")
+		local path = vim.fs.joinpath(sel, file)
+		vim.cmd.edit(path)
+	end)
+end
 
-vim.api.nvim_create_user_command("RestoreFile", function()
-	restore_file()
-end, {})
+M.create_dir = function()
+	local dirs = get_all_dirs(".", {})
+	create_picker("Create Dir", dirs, function(sel)
+		local dir = vim.fn.input("Dir name: ")
+		local path = vim.fs.joinpath(sel, dir)
+		vim.fn.mkdir(path)
+	end)
+end
 
-vim.api.nvim_create_user_command("RestoreAllFiles", function()
-	restore_all_files()
-end, {})
+M.open_dir = function()
+	local dirs = get_all_dirs(".", {})
+	create_picker("Open Dir", dirs, function(sel)
+		vim.cmd.edit(sel)
+	end)
+end
 
-vim.api.nvim_create_user_command("RebaseBranch", function()
-	rebase_branch()
-end, {})
-
-vim.api.nvim_create_user_command("PrintConflicts", function()
-	print_conflicts()
-end, {})
-
-vim.api.nvim_create_user_command("StashChanges", function()
-	stash_changes()
-end, {})
-
-vim.api.nvim_create_user_command("ReadCmd", function(opts)
-	read_cmd(opts.args ~= "" and opts.args or vim.fn.input(""))
-end, { nargs = "?" })
-
-vim.api.nvim_create_user_command("UpdateSubmodule", function()
-	update_submodules()
-end, {})
-
-vim.api.nvim_create_user_command("GitAdd", function()
-	git_add()
-end, {})
-
-vim.api.nvim_create_user_command("CloseBuffer", function()
-	close_buffer()
-end, {})
-vim.api.nvim_create_user_command("CreateFile", function()
-	create_file()
-end, {})
+return M
