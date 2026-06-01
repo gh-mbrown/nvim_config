@@ -1,3 +1,5 @@
+local funcs = require("core.functions")
+
 -- Set Razor files as html
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 	pattern = { "*.cshtml", "*.razor" },
@@ -27,4 +29,11 @@ vim.api.nvim_create_autocmd("FileType", {
 			pcall(vim.treesitter.start)
 		end
 	end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "*",
+    callback = function(_)
+        funcs.auto_install_tree_sitter()
+    end
 })

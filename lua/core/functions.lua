@@ -1,14 +1,13 @@
-local config = require("telescope.config").values
-local pickers = require("telescope.pickers")
-local finders = require("telescope.finders")
-local actions = require("telescope.actions")
-local action_state = require("telescope.actions.state")
-local themes = require("telescope.themes")
-
 local M = {}
 M.__index = M
 
 local function create_picker(name, list, func)
+    local config = require("telescope.config").values
+    local pickers = require("telescope.pickers")
+    local finders = require("telescope.finders")
+    local actions = require("telescope.actions")
+    local action_state = require("telescope.actions.state")
+    local themes = require("telescope.themes")
 	local opts = {
 		prompt_title = name,
 		finder = finders.new_table({
@@ -71,7 +70,7 @@ M.read_cmd = function(cmd)
 	if cmd == "" then
 		return
 	end
-    local shell = (vim.fn.has("win32") == 1 and "pwsh" or os.getenv("SHELL"))
+	local shell = (vim.fn.has("win32") == 1 and "pwsh" or os.getenv("SHELL"))
 	vim.cmd("botright new | term " .. shell .. " -i -c '" .. cmd .. "'")
 end
 
@@ -156,6 +155,30 @@ M.open_dir = function()
 	create_picker("Open Dir", dirs, function(sel)
 		vim.cmd.edit(sel)
 	end)
+end
+
+M.list_to_read_bufnr = function()
+    local ts = require("nvim-treesitter")
+	local installed = ts.get_installed()
+	local bufnr = vim.api.nvim_create_buf(false, true)
+	vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, installed)
+	vim.bo[bufnr].buftype = "nofile"
+	vim.bo[bufnr].bufhidden = "wipe"
+	vim.bo[bufnr].modifiable = false
+	vim.bo[bufnr].readonly = true
+	vim.api.nvim_open_win(bufnr, true, { split = "below", win = 0 })
+end
+
+M.auto_install_tree_sitter = function()
+    local ts = require("nvim-treesitter")
+	local ft = vim.bo.filetype
+	local installed = ts.get_installed()
+	if not vim.tbl_contains(installed, ft) then
+		local avail = ts.get_available()
+		if vim.tbl_contains(avail, ft) then
+			ts.install(ft)
+		end
+	end
 end
 
 return M

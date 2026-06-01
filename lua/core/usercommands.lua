@@ -55,3 +55,7 @@ end, {})
 vim.api.nvim_create_user_command("OpenDir", function ()
     funcs.open_dir()
 end, {})
+
+vim.api.nvim_create_user_command("TSInstalled", function ()
+    funcs.list_to_read_bufnr()
+end, {})
