@@ -3,7 +3,7 @@ vim.pack.add({
     { src = root .. "nvim-lua/plenary.nvim" },
     { src = root .. "rafamadriz/friendly-snippets" },
     { src = root .. "saghen/blink.cmp",                        version = "v1.10.2" },
-    { src = root .. "catppuccin/nvim" },
+    { src = root .. "sainnhe/everforest" },
     { src = root .. "folke/ts-comments.nvim" },
     { src = root .. "tpope/vim-fugitive" },
     { src = root .. "ThePrimeagen/harpoon",                    version = "harpoon2" },
