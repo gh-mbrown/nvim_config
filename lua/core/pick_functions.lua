@@ -3,45 +3,101 @@ local pick = require("mini.pick")
 local M = {}
 M.__index = M
 
-local function create_picker(name, list, func)
-    pick.start({
+M.git_restore = function()
+    pick.builtin.cli({
+        command = { "git", "status", "--short" },
+        postprocess = function(list)
+            local result = {}
+            for _, l in pairs(list) do
+                table.insert(result, string.sub(l, 4, string.len(l)))
+            end
+            return result
+        end
+    },
+    {
         source = {
-            items = list,
-            name = name,
-            choose = func
+            name = "Git Restore",
+            choose = function (selection)
+                vim.cmd.Git("restore " .. selection)
+            end
         }
     })
 end
 
-local function get_diff_files(staged)
-    return vim.fn.systemlist("git diff --name-only " .. (staged and "--staged" or "") .. "| awk '{ print $1 }'")
+M.git_stash = function()
+    pick.builtin.cli({
+        command = { "git", "status", "--short" },
+        postprocess = function(list)
+            local result = {}
+            for _, l in pairs(list) do
+                table.insert(result, string.sub(l, 4, string.len(l)))
+            end
+            return result
+        end
+    },
+    {
+        source = {
+            name = "Git Stash",
+            choose = function (selection)
+                vim.cmd.Git("stash " .. selection)
+            end
+        }
+    })
 end
 
-M.restore_file = function()
-    local list = get_diff_files(false)
-    create_picker("Restore File", list, function(selection)
-        vim.cmd.Git("restore " .. selection)
-    end)
+M.git_stash_list = function ()
+    pick.builtin.cli({
+        command = {"git", "stash", "list"},
+    },
+    {
+        source = {
+            name = "Git Stash List",
+            choose = function (selection)
+                local stash_name = string.match(selection, "%a+")
+                vim.print(stash_name)
+                vim.cmd.Git("stash pop " .. stash_name)
+            end
+        }
+    })
 end
 
-M.stash_changes = function()
-    local list = get_diff_files(false)
-    create_picker("Stash File", list, function(selection)
-        local message = vim.fn.input("Stash Message: ")
-        vim.cmd.Git("stash push --message '" .. message .. "' " .. selection)
-    end)
-end
-
-M.update_submodules = function()
-    local list = vim.fn.systemlist("git config --file .gitmodules --get-regexp path | awk '{ print $2 }'")
-    create_picker("Update Submodule", list, function(sel)
-        vim.cmd.Git("submodule update --remote " .. sel)
-    end)
+M.git_update_submodules = function()
+    pick.builtin.cli({
+        command = {"git", "config", "--file", ".gitmodules", "--get-regexp", "path"},
+        postprocess = function (list)
+            local results = {}
+            for _, l in pairs(list) do
+                local r = string.match(l, "%S+$")
+                table.insert(results, r)
+            end
+            return results
+        end
+    },
+    {
+        source = {
+            name = "Git Submodules",
+            choose = function (selection)
+                vim.print(selection)
+                vim.cmd.Git("submodule update --remote " .. selection)
+            end
+        }
+    })
 end
 
 M.git_branches = function()
     pick.builtin.cli({
-            command = { "git", "branch", "--all", "--format", "'%(refname:short)'" }
+            command = { "git", "branch", "--all", "--format", "%(refname:short)" },
+            postprocess = function(list)
+                local result = {}
+                for _, l in pairs(list) do
+                    if l ~= "origin" then
+                        local r, _ = string.gsub(l, "origin/", "", 1)
+                        vim.print(r)
+                        table.insert(result, r)
+                    end
+                end
+                return result
+            end
         },
         {
             source = {
@@ -55,7 +111,18 @@ end
 
 M.git_rebase = function()
     pick.builtin.cli({
-            command = { "git", "branch", "--all", "--format", "'%(refname:short)'" }
+            command = { "git", "branch", "--all", "--format", "%(refname:short)" },
+            postprocess = function(list)
+                local result = {}
+                for _, l in pairs(list) do
+                    if l ~= "origin" then
+                        local r, _ = string.gsub(l, "origin/", "", 1)
+                        vim.print(r)
+                        table.insert(result, r)
+                    end
+                end
+                return result
+            end
         },
         {
             source = {

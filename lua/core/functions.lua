@@ -30,22 +30,6 @@ M.read_cmd = function(cmd)
 	vim.cmd("botright new | term " .. shell .. " -i -c '" .. cmd .. "'")
 end
 
-M.create_branch = function()
-	local branch = vim.fn.input("Branch name: ")
-	if branch ~= "" then
-		vim.cmd.Git("checkout -b " .. branch)
-		vim.cmd.Git("push -u origin " .. branch)
-	end
-end
-
-
-M.restore_all_files = function()
-	local confirm = vim.fn.input("Do you want to restore ALL files(yes/no): ")
-	if confirm == "yes" then
-		vim.cmd.Git("restore :/")
-	end
-end
-
 M.list_to_read_bufnr = function()
     local ts = require("nvim-treesitter")
 	local installed = ts.get_installed()

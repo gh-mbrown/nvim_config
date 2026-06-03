@@ -1,21 +1,5 @@
 local funcs = require("core.functions")
 
-vim.api.nvim_create_user_command("CreateBranch", function()
-	funcs.create_branch()
-end, {})
-
-vim.api.nvim_create_user_command("RestoreFile", function()
-	funcs.restore_file()
-end, {})
-
-vim.api.nvim_create_user_command("RestoreAllFiles", function()
-	funcs.restore_all_files()
-end, {})
-
-vim.api.nvim_create_user_command("RebaseBranch", function()
-	funcs.rebase_branch()
-end, {})
-
 vim.api.nvim_create_user_command("PrintConflicts", function()
 	funcs.print_conflicts()
 end, {})
