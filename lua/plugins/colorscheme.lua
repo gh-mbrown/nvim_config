@@ -1,3 +1,6 @@
-vim.g.everforest_transparent_background = 2
-vim.g.everforest_better_performance = 1
-vim.cmd.colorscheme("everforest")
+vim.cmd.colorscheme("nord")
+vim.cmd.highlight("Normal guibg=none")
+vim.cmd.highlight("Signcolumn guibg=none")
+vim.cmd.highlight("LineNr guifg=#ffffff")
+vim.cmd.highlight("Visual guibg=#2e3440")
+vim.cmd.highlight("Comment cterm=bold gui=bold")

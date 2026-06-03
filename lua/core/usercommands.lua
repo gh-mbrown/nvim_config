@@ -59,3 +59,11 @@ end, {})
 vim.api.nvim_create_user_command("TSInstalled", function ()
     funcs.list_to_read_bufnr()
 end, {})
+
+vim.api.nvim_create_user_command("GitFiles", function ()
+    funcs.find_git_files()
+end, {})
+
+vim.api.nvim_create_user_command("FindKeymaps", function ()
+    funcs.find_keymaps()
+end, {})

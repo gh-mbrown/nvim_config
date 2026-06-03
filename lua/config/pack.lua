@@ -1,14 +1,10 @@
 local root = "https://github.com/"
 vim.pack.add({
-    { src = root .. "nvim-lua/plenary.nvim" },
-    { src = root .. "rafamadriz/friendly-snippets" },
     { src = root .. "saghen/blink.cmp",                        version = "v1.10.2" },
-    { src = root .. "sainnhe/everforest" },
+    { src = root .. "nordtheme/vim" },
+    { src = root .. "nvim-mini/mini.pick" },
     { src = root .. "folke/ts-comments.nvim" },
     { src = root .. "tpope/vim-fugitive" },
-    { src = root .. "ThePrimeagen/harpoon",                    version = "harpoon2" },
-    { src = root .. "nvim-telescope/telescope-fzf-native.nvim" },
-    { src = root .. "nvim-telescope/telescope.nvim" },
     { src = root .. "christoomey/vim-tmux-navigator" },
     { src = root .. "nvim-treesitter/nvim-treesitter" },
     { src = root .. "mbbill/undotree" },

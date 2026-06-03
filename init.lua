@@ -8,4 +8,5 @@ vim.lsp.enable({
     "fish_lsp",
     "roslyn_ls",
     "html",
+    "zls"
 })
