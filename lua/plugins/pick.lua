@@ -5,7 +5,7 @@ require("mini.pick").setup({
     window = {
         config = {
             width = vim.o.columns,
-            height = vim.o.lines * 0.5
+            height = math.ceil(vim.o.lines * 0.2)
         },
         prompt_caret = "<|",
         prompt_prefix = "|>"
