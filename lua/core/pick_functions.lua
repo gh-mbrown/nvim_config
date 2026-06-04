@@ -10,7 +10,11 @@ M.git_restore = function()
             postprocess = function(list)
                 local result = {}
                 for _, l in pairs(list) do
-                    table.insert(result, string.sub(l, 4, string.len(l)))
+                    local v = string.sub(l, 4, string.len(l))
+                    if vim.list_contains(result, v) then
+                    else
+                        table.insert(result, v)
+                    end
                 end
                 return result
             end
@@ -189,6 +193,24 @@ M.search_tldr = function()
         })
 end
 
+M.search_dirs = function()
+    local dirs = {}
+    local function get_dirs(path)
+        local content = vim.split(vim.fn.glob(path .. "/*"), "\n", { trimempty = true })
+        for _, d in pairs(content) do
+            if vim.fn.isdirectory(d) == 1 then
+                table.insert(dirs, d)
+                get_dirs(d)
+            end
+        end
+    end
+    get_dirs(".")
+    vim.ui.select(dirs, {}, "Directories", function(choice)
+        if not choice then return end
+        vim.cmd.edit(choice)
+    end)
+end
+
 M.treesitter_search = function()
     local bufnr = vim.api.nvim_get_current_buf()
     local path = vim.api.nvim_buf_get_name(bufnr)
@@ -197,15 +219,15 @@ M.treesitter_search = function()
     local tree = parser:parse()[1]
     local root = tree:root()
 
-    local query = var_queries[vim.bo.filetype]
+    local var_query = var_queries[vim.bo.filetype]
 
     local items = {}
-    for id, node in query:iter_captures(root, bufnr, 0, -1) do
-        if query.captures[id] == "name" then
+    for id, node in var_query:iter_captures(root, bufnr, 0, -1) do
+        if var_query.captures[id] == "name" then
             local row, col = node:start()
             local name = vim.treesitter.get_node_text(node, bufnr)
             table.insert(items, {
-                text = string.format("%s | %-30s | %s:%d", "var", name, vim.fn.fnamemodify(path, ":t"), row + 1),
+                text = string.format("%s | %-30s", "var", name),
                 path = path,
                 lnum = row + 1,
                 col = col + 1
@@ -218,11 +240,8 @@ M.treesitter_search = function()
             items = items,
             name = "Treesitter",
             choose_marked = function(choice)
-                if choice then
-                    vim.api.nvim_win_set_cursor(0, { choice.lnum, choice.col - 1 })
-                else
-                    return
-                end
+                if not choice then return end
+                vim.api.nvim_win_set_cursor(0, { choice.lnum, choice.col - 1 })
             end
         }
     })
