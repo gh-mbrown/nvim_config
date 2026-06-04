@@ -1,12 +1,12 @@
 local root = "https://github.com/"
 vim.pack.add({
-    { src = root .. "saghen/blink.cmp",                        version = "v1.10.2" },
+    { src = root .. "saghen/blink.cmp",                version = "v1.10.2" },
     { src = root .. "nordtheme/vim" },
-    { src = root .. "nvim-mini/mini.pick" },
+    { src = root .. "nvim-mini/mini.pick",             version = "stable" },
     { src = root .. "folke/ts-comments.nvim" },
     { src = root .. "tpope/vim-fugitive" },
     { src = root .. "christoomey/vim-tmux-navigator" },
-    { src = root .. "nvim-treesitter/nvim-treesitter" },
+    { src = root .. "nvim-treesitter/nvim-treesitter", version = "main" },
     { src = root .. "mbbill/undotree" },
     { src = root .. "neovim/nvim-lspconfig" },
     { src = root .. "windwp/nvim-autopairs" },

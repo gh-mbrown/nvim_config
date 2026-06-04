@@ -7,7 +7,8 @@
     },
     "mini.pick": {
       "rev": "26f94e9c84f529d713de00b900c0a307ca260f35",
-      "src": "https://github.com/nvim-mini/mini.pick"
+      "src": "https://github.com/nvim-mini/mini.pick",
+      "version": "'stable'"
     },
     "nvim-autopairs": {
       "rev": "7b9923abad60b903ece7c52940e1321d39eccc79",
@@ -19,7 +20,8 @@
     },
     "nvim-treesitter": {
       "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
-      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter",
+      "version": "'main'"
     },
     "ts-comments.nvim": {
       "rev": "123a9fb12e7229342f807ec9e6de478b1102b041",
