@@ -1,9 +1,6 @@
 local set = vim.keymap.set
 local pick_funcs = require("core.pick_functions")
 
-set("n", "<leader>sc", function ()
-    pick_funcs.spell_suggest()
-end)
 -- Misc Leader Actions
 set("n", "<leader>/", function()
 	vim.cmd.Pick("grep_live")

@@ -1,5 +1,5 @@
 local pick = require("mini.pick")
-local ts_queries = require("core.treesitter_queries")
+local var_queries = require("core.treesitter.var_queries")
 
 local M = {}
 M.__index = M
@@ -189,19 +189,7 @@ M.search_tldr = function()
         })
 end
 
-M.spell_suggest = function()
-    local word = vim.fn.expand("<cword>")
-    local sug = vim.fn.spellsuggest(word)
-    vim.ui.select(sug, {}, "Spell Suggestions", function(choice)
-        if choice then
-            vim.api.nvim_command("normal! ciw" .. choice)
-        else
-            return
-        end
-    end)
-end
-
-M.treesitter_search = function ()
+M.treesitter_search = function()
     local bufnr = vim.api.nvim_get_current_buf()
     local path = vim.api.nvim_buf_get_name(bufnr)
     local lang = vim.treesitter.language.get_lang(vim.bo.filetype)
@@ -209,7 +197,7 @@ M.treesitter_search = function ()
     local tree = parser:parse()[1]
     local root = tree:root()
 
-    local query = ts_queries[vim.bo.filetype]
+    local query = var_queries[vim.bo.filetype]
 
     local items = {}
     for id, node in query:iter_captures(root, bufnr, 0, -1) do
@@ -217,7 +205,7 @@ M.treesitter_search = function ()
             local row, col = node:start()
             local name = vim.treesitter.get_node_text(node, bufnr)
             table.insert(items, {
-                text = string.format("%s %s line %d", "var", name, row + 1),
+                text = string.format("%s | %-30s | %s:%d", "var", name, vim.fn.fnamemodify(path, ":t"), row + 1),
                 path = path,
                 lnum = row + 1,
                 col = col + 1
@@ -228,9 +216,13 @@ M.treesitter_search = function ()
     pick.start({
         source = {
             items = items,
-            name = "tree",
-            choose_marked = function (choice)
-                vim.api.nvim_win_set_cursor(0, {choice.lnum, choice.col - 1})
+            name = "Treesitter",
+            choose_marked = function(choice)
+                if choice then
+                    vim.api.nvim_win_set_cursor(0, { choice.lnum, choice.col - 1 })
+                else
+                    return
+                end
             end
         }
     })
