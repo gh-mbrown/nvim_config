@@ -34,3 +34,4 @@ vim.o.laststatus = 2
 vim.opt.guicursor = "n-v-c-i:block"
 vim.g.netrw_cursor = 1
 vim.g.netrw_bufsettings = "noma nomod nu nobl nowrap ro"
+vim.opt.statusline = "%<%f %h%m%r%{FugitiveStatusline()}%=%-14.(%l,%c%V%) %P"
