@@ -33,7 +33,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "*",
-    callback = function(_)
+    callback = function()
         funcs.auto_install_tree_sitter()
     end
 })

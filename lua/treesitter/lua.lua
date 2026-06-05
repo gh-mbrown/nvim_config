@@ -11,7 +11,7 @@ return [[
         (variable_list
             name: (dot_index_expression
                 table: (identifier)
-                field: (identifier))) @method
+                field: (identifier))) @func
         (expression_list
             value: (function_definition)))
 ]]

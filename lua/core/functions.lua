@@ -49,7 +49,7 @@ M.auto_install_tree_sitter = function()
 	if not vim.tbl_contains(installed, ft) then
 		local avail = ts.get_available()
 		if vim.tbl_contains(avail, ft) then
-			ts.install(ft)
+			ts.install({ft})
 		end
 	end
 end

@@ -218,16 +218,12 @@ M.treesitter_search = function()
     local parser = vim.treesitter.get_parser(bufnr, lang)
     local tree = parser:parse()[1]
     local root = tree:root()
-
     local file_type = vim.bo.filetype
-
-    local query = require("treesitter." .. file_type)
-    local parse = vim.treesitter.query.parse(file_type, query)
+    local query = vim.treesitter.query.parse(file_type, require("treesitter." .. file_type))
 
     local items = {}
-
-    for id, node in parse:iter_captures(root, bufnr, 0, -1) do
-        local cap = parse.captures[id]
+    for id, node in query:iter_captures(root, bufnr, 0, -1) do
+        local cap = query.captures[id]
         if cap then
             local row, col = node:start()
             local name = vim.treesitter.get_node_text(node, bufnr)
