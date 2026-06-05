@@ -228,7 +228,7 @@ M.treesitter_search = function()
             local row, col = node:start()
             local name = vim.treesitter.get_node_text(node, bufnr)
             table.insert(items, {
-                text = string.format("%-10s | %s", cap, name),
+                text = string.format("%-5s | %s", cap, name),
                 path = path,
                 lnum = row + 1,
                 col = col + 1

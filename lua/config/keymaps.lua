@@ -124,6 +124,7 @@ set("n", "<leader>gmu", function ()
 end)
 -- Toggle Actions
 set("n", "<leader>tu", vim.cmd.UndotreeToggle)
+set("n", "<leader>tt", vim.cmd.InspectTree)
 -- Project Actions
 set("n", "<leader>pf", function ()
     pick_funcs.git_files()

@@ -3,7 +3,7 @@ return {
         "roslyn",
         "--stdio",
         "--logLevel=Information",
-        "--extensionLogDirectory=" .. vim.fn.expand(os.getenv("HOME") or "/home/mbrown" .. "/.cache/nvim/roslyn-logs")
+        "--extensionLogDirectory=" .. vim.fn.expand((os.getenv("HOME") or "/home/mbrown") .. "/.cache/nvim/roslyn-logs")
     },
     filetypes = {
         "cs",

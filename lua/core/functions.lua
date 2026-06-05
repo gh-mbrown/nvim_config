@@ -45,11 +45,16 @@ end
 M.auto_install_tree_sitter = function()
     local ts = require("nvim-treesitter")
 	local ft = vim.bo.filetype
+    local remap = {
+        cs = "c_sharp",
+        jsonc = "json"
+    }
+    local rft = remap[ft] or ft
 	local installed = ts.get_installed()
-	if not vim.tbl_contains(installed, ft) then
+	if not vim.tbl_contains(installed, rft) then
 		local avail = ts.get_available()
-		if vim.tbl_contains(avail, ft) then
-			ts.install({ft})
+		if vim.tbl_contains(avail, rft) then
+			ts.install({rft})
 		end
 	end
 end
