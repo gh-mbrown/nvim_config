@@ -1,5 +1,4 @@
 local pick = require("mini.pick")
-local var_queries = require("core.treesitter.var_queries")
 
 local M = {}
 M.__index = M
@@ -211,6 +210,7 @@ M.search_dirs = function()
     end)
 end
 
+
 M.treesitter_search = function()
     local bufnr = vim.api.nvim_get_current_buf()
     local path = vim.api.nvim_buf_get_name(bufnr)
@@ -219,15 +219,20 @@ M.treesitter_search = function()
     local tree = parser:parse()[1]
     local root = tree:root()
 
-    local var_query = var_queries[vim.bo.filetype]
+    local file_type = vim.bo.filetype
+
+    local query = require("treesitter." .. file_type)
+    local parse = vim.treesitter.query.parse(file_type, query)
 
     local items = {}
-    for id, node in var_query:iter_captures(root, bufnr, 0, -1) do
-        if var_query.captures[id] == "name" then
+
+    for id, node in parse:iter_captures(root, bufnr, 0, -1) do
+        local cap = parse.captures[id]
+        if cap then
             local row, col = node:start()
             local name = vim.treesitter.get_node_text(node, bufnr)
             table.insert(items, {
-                text = string.format("%s | %-30s", "var", name),
+                text = string.format("%-10s | %s", cap, name),
                 path = path,
                 lnum = row + 1,
                 col = col + 1

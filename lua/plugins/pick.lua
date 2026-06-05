@@ -1,6 +1,4 @@
 local pick = require("mini.pick")
-local height = math.floor(0.618 * vim.o.lines)
-local width = math.floor(0.618 * vim.o.columns)
 pick.setup({
     mappings = {
         scroll_down = "<C-d>",
@@ -14,10 +12,8 @@ pick.setup({
     window = {
         config = {
             anchor = "NW",
-            row = math.floor(0.5 * (vim.o.lines - height)),
-            col = math.floor(0.5 * (vim.o.columns - width)),
-            width = width,
-            height = height
+            width = vim.o.columns,
+            height = math.floor(vim.o.lines * 0.4)
         },
         prompt_caret = "<|",
         prompt_prefix = "|>"
