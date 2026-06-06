@@ -204,10 +204,16 @@ M.search_dirs = function()
         end
     end
     get_dirs(".")
-    vim.ui.select(dirs, {}, "Directories", function(choice)
-        if not choice then return end
-        vim.cmd.edit(choice)
-    end)
+    pick.start({
+        source = {
+            name = "Directories",
+            items = dirs,
+            choose_marked = function(choice)
+                if not choice then return end
+                vim.cmd.edit(choice)
+            end
+        }
+    })
 end
 
 
@@ -218,21 +224,23 @@ M.treesitter_search = function()
     local parser = vim.treesitter.get_parser(bufnr, lang)
     local tree = parser:parse()[1]
     local root = tree:root()
-    local file_type = vim.bo.filetype
-    local query = vim.treesitter.query.parse(file_type, require("treesitter." .. file_type))
 
     local items = {}
-    for id, node in query:iter_captures(root, bufnr, 0, -1) do
-        local cap = query.captures[id]
-        if cap then
-            local row, col = node:start()
-            local name = vim.treesitter.get_node_text(node, bufnr)
-            table.insert(items, {
-                text = string.format("%-5s | %s", cap, name),
-                path = path,
-                lnum = row + 1,
-                col = col + 1
-            })
+    for name, _ in vim.fs.dir("./queries/" .. lang) do
+        local query = vim.treesitter.query.get(lang, name:gsub("%.scm$", ""))
+
+        for id, node in query:iter_captures(root, bufnr, 0, -1) do
+            local cap = query.captures[id]
+            if cap then
+                local row, col = node:start()
+                local result = vim.treesitter.get_node_text(node, bufnr)
+                table.insert(items, {
+                    text = string.format("%-5s | %s", cap, result),
+                    path = path,
+                    lnum = row + 1,
+                    col = col + 1
+                })
+            end
         end
     end
 

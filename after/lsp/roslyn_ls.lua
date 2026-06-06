@@ -1,6 +1,6 @@
 return {
     cmd = {
-        "roslyn",
+        "roslyn-language-server",
         "--stdio",
         "--logLevel=Information",
         "--extensionLogDirectory=" .. vim.fn.expand((os.getenv("HOME") or "/home/mbrown") .. "/.cache/nvim/roslyn-logs")

@@ -1,4 +1,4 @@
-local funcs = require("core.functions")
+local funcs = require("functions.misc")
 
 vim.api.nvim_create_user_command("PrintConflicts", function()
     funcs.print_conflicts()

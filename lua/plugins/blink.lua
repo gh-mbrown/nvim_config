@@ -34,6 +34,6 @@ require("blink.cmp").setup({
         },
     },
     fuzzy = {
-        implementation = "prefer_rust_with_warning",
+        implementation = vim.fn.has("win32") == 0 and "prefer_rust_with_warning" or "lua",
     },
 })

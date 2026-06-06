@@ -1,5 +1,5 @@
 local set = vim.keymap.set
-local pick_funcs = require("core.pick_functions")
+local pick_funcs = require("functions.pick")
 
 -- Misc Leader Actions
 set("n", "<leader>/", function()
@@ -34,7 +34,7 @@ set("n", "<leader>cc", function()
 end)
 set("n", "<leader>cf", vim.lsp.buf.format)
 set("n", "<leader>cl", function()
-	vim.cmd.checkhealth("lsp")
+	vim.cmd.checkhealth("vim.lsp")
 end)
 set("n", "<leader>ct", vim.cmd.TSInstalled)
 -- File Actions

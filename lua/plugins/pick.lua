@@ -4,7 +4,6 @@ pick.setup({
         scroll_down = "<C-d>",
         scroll_up = "<C-u>",
         delete_left = "<C-b>",
-        toggle_preview = "<C-z>"
     },
     source = {
         show = require("mini.pick").default_show
