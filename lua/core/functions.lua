@@ -1,13 +1,10 @@
-local M = {}
-M.__index = M
-
-M.print_conflicts = function()
+local function print_conflicts()
     local conflict_pattern = "^<<<<<<< "
     local conflicts = vim.fn.search(conflict_pattern, "n")
     print("Remaining Conflicts: " .. conflicts)
 end
 
-M.close_buffer = function()
+local function close_buffer()
     local buf = vim.fn.bufnr("%")
 
     local buffers = vim.tbl_filter(function(b)
@@ -22,7 +19,7 @@ M.close_buffer = function()
     end
 end
 
-M.read_cmd = function(cmd)
+local function read_cmd(cmd)
     if cmd == "" then
         return
     end
@@ -30,7 +27,7 @@ M.read_cmd = function(cmd)
     vim.cmd("botright new | term " .. shell .. " -i -c '" .. cmd .. "'")
 end
 
-M.list_to_read_bufnr = function()
+local function list_to_read_bufnr()
     local ts = require("nvim-treesitter")
     local installed = ts.get_installed()
     local bufnr = vim.api.nvim_create_buf(false, true)
@@ -42,7 +39,7 @@ M.list_to_read_bufnr = function()
     vim.api.nvim_open_win(bufnr, true, { split = "below", win = 0 })
 end
 
-M.auto_install_tree_sitter = function()
+local function auto_install_tree_sitter()
     local ts = require("nvim-treesitter")
     local ft = vim.bo.filetype
     local remap = {
@@ -59,4 +56,25 @@ M.auto_install_tree_sitter = function()
     end
 end
 
-return M
+vim.api.nvim_create_user_command("PrintConflicts", function()
+    print_conflicts()
+end, {})
+
+vim.api.nvim_create_user_command("ReadCmd", function(opts)
+    read_cmd(opts.args ~= "" and opts.args or vim.fn.input(""))
+end, { nargs = "?" })
+
+vim.api.nvim_create_user_command("CloseBuffer", function()
+    close_buffer()
+end, {})
+
+vim.api.nvim_create_user_command("TSInstalled", function()
+    list_to_read_bufnr()
+end, {})
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "*",
+    callback = function()
+        auto_install_tree_sitter()
+    end
+})

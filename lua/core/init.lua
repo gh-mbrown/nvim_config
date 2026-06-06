@@ -1,3 +1,3 @@
-require("core.usercommands")
 require("core.diagnostics")
-require("core.autocmds")
+require("core.functions")
+require("core.lsp")
