@@ -1,8 +1,8 @@
 local set = vim.keymap.set
 
 -- Misc Leader Actions
-set("n", "<leader>/", function()
-	vim.cmd.Pick("grep_live")
+set("n", "<leader>/", function ()
+    vim.cmd.Pick("grep_live")
 end)
 set("n", "<leader>ht", function()
 	vim.cmd.Pick("help")
@@ -25,8 +25,8 @@ set("n", "<leader>cl", function()
 	vim.cmd.checkhealth("vim.lsp")
 end)
 -- File Actions
-set("n", "<leader>ff", function()
-	vim.cmd.Pick("files")
+set("n", "<leader>ff", function ()
+    vim.cmd.Pick("files")
 end)
 -- Git Actions
 set("n", "<leader>gC", function()

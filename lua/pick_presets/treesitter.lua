@@ -33,7 +33,7 @@ local function execute_treesitter_query(opts)
             local row, col = node:start()
             local result = vim.treesitter.get_node_text(node, bufnr)
             table.insert(items, {
-                text = string.format("%-5s | %s", cap, result),
+                text = string.format("%s", result),
                 path = path,
                 lnum = row + 1,
                 col = col + 1
