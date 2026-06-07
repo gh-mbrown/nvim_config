@@ -1,6 +1,17 @@
 local tokyo = require("tokyonight")
 tokyo.setup({
     style = "night",
-    transparent = true
+    transparent = true,
+    on_highlights = function (hl, c)
+        hl.CursorLine = {
+            bg = "none"
+        }
+        hl.MiniPickMatchCurrent = {
+            bg = "#292e42"
+        }
+        hl.MiniPickPreviewLine = {
+            bg = "#292e42"
+        }
+    end,
 })
 vim.cmd.colorscheme("tokyonight")
