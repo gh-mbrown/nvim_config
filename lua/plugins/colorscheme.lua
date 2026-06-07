@@ -1,9 +1,6 @@
-vim.cmd.colorscheme("nord")
-vim.api.nvim_set_hl(0, "Normal", {bg = "none"})
-vim.api.nvim_set_hl(0, "Signcolumn", {bg = "none"})
-vim.api.nvim_set_hl(0, "LineNr", {fg = "#d8dee9"})
-vim.api.nvim_set_hl(0, "Visual", {bg = "#2e3440"})
-vim.api.nvim_set_hl(0, "CursorLine", {bg = "none"})
-vim.api.nvim_set_hl(0, "MiniPickMatchCurrent", {bg = "#3b4252"})
-vim.api.nvim_set_hl(0, "MiniPickPreviewLine", {bg = "#3b4252"})
-vim.api.nvim_set_hl(0, "CursorLineNr", {fg = "#88c0d0"})
+local tokyo = require("tokyonight")
+tokyo.setup({
+    style = "night",
+    transparent = true
+})
+vim.cmd.colorscheme("tokyonight")

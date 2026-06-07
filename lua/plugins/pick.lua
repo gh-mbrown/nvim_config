@@ -1,8 +1,5 @@
 local pick = require("mini.pick")
-local git_presets = require("pick_presets.git")
-local treesitter_presets = require("pick_presets.treesitter")
-local misc_presets = require("pick_presets.misc")
-local misc_cli_presets = require("pick_presets.misc_cli")
+local presets = require("config.presets")
 
 pick.setup({
     mappings = {
@@ -76,7 +73,7 @@ vim.api.nvim_create_user_command("GitFilesPick", function()
 end, {})
 
 vim.api.nvim_create_user_command("GitPick", function(opts)
-    local preset = git_presets[opts.args]
+    local preset = presets.git[opts.args]
     if not preset then
         vim.notify("GitPick: unkown preset '" .. opts.args .. "'", vim.log.levels.ERROR)
         return
@@ -85,12 +82,12 @@ vim.api.nvim_create_user_command("GitPick", function(opts)
 end, {
     nargs = 1,
     complete = function()
-        return vim.tbl_keys(git_presets)
+        return vim.tbl_keys(presets.git)
     end
 })
 
 vim.api.nvim_create_user_command("TreesitterPick", function(opts)
-    local preset = treesitter_presets[opts.args]
+    local preset = presets.treesitter[opts.args]
     if not preset then
         vim.notify("TressitterPick: unkown preset '" .. opts.args .. "'", vim.log.levels.ERROR)
         return
@@ -99,12 +96,12 @@ vim.api.nvim_create_user_command("TreesitterPick", function(opts)
 end, {
     nargs = 1,
     complete = function()
-        return vim.tbl_keys(treesitter_presets)
+        return vim.tbl_keys(presets.treesitter)
     end
 })
 
 vim.api.nvim_create_user_command("MiscPick", function(opts)
-    local preset = misc_presets[opts.args]
+    local preset = presets.misc[opts.args]
     if not preset then
         vim.notify("MiscPick: unkown preset '" .. opts.args .. "'", vim.log.levels.ERROR)
         return
@@ -113,12 +110,12 @@ vim.api.nvim_create_user_command("MiscPick", function(opts)
 end, {
     nargs = 1,
     complete = function()
-        return vim.tbl_keys(misc_presets)
+        return vim.tbl_keys(presets.misc)
     end
 })
 
 vim.api.nvim_create_user_command("MiscCliPick", function(opts)
-    local preset = misc_cli_presets[opts.args]
+    local preset = presets.misc_cli[opts.args]
     if not preset then
         vim.notify("MiscCliPick: unkown preset '" .. opts.args .. "'", vim.log.levels.ERROR)
         return
@@ -127,6 +124,6 @@ vim.api.nvim_create_user_command("MiscCliPick", function(opts)
 end, {
     nargs = 1,
     complete = function()
-        return vim.tbl_keys(misc_cli_presets)
+        return vim.tbl_keys(presets.misc_cli)
     end
 })

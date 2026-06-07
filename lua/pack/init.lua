@@ -1,7 +1,7 @@
 local root = "https://github.com/"
 vim.pack.add({
     { src = root .. "saghen/blink.cmp",                version = "v1.10.2" },
-    { src = root .. "nordtheme/vim" },
+    { src = root .. "folke/tokyonight.nvim"},
     { src = root .. "nvim-mini/mini.pick"},
     { src = root .. "folke/ts-comments.nvim" },
     { src = root .. "tpope/vim-fugitive" },
