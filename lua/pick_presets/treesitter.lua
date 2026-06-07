@@ -40,6 +40,10 @@ local function execute_treesitter_query(opts)
             })
         end
     end
+
+    if #items == 0 then
+        vim.notify("No " .. query_type .. " found")
+    end
     return items
 end
 
@@ -56,11 +60,18 @@ return {
         name = "Treesitter Vars",
         choose_marked = apply_choice_buffer
     },
-    buffer_func_query= {
+    buffer_func_query = {
         items = function ()
             return execute_treesitter_query({query = "func"})
         end,
         name = "Treesitter Funcs",
+        choose_marked = apply_choice_buffer
+    },
+    buffer_field_query = {
+        items = function ()
+            return execute_treesitter_query({query = "field"})
+        end,
+        name = "Treesitter Fields",
         choose_marked = apply_choice_buffer
     }
 }

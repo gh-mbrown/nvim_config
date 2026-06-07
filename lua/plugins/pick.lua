@@ -30,8 +30,13 @@ end
 
 local function start_pick(opts)
     if not opts.items then return end
-    local items = type(opts.items) == "function" and opts.items() or opts.items
-    if not items then return end
+    local items
+    if type(opts.items) == "function" then
+        items = opts.items()
+    else
+        items = opts.items
+    end
+    if not items or #items == 0 then return end
     local name = opts.name or nil
     local choose = opts.choose or nil
     local choose_marked = opts.choose_marked or nil
@@ -42,7 +47,7 @@ local function start_pick(opts)
             name = name,
             choose = choose,
             choose_marked = choose_marked
-        }
+        },
     })
 end
 
@@ -66,8 +71,8 @@ local function cli_pick(opts)
         })
 end
 
-vim.api.nvim_create_user_command("GitFilesPick", function ()
-    pick.builtin.files({tool = "git"})
+vim.api.nvim_create_user_command("GitFilesPick", function()
+    pick.builtin.files({ tool = "git" })
 end, {})
 
 vim.api.nvim_create_user_command("GitPick", function(opts)
