@@ -1,6 +1,6 @@
 vim.keymap.set({ "v", "n" }, "<leader>y", '"+y')
-vim.keymap.set("n", "<leader>pu", vim.cmd.UpdatePlugins)
-vim.keymap.set("n", "<leader>pc", vim.cmd.CleanPlugins)
+vim.keymap.set("n", "<leader>up", vim.cmd.UpdatePlugins)
+vim.keymap.set("n", "<leader>cp", vim.cmd.CleanPlugins)
 vim.keymap.set("n", "<leader>bd", vim.cmd.CloseBuffer)
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename)
