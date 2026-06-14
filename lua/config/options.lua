@@ -34,11 +34,43 @@ vim.o.laststatus = 2
 vim.opt.guicursor = "n-v-c-i:block"
 vim.g.netrw_cursor = 1
 vim.g.netrw_bufsettings = "noma nomod nu nobl nowrap ro"
-vim.opt.statusline = "%<%f %h%m%r%{FugitiveStatusline()}%=%-14.(%l,%c%V%) %P"
+vim.diagnostic.config({
+	virtual_text = {
+		spacing = 4,
+		source = "if_many",
+		prefix = "●",
+	},
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "✘",
+			[vim.diagnostic.severity.WARN] = "▲",
+			[vim.diagnostic.severity.INFO] = "⚠",
+			[vim.diagnostic.severity.HINT] = "⚡",
+		},
+	},
+	underline = true,
+	update_in_insert = false,
+	severity_sort = true,
+	float = {
+		focusable = false,
+		style = "minimal",
+		border = "rounded",
+		source = "always",
+		header = "",
+		prefix = "",
+	},
+})
 
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
         vim.highlight.on_yank()
+    end,
+})
+
+-- disable inlay hints
+vim.api.nvim_create_autocmd("lspattach", {
+    callback = function(args)
+        vim.lsp.inlay_hint.enable(false, { bufnr = args.buf })
     end,
 })

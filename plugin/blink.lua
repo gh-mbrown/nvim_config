@@ -1,5 +1,5 @@
 vim.pack.add({
-    { Git_root .. "saghen/blink.cmp", version = "1.10.2" },
+    { src = Git_root .. "saghen/blink.cmp", version = "v1" },
 })
 
 require("blink.cmp").setup({
