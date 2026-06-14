@@ -1,7 +1,7 @@
 local set = vim.keymap.set
 
 -- Misc Leader Actions
-set({"v", "n"}, "<leader>y", '"+y')
+set({ "v", "n" }, "<leader>y", '"+y')
 -- Plugin Actions
 set("n", "<leader>pu", vim.cmd.UpdatePlugins)
 set("n", "<leader>pc", vim.cmd.CleanPlugins)
@@ -12,7 +12,7 @@ set("n", "<leader>cr", vim.lsp.buf.rename)
 set("n", "<leader>cc", vim.cmd.ReadCmd)
 set("n", "<leader>cf", vim.lsp.buf.format)
 set("n", "<leader>cl", function()
-	vim.cmd.checkhealth("vim.lsp")
+    vim.cmd.checkhealth("vim.lsp")
 end)
 set("n", "<leader>qq", vim.cmd.Ex)
 -- Window Actions
@@ -28,7 +28,7 @@ set("n", "<", "<<")
 set("n", ">", ">>")
 set("v", "p", "P")
 set("n", "<C-n>", function()
-	vim.cmd("nohlsearch")
+    vim.cmd("nohlsearch")
 end)
 set("v", "J", ":m '>+1<CR>gv=gv")
 set("v", "K", ":m '<-2<CR>gv=gv")
