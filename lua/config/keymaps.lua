@@ -25,9 +25,9 @@ set("n", "<leader>cl", function()
 	vim.cmd.checkhealth("vim.lsp")
 end)
 -- File Actions
-set("n", "<leader>ff", function ()
-    vim.cmd.Pick("files")
-end)
+-- set("n", "<leader>ff", function ()
+--     vim.cmd.Pick("files")
+-- end)
 -- Git Actions
 set("n", "<leader>gC", function()
 	local branch = vim.fn.input("Branch name: ")

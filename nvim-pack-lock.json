@@ -1,12 +1,11 @@
 {
   "plugins": {
-    "blink.cmp": {
-      "rev": "78336bc89ee5365633bcf754d93df01678b5c08f",
-      "src": "https://github.com/saghen/blink.cmp",
-      "version": "'v1.10.2'"
+    "fff.nvim": {
+      "rev": "6f18b5ea04572dd60d545f7913ecdd8a2a986b91",
+      "src": "https://github.com/dmtrKovalenko/fff.nvim"
     },
     "mini.pick": {
-      "rev": "1ffba38c7221669d3da7792d4bbe1c9761075f4d",
+      "rev": "8905fe4b8fb6be80e1a940b905f17013ed27a006",
       "src": "https://github.com/nvim-mini/mini.pick"
     },
     "nvim-autopairs": {
@@ -14,13 +13,12 @@
       "src": "https://github.com/windwp/nvim-autopairs"
     },
     "nvim-lspconfig": {
-      "rev": "229b79051b380377664edc4cbd534930154921a1",
+      "rev": "a683e0ddf0cf64c6cd689e18ffb480ade3c162b7",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
       "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
-      "src": "https://github.com/nvim-treesitter/nvim-treesitter",
-      "version": "'main'"
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "tokyonight.nvim": {
       "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",

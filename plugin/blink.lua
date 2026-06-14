@@ -1,3 +1,7 @@
+vim.pack.add({
+    { Git_root .. "saghen/blink.cmp", version = "1.10.2" },
+})
+
 require("blink.cmp").setup({
     keymap = {
         ["<C-n>"] = {

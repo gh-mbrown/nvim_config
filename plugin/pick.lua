@@ -1,3 +1,7 @@
+vim.pack.add({
+    "https://github.com/nvim-mini/mini.pick"
+})
+
 local pick = require("mini.pick")
 local presets = require("config.presets")
 

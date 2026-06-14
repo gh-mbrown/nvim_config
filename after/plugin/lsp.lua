@@ -5,5 +5,6 @@ vim.lsp.enable({
     "roslyn_ls",
     "html",
     "zls",
-    "pyright"
+    "pyright",
+    "clangd"
 })

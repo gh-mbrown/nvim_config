@@ -1,4 +1,4 @@
+Git_root = "https://github.com/"
 vim.g.mapleader = " "
-require("pack")
 require("config")
 require("core")

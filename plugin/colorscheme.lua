@@ -1,5 +1,8 @@
-local tokyo = require("tokyonight")
-tokyo.setup({
+vim.pack.add({
+    Git_root .. "folke/tokyonight.nvim",
+})
+
+require("tokyonight").setup({
     style = "night",
     transparent = true,
     on_highlights = function (hl, c)
