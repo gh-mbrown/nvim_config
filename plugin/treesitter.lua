@@ -17,10 +17,6 @@ vim.pack.add({
 local ts = require("nvim-treesitter")
 ts.setup({})
 
-vim.keymap.set("n", "<leader>tt", vim.cmd.InspectTree)
-vim.keymap.set("n", "<leader>te", vim.cmd.EditQuery)
-vim.keymap.set("n", "<leader>ti", vim.cmd.TSInstalled)
-
 local function auto_install_tree_sitter()
     local ft = vim.bo.filetype
     local remap = {
@@ -67,3 +63,7 @@ vim.api.nvim_create_autocmd("FileType", {
         end
     end,
 })
+
+vim.keymap.set("n", "<leader>tt", vim.cmd.InspectTree)
+vim.keymap.set("n", "<leader>te", vim.cmd.EditQuery)
+vim.keymap.set("n", "<leader>ti", vim.cmd.TSInstalled)

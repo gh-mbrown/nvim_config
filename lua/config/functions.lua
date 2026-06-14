@@ -14,14 +14,6 @@ local function close_buffer()
     end
 end
 
-local function read_cmd(cmd)
-    if cmd == "" then
-        return
-    end
-    local shell = (vim.fn.has("win32") == 1 and "pwsh" or os.getenv("SHELL"))
-    vim.cmd("botright new | term " .. shell .. " -i -c '" .. cmd .. "'")
-end
-
 local function update_plugins()
     local plugins = vim.pack.get()
 
@@ -49,10 +41,6 @@ local function clean_plugins()
 end
 
 -- user commands to access from cmdline
-vim.api.nvim_create_user_command("ReadCmd", function(opts)
-    read_cmd(opts.args ~= "" and opts.args or vim.fn.input(""))
-end, { nargs = "?" })
-
 vim.api.nvim_create_user_command("CloseBuffer", function()
     close_buffer()
 end, {})

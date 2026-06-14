@@ -9,10 +9,6 @@
       "rev": "6f18b5ea04572dd60d545f7913ecdd8a2a986b91",
       "src": "https://github.com/dmtrKovalenko/fff.nvim"
     },
-    "nvim-autopairs": {
-      "rev": "7b9923abad60b903ece7c52940e1321d39eccc79",
-      "src": "https://github.com/windwp/nvim-autopairs"
-    },
     "nvim-lspconfig": {
       "rev": "a683e0ddf0cf64c6cd689e18ffb480ade3c162b7",
       "src": "https://github.com/neovim/nvim-lspconfig"

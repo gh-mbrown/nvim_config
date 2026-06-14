@@ -68,7 +68,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
--- disable inlay hints
+-- Disable inlay hints
 vim.api.nvim_create_autocmd("lspattach", {
     callback = function(args)
         vim.lsp.inlay_hint.enable(false, { bufnr = args.buf })

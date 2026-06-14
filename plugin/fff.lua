@@ -36,13 +36,6 @@ vim.g.fff = {
 }
 
 local fff = require("fff")
-
-vim.keymap.set("n", "<leader>ff", function()
-    fff.find_files()
-end)
-vim.keymap.set("n", "<leader>/", function()
-    fff.live_grep()
-end)
-vim.keymap.set("n", '<leader>fc', function()
-    fff.live_grep({ query = vim.fn.expand('<cword>') })
-end)
+vim.keymap.set("n", "<leader>ff", function() fff.find_files() end)
+vim.keymap.set("n", "<leader>/", function() fff.live_grep() end)
+vim.keymap.set("n", '<leader>fc', function() fff.live_grep({ query = vim.fn.expand('<cword>') }) end)
