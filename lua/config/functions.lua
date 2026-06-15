@@ -30,14 +30,11 @@ end
 
 local function clean_plugins()
     local plugins = vim.pack.get()
-
-    local to_clean = {}
     for _, p in pairs(plugins) do
         if not p.active then
-            table.insert(to_clean, p.spec.name)
+            vim.pack.del({p.spec.name})
         end
     end
-    vim.pack.del(to_clean)
 end
 
 -- user commands to access from cmdline

@@ -10,5 +10,6 @@ vim.lsp.enable({
     "html",
     "zls",
     "pyright",
-    "clangd"
+    "clangd",
+    "fsautocomplete"
 })

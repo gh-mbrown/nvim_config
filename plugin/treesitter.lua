@@ -44,10 +44,6 @@ local function list_to_read_bufnr()
     vim.api.nvim_open_win(bufnr, true, { split = "below", win = 0 })
 end
 
-vim.api.nvim_create_user_command("TSInstalled", function()
-    list_to_read_bufnr()
-end, {})
-
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "*",
     callback = function()
@@ -66,4 +62,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.keymap.set("n", "<leader>tt", vim.cmd.InspectTree)
 vim.keymap.set("n", "<leader>te", vim.cmd.EditQuery)
-vim.keymap.set("n", "<leader>ti", vim.cmd.TSInstalled)
+vim.keymap.set("n", "<leader>ti", function ()
+    list_to_read_bufnr()
+end)
+vim.keymap.set("n", "<leader>tu", vim.cmd.TSUpdate)
