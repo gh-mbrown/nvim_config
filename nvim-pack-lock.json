@@ -6,7 +6,7 @@
       "version": "'v1'"
     },
     "mini.pick": {
-      "rev": "8905fe4b8fb6be80e1a940b905f17013ed27a006",
+      "rev": "f8ea97c5e89cc923f466e0706046eaa3988f246c",
       "src": "https://github.com/nvim-mini/mini.pick"
     },
     "nvim-autopairs": {

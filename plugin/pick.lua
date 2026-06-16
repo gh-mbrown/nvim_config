@@ -27,12 +27,21 @@ vim.ui.select = function(items, opts, func, l_opts)
     return pick.ui_select(items, opts, func, l_opts)
 end
 
+---@class CliPickOptions
+---@field command table
+---@field post_process? function
+---@field name? string
+---@field choose? function
+---@field choose_marked? function
+
+---@param opts CliPickOptions
+---@return nil
 local function cli_pick(opts)
-    local command = opts.command or nil
-    local post_process = opts.post_process or nil
-    local name = opts.name or nil
-    local choose = opts.choose or nil
-    local choose_marked = opts.choose_marked or nil
+    local command = opts.command
+    local post_process = opts.post_process
+    local name = opts.name or "CLI Pick"
+    local choose = opts.choose
+    local choose_marked = opts.choose_marked
 
     pick.builtin.cli({
         command = command,
@@ -46,6 +55,41 @@ local function cli_pick(opts)
     })
 end
 
+---@class StartPickOptions<T>
+---@field items? T[]
+---@field name? string
+---@field choose? fun(choice: T): nil
+---@field choose_marked? fun(choice: T): nil
+
+---@generic T
+---@param opts StartPickOptions<T>
+---@return nil
+local function start_pick(opts)
+    if not opts.items then return end
+    local items = opts.items
+
+    local name = opts.name or "Pick"
+    local choose = opts.choose
+    local choose_marked = opts.choose_marked
+
+    pick.start({
+        source = {
+            items = items,
+            name = name,
+            choose = choose,
+            choose_marked = choose_marked,
+        }
+    })
+end
+
+---@param choice PickBuffer
+---@return nil
+local apply_marked_ts = function(choice)
+    if not choice then return end
+    vim.api.nvim_win_set_cursor(0, { choice.lnum, choice.col - 1 })
+end
+
+
 -- Picker keys
 vim.keymap.set("n", "<leader>pf", function()
     pick.builtin.files({ tool = "git" })
@@ -53,12 +97,8 @@ end)
 vim.keymap.set("n", "<leader>pr", function()
     pick.builtin.files({ tool = "rg" })
 end)
-vim.keymap.set("n", "<leader>pg", function()
-    pick.builtin.grep_live()
-end)
-vim.keymap.set("n", "<leader>ph", function()
-    pick.builtin.help()
-end)
+vim.keymap.set("n", "<leader>pg", pick.builtin.grep_live)
+vim.keymap.set("n", "<leader>ph", pick.builtin.help)
 vim.keymap.set("n", "<leader>pb", function()
     pick.builtin.buffers({
         include_current = false,
@@ -77,7 +117,7 @@ vim.keymap.set("n", "<leader>pt", function()
             vim.bo[bufnr].modifiable = false
             vim.bo[bufnr].readonly = true
 
-            vim.api.nvim_open_win(bufnr, true, { split = "below"})
+            vim.api.nvim_open_win(bufnr, true, { split = "below" })
         end
     })
 end)
@@ -127,5 +167,34 @@ vim.keymap.set("n", "<leader>gsm", function()
         choose = function(selection)
             vim.cmd.Git("submodule update --remote " .. selection)
         end
+    })
+end)
+
+-- Treesitter Keys
+vim.keymap.set("n", "<leader>tv", function()
+    start_pick({
+        items = Execute_ts_query({
+            query_type = "var"
+        }),
+        name = "TS Var",
+        choose_marked = apply_marked_ts
+    })
+end)
+vim.keymap.set("n", "<leader>tf", function()
+    start_pick({
+        items = Execute_ts_query({
+            query_type = "func"
+        }),
+        name = "TS Var",
+        choose_marked = apply_marked_ts
+    })
+end)
+vim.keymap.set("n", "<leader>tF", function()
+    start_pick({
+        items = Execute_ts_query({
+            query_type = "field"
+        }),
+        name = "TS Var",
+        choose_marked = apply_marked_ts
     })
 end)
