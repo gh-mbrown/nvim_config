@@ -152,7 +152,7 @@ vim.keymap.set("n", "<leader>gsp", function()
         end
     })
 end)
-vim.keymap.set("n", "<leader>gsm", function()
+vim.keymap.set("n", "<leader>gmu", function()
     cli_pick({
         command = { "git", "config", "--file", ".gitmodules", "--get-regexp", "path" },
         post_process = function(list)
