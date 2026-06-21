@@ -2,7 +2,6 @@ vim.pack.add({
     Git_root .. "rebelot/kanagawa.nvim"
 })
 require("kanagawa").setup({
-    compile = true,
     transparent = true,
     colors = {
         theme = {
@@ -17,12 +16,10 @@ require("kanagawa").setup({
         local theme = colors.theme
         return {
             CursorLine = { bg = "none" },
-            MiniPickMatchCurrent = { bg = "#ffffff" }
+            MiniPickMatchCurrent = { bg = "#363646" },
+            MiniPickPreviewLine = { bg = "#363646" }
         }
     end
 })
 vim.opt.background = "dark"
-vim.keymap.set("n", "<leader>kc", function()
-    vim.cmd("KanagawaCompile")
-end)
 vim.cmd.colorscheme("kanagawa-wave")
