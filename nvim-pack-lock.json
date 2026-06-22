@@ -1,13 +1,13 @@
 {
   "plugins": {
+    "ayu-vim": {
+      "rev": "01faacb4cb76e8cf72ad9858c581d80876260ab3",
+      "src": "https://github.com/ayu-theme/ayu-vim"
+    },
     "blink.cmp": {
       "rev": "78336bc89ee5365633bcf754d93df01678b5c08f",
       "src": "https://github.com/saghen/blink.cmp",
       "version": "'v1'"
-    },
-    "kanagawa.nvim": {
-      "rev": "bb85e4bfc8d89b0e62c8fa53ccdd13d12e2f77b3",
-      "src": "https://github.com/rebelot/kanagawa.nvim"
     },
     "mini.pick": {
       "rev": "f8ea97c5e89cc923f466e0706046eaa3988f246c",
@@ -32,10 +32,6 @@
     "vim-fugitive": {
       "rev": "3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0",
       "src": "https://github.com/tpope/vim-fugitive"
-    },
-    "vim-tmux-navigator": {
-      "rev": "e41c431a0c7b7388ae7ba341f01a0d217eb3a432",
-      "src": "https://github.com/christoomey/vim-tmux-navigator"
     }
   }
 }

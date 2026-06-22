@@ -35,30 +35,30 @@ vim.opt.guicursor = "n-v-c-i:block"
 vim.g.netrw_cursor = 1
 vim.g.netrw_bufsettings = "noma nomod nu nobl nowrap ro"
 vim.diagnostic.config({
-	virtual_text = {
-		spacing = 4,
-		source = "if_many",
-		prefix = "●",
-	},
-	signs = {
-		text = {
-			[vim.diagnostic.severity.ERROR] = "✘",
-			[vim.diagnostic.severity.WARN] = "▲",
-			[vim.diagnostic.severity.INFO] = "⚠",
-			[vim.diagnostic.severity.HINT] = "⚡",
-		},
-	},
-	underline = true,
-	update_in_insert = false,
-	severity_sort = true,
-	float = {
-		focusable = false,
-		style = "minimal",
-		border = "rounded",
-		source = "always",
-		header = "",
-		prefix = "",
-	},
+    virtual_text = {
+        spacing = 4,
+        source = "if_many",
+        prefix = "●",
+    },
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = "✘",
+            [vim.diagnostic.severity.WARN] = "▲",
+            [vim.diagnostic.severity.INFO] = "⚠",
+            [vim.diagnostic.severity.HINT] = "⚡",
+        },
+    },
+    underline = true,
+    update_in_insert = false,
+    severity_sort = true,
+    float = {
+        focusable = false,
+        style = "minimal",
+        border = "rounded",
+        source = "always",
+        header = "",
+        prefix = "",
+    },
 })
 
 -- Highlight on yank
@@ -74,3 +74,18 @@ vim.api.nvim_create_autocmd("lspattach", {
         vim.lsp.inlay_hint.enable(false, { bufnr = args.buf })
     end,
 })
+
+if vim.fn.has("win32") == 1 then
+    vim.opt.shell = "pwsh"
+end
+
+if vim.g.neovide then
+    vim.opt.linespace = -1
+    vim.g.neovide_scale_factor = 0.8
+    vim.g.neovide_theme = "dark"
+    vim.g.neovide_cursor_animation_length = 0
+    vim.opt.belloff = "all"
+    vim.opt.visualbell = false
+    vim.opt.errorbells = false
+    vim.g.neovide_cursor_vfx_mode = ""
+end

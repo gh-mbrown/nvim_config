@@ -116,8 +116,7 @@ vim.keymap.set("n", "<leader>pt", function()
             vim.bo[bufnr].bufhidden = "wipe"
             vim.bo[bufnr].modifiable = false
             vim.bo[bufnr].readonly = true
-
-            vim.api.nvim_open_win(bufnr, true, { split = "below" })
+            vim.api.nvim_open_win(bufnr, true, { split = "below", win = 0 })
         end
     })
 end)

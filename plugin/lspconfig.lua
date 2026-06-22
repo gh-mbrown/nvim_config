@@ -11,5 +11,6 @@ vim.lsp.enable({
     "zls",
     "pyright",
     "clangd",
-    "fsautocomplete"
+    "fsautocomplete",
+    "powershell_es"
 })
