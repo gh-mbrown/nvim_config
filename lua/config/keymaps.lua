@@ -23,18 +23,6 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("n", "K", vim.lsp.buf.hover)
 vim.keymap.set("n", "J", vim.diagnostic.open_float)
-vim.keymap.set("n", "<leader>fb", function()
-    local cwd = vim.fn.getcwd()
-    local bufs = vim.tbl_filter(function(b)
-        return vim.api.nvim_buf_is_loaded(b) and vim.bo[b].buflisted
-    end, vim.api.nvim_list_bufs())
-    local names = vim.tbl_map(function(b)
-        return vim.api.nvim_buf_get_name(b):gsub(vim.pesc(cwd) .. "/", "")
-    end, bufs)
-    vim.ui.select(names, { prompt = "Buffers" }, function(choice)
-        if choice then vim.cmd("edit " .. choice) end
-    end)
-end)
 if vim.g.neovide then
     vim.keymap.set("n", "<C-h>", function()
         vim.cmd.wincmd("h")
