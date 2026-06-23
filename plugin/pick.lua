@@ -1,14 +1,11 @@
 local str = require("utils.string")
 
 vim.pack.add({
-    Git_root .. "nvim-mini/mini.pick"
+    GIT_ROOT .. "nvim-mini/mini.pick"
 })
 
 local pick = require("mini.pick")
 pick.setup({
-    source = {
-        show = pick.default_show
-    },
     mappings = {
         scroll_down = "<C-d>",
         scroll_up = "<C-u>",
@@ -27,15 +24,6 @@ vim.ui.select = function(items, opts, func, l_opts)
     return pick.ui_select(items, opts, func, l_opts)
 end
 
----@class CliPickOptions
----@field command table
----@field post_process? function
----@field name? string
----@field choose? function
----@field choose_marked? function
-
----@param opts CliPickOptions
----@return nil
 local function cli_pick(opts)
     local command = opts.command
     local post_process = opts.post_process
@@ -55,15 +43,6 @@ local function cli_pick(opts)
     })
 end
 
----@class StartPickOptions<T>
----@field items? T[]
----@field name? string
----@field choose? fun(choice: T): nil
----@field choose_marked? fun(choice: T): nil
-
----@generic T
----@param opts StartPickOptions<T>
----@return nil
 local function start_pick(opts)
     if not opts.items then return end
     local items = opts.items
@@ -82,21 +61,45 @@ local function start_pick(opts)
     })
 end
 
----@param choice PickBuffer
----@return nil
 local apply_marked_ts = function(choice)
     if not choice then return end
     vim.api.nvim_win_set_cursor(0, { choice.lnum, choice.col - 1 })
 end
 
+local function get_treesitter_query()
+    local bufnr = vim.api.nvim_get_current_buf()
+    local lang = vim.bo[bufnr].filetype
+    local parser = vim.treesitter.get_parser(bufnr, lang)
+    local tree = parser:parse()[1]
+    return vim.treesitter.query.get(lang, "highlights"), tree:root(), bufnr
+end
 
--- Picker keys
-vim.keymap.set("n", "<leader>pf", function()
-    pick.builtin.files({ tool = "git" })
-end)
-vim.keymap.set("n", "<leader>pr", function()
-    pick.builtin.files({ tool = "rg" })
-end)
+local function get_treesitter_list(opts)
+    local pick_name = opts.pick_name or "Treesitter"
+    local query_type = opts.query_type or "function"
+
+    local query, root, bufnr = get_treesitter_query()
+    local items = {}
+    for id, node in query:iter_captures(root, bufnr) do
+        local capture_name = query.captures[id]
+        if capture_name == query_type then
+            local row, col = node:start()
+            table.insert(items, {
+                text = vim.treesitter.get_node_text(node, bufnr),
+                path = vim.api.nvim_buf_get_name(bufnr),
+                lnum = row + 1,
+                col = col + 1,
+            })
+        end
+    end
+
+    start_pick({
+        items = items,
+        name = pick_name,
+        choose_marked = apply_marked_ts,
+    })
+end
+
 vim.keymap.set("n", "<leader>pg", pick.builtin.grep_live)
 vim.keymap.set("n", "<leader>ph", pick.builtin.help)
 vim.keymap.set("n", "<leader>pb", function()
@@ -171,29 +174,14 @@ end)
 
 -- Treesitter Keys
 vim.keymap.set("n", "<leader>tv", function()
-    start_pick({
-        items = Execute_ts_query({
-            query_type = "var"
-        }),
-        name = "TS Var",
-        choose_marked = apply_marked_ts
+    get_treesitter_list({
+        pick_name = "Variables",
+        query_type = "variable.local"
     })
 end)
 vim.keymap.set("n", "<leader>tf", function()
-    start_pick({
-        items = Execute_ts_query({
-            query_type = "func"
-        }),
-        name = "TS Var",
-        choose_marked = apply_marked_ts
-    })
-end)
-vim.keymap.set("n", "<leader>tF", function()
-    start_pick({
-        items = Execute_ts_query({
-            query_type = "field"
-        }),
-        name = "TS Var",
-        choose_marked = apply_marked_ts
+    get_treesitter_list({
+        pick_name = "Functions",
+        query_type = "function"
     })
 end)

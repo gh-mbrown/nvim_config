@@ -1,5 +1,5 @@
 vim.pack.add({
-    Git_root .. "windwp/nvim-autopairs"
+    GIT_ROOT .. "windwp/nvim-autopairs"
 })
 
 require("nvim-autopairs").setup({})

@@ -1,5 +1,5 @@
-if vim.fn.has("win32") == 0 then
+if vim.fn.has("linux") == 1 then
     vim.pack.add({
-        Git_root .. "christoomey/vim-tmux-navigator"
+        GIT_ROOT .. "christoomey/vim-tmux-navigator"
     })
 end

@@ -1,5 +1,5 @@
 vim.pack.add({
-    Git_root .. "neovim/nvim-lspconfig"
+    GIT_ROOT .. "neovim/nvim-lspconfig"
 })
 
 vim.lsp.enable({

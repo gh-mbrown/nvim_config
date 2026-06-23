@@ -1,5 +1,5 @@
 vim.pack.add({
-    Git_root .. "mbbill/undotree"
+    GIT_ROOT .. "mbbill/undotree"
 })
 if vim.fn.has("win32") == 1 then
     vim.g.undotree_DiffCommand = "FC"

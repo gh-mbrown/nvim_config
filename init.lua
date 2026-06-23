@@ -1,3 +1,3 @@
-Git_root = "https://github.com/"
+GIT_ROOT = "https://github.com/"
 vim.g.mapleader = " "
 require("config")
