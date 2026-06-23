@@ -20,10 +20,6 @@ pick.setup({
     }
 })
 
-vim.ui.select = function(items, opts, func, l_opts)
-    return pick.ui_select(items, opts, func, l_opts)
-end
-
 local function cli_pick(opts)
     local command = opts.command
     local post_process = opts.post_process
