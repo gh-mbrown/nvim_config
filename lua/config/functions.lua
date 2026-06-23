@@ -7,8 +7,8 @@ local function close_buffer()
     end, vim.api.nvim_list_bufs())
 
     if #buffers > 0 then
-        vim.cmd("buffer " .. buffers[#buffers])
-        vim.api.nvim_buf_delete(buf, { force = false })
+        vim.cmd("b#")
+        vim.api.nvim_buf_delete(buf, { force = true })
     else
         vim.cmd("quit")
     end
@@ -37,6 +37,49 @@ local function clean_plugins()
     end
 end
 
+local function get_term()
+    local bufs = vim.api.nvim_list_bufs()
+    local match = nil
+    for _, b in pairs(bufs) do
+        local name = vim.fn.bufname(b)
+        match = string.match(name, "term://")
+        if match then return name end
+    end
+
+    return nil
+end
+
+local function toggle_term(direction)
+    direction = direction or "full"
+
+    local term = get_term()
+    if term then
+        if direction == "right" then
+            vim.cmd("vsplit " .. term)
+        elseif direction == "left" then
+            vim.cmd("leftabove vsplit " .. term)
+        elseif direction == "above" then
+            vim.cmd("leftabove split " .. term)
+        elseif direction == "below" then
+            vim.cmd("split " .. term)
+        elseif direction == "full" then
+            vim.cmd("edit " .. term)
+        end
+    else
+        if direction == "right" then
+            vim.cmd("vert term")
+        elseif direction == "left" then
+            vim.cmd("leftabove vert term")
+        elseif direction == "above" then
+            vim.cmd("leftabove hor term")
+        elseif direction == "below" then
+            vim.cmd("hor term")
+        elseif direction == "full" then
+            vim.cmd("term")
+        end
+    end
+end
+
 -- user commands to access from cmdline
 vim.api.nvim_create_user_command("CloseBuffer", function()
     close_buffer()
@@ -49,3 +92,6 @@ end, {})
 vim.api.nvim_create_user_command("CleanPlugins", function ()
     clean_plugins()
 end, {})
+vim.api.nvim_create_user_command("ToggleTerm", function (opts)
+    toggle_term(opts.args)
+end, {nargs = 1})

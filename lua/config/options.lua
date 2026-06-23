@@ -75,8 +75,16 @@ vim.api.nvim_create_autocmd("lspattach", {
     end,
 })
 
+-- Enter terminal in insert mode
+vim.api.nvim_create_autocmd({"TermOpen", "BufEnter"}, {
+    pattern = "term://*",
+    callback = function ()
+        vim.cmd("startinsert")
+    end
+})
+
 if vim.fn.has("win32") == 1 then
-    vim.opt.shell = "pwsh"
+    vim.opt.shell = "pwsh -NoLogo"
 end
 
 if vim.g.neovide then

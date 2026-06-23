@@ -96,6 +96,16 @@ local function get_treesitter_list(opts)
     })
 end
 
+vim.keymap.set("n", "<leader>pf", function ()
+    pick.builtin.files({
+        tool = "git"
+    })
+end)
+vim.keymap.set("n", "<leader>pr", function ()
+    pick.builtin.files({
+        tool = "rg"
+    })
+end)
 vim.keymap.set("n", "<leader>pg", pick.builtin.grep_live)
 vim.keymap.set("n", "<leader>ph", pick.builtin.help)
 vim.keymap.set("n", "<leader>pb", function()
