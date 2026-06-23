@@ -11,14 +11,11 @@ pick.setup({
         scroll_up = "<C-u>",
         delete_left = "<C-f>"
     },
-    window = {
-        config = {
-            anchor = "NW",
-            height = math.floor(vim.o.lines * 0.45),
-            width = vim.o.columns,
-        },
-    }
 })
+
+vim.ui.select = function(items, opts, func, lopts)
+    return pick.ui_select(items, opts, func, lopts)
+end
 
 local function cli_pick(opts)
     local command = opts.command
@@ -62,19 +59,20 @@ local apply_marked_ts = function(choice)
     vim.api.nvim_win_set_cursor(0, { choice.lnum, choice.col - 1 })
 end
 
-local function get_treesitter_query()
+local function get_treesitter_query(file)
+    file = file or "highlights"
     local bufnr = vim.api.nvim_get_current_buf()
     local lang = vim.bo[bufnr].filetype
     local parser = vim.treesitter.get_parser(bufnr, lang)
     local tree = parser:parse()[1]
-    return vim.treesitter.query.get(lang, "highlights"), tree:root(), bufnr
+    return vim.treesitter.query.get(lang, file), tree:root(), bufnr
 end
 
 local function get_treesitter_list(opts)
     local pick_name = opts.pick_name or "Treesitter"
     local query_type = opts.query_type or "function"
 
-    local query, root, bufnr = get_treesitter_query()
+    local query, root, bufnr = get_treesitter_query("highlights")
     local items = {}
     for id, node in query:iter_captures(root, bufnr) do
         local capture_name = query.captures[id]
@@ -96,12 +94,12 @@ local function get_treesitter_list(opts)
     })
 end
 
-vim.keymap.set("n", "<leader>pf", function ()
+vim.keymap.set("n", "<leader>pf", function()
     pick.builtin.files({
         tool = "git"
     })
 end)
-vim.keymap.set("n", "<leader>pr", function ()
+vim.keymap.set("n", "<leader>pr", function()
     pick.builtin.files({
         tool = "rg"
     })
@@ -118,7 +116,7 @@ vim.keymap.set("n", "<leader>pt", function()
         command = { "tldr", "--list" },
         name = "TLDR",
         choose = function(selection)
-            local page = vim.fn.systemlist({ "tldr", selection })
+            local page = vim.fn.systemlist({ "tldr", "--no-compact", selection })
             local bufnr = vim.api.nvim_create_buf(false, true)
             vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, page)
             vim.bo[bufnr].buftype = "nofile"
@@ -135,14 +133,11 @@ vim.keymap.set("n", "<leader>gb", function()
     cli_pick({
         command = { "git", "branch", "--all", "--format", "%(refname:short)" },
         post_process = function(list)
-            local result = {}
-            for _, l in pairs(list) do
-                if not str.starts_with(l, "origin") then
-                    table.insert(result, l)
-                end
-            end
-
-            return result
+            return vim.iter(list)
+                :filter(function(x)
+                    return not str.starts_with(x, "origin")
+                end)
+                :totable()
         end,
         name = "Git Branches",
         choose = function(selection)
@@ -164,12 +159,11 @@ vim.keymap.set("n", "<leader>gmu", function()
     cli_pick({
         command = { "git", "config", "--file", ".gitmodules", "--get-regexp", "path" },
         post_process = function(list)
-            local results = {}
-            for _, l in pairs(list) do
-                local r = string.match(l, "%S+$")
-                table.insert(results, r)
-            end
-            return results
+            return vim.iter(list)
+                :map(function(x)
+                    return string.match(x, "%S+$")
+                end)
+                :totable()
         end,
         name = "Git Submodules",
         choose = function(selection)

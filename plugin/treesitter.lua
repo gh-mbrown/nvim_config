@@ -24,12 +24,8 @@ local function auto_install_tree_sitter()
         jsonc = "json"
     }
     local rft = remap[ft] or ft
-    local installed = ts.get_installed()
-    if not vim.tbl_contains(installed, rft) then
-        local avail = ts.get_available()
-        if vim.tbl_contains(avail, rft) then
-            ts.install({ rft })
-        end
+    if not vim.tbl_contains(ts.get_installed(), rft) and vim.tbl_contains(ts.get_available(), rft) then
+        ts.install({ rft })
     end
 end
 
@@ -46,9 +42,7 @@ end
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "*",
-    callback = function()
-        auto_install_tree_sitter()
-    end
+    callback = auto_install_tree_sitter
 })
 
 vim.api.nvim_create_autocmd("FileType", {

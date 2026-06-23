@@ -85,6 +85,9 @@ vim.api.nvim_create_autocmd({"TermOpen", "BufEnter"}, {
 
 if vim.fn.has("win32") == 1 then
     vim.opt.shell = "pwsh -NoLogo"
+    vim.opt.shellcmdflag = "-ExecutionPolicy RemoteSigned -Command"
+    vim.opt.shellquote = ""
+    vim.opt.shellxquote = ""
 end
 
 if vim.g.neovide then
