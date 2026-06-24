@@ -30,14 +30,7 @@ local function auto_install_tree_sitter()
 end
 
 local function list_to_read_bufnr()
-    local installed = ts.get_installed()
-    local bufnr = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, installed)
-    vim.bo[bufnr].buftype = "nofile"
-    vim.bo[bufnr].bufhidden = "wipe"
-    vim.bo[bufnr].modifiable = false
-    vim.bo[bufnr].readonly = true
-    vim.api.nvim_open_win(bufnr, true, { split = "below", win = 0 })
+    require("utils.functions").list_to_buffer(ts.get_installed())
 end
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -54,7 +47,7 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
-vim.keymap.set("n", "<leader>tt", vim.cmd.InspectTree)
+vim.keymap.set("n", "<leader>ti", vim.cmd.InspectTree)
 vim.keymap.set("n", "<leader>te", vim.cmd.EditQuery)
-vim.keymap.set("n", "<leader>ti", list_to_read_bufnr)
+vim.keymap.set("n", "<leader>tl", list_to_read_bufnr)
 vim.keymap.set("n", "<leader>tu", vim.cmd.TSUpdate)

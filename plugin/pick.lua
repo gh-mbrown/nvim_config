@@ -11,6 +11,19 @@ pick.setup({
         scroll_up = "<C-u>",
         delete_left = "<C-f>"
     },
+    window = {
+        config = function()
+            local height = math.floor(0.618 * vim.o.lines)
+            local width = math.floor(0.618 * vim.o.columns)
+            return {
+                anchor = "NW",
+                height = height,
+                width = width,
+                row = math.floor(0.5 * (vim.o.lines - height)),
+                col = math.floor(0.5 * (vim.o.columns - width))
+            }
+        end
+    }
 })
 
 vim.ui.select = function(items, opts, func, lopts)
@@ -116,14 +129,7 @@ vim.keymap.set("n", "<leader>pt", function()
         command = { "tldr", "--list" },
         name = "TLDR",
         choose = function(selection)
-            local page = vim.fn.systemlist({ "tldr", "--no-compact", selection })
-            local bufnr = vim.api.nvim_create_buf(false, true)
-            vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, page)
-            vim.bo[bufnr].buftype = "nofile"
-            vim.bo[bufnr].bufhidden = "wipe"
-            vim.bo[bufnr].modifiable = false
-            vim.bo[bufnr].readonly = true
-            vim.api.nvim_open_win(bufnr, true, { split = "below", win = 0 })
+            require("utils.functions").list_to_buffer(vim.fn.systemlist({ "tldr", selection }))
         end
     })
 end)
