@@ -12,5 +12,6 @@ vim.lsp.enable({
     "pyright",
     "clangd",
     "fsautocomplete",
-    "powershell_es"
+    "powershell_es",
+    "azure_pipelines_ls"
 })

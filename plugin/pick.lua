@@ -26,10 +26,6 @@ pick.setup({
     }
 })
 
-vim.ui.select = function(items, opts, func, lopts)
-    return pick.ui_select(items, opts, func, lopts)
-end
-
 local function cli_pick(opts)
     local command = opts.command
     local post_process = opts.post_process
@@ -56,6 +52,7 @@ local function start_pick(opts)
     local name = opts.name or "Pick"
     local choose = opts.choose
     local choose_marked = opts.choose_marked
+    local preview = opts.preview or pick.default_preview
 
     pick.start({
         source = {
@@ -63,47 +60,61 @@ local function start_pick(opts)
             name = name,
             choose = choose,
             choose_marked = choose_marked,
+            preview = preview,
         }
     })
 end
 
-local apply_marked_ts = function(choice)
-    if not choice then return end
-    vim.api.nvim_win_set_cursor(0, { choice.lnum, choice.col - 1 })
-end
+local function get_treesitter_list(opts)
+    local pick_name = opts.pick_name or "Treesitter"
+    local file = opts.file or "highlights"
 
-local function get_treesitter_query(file)
-    file = file or "highlights"
     local bufnr = vim.api.nvim_get_current_buf()
     local lang = vim.bo[bufnr].filetype
     local parser = vim.treesitter.get_parser(bufnr, lang)
     local tree = parser:parse()[1]
-    return vim.treesitter.query.get(lang, file), tree:root(), bufnr
-end
+    local query = vim.treesitter.query.get(lang, file)
+    local root = tree:root()
 
-local function get_treesitter_list(opts)
-    local pick_name = opts.pick_name or "Treesitter"
-    local query_type = opts.query_type or "function"
-
-    local query, root, bufnr = get_treesitter_query("highlights")
-    local items = {}
+    local results = {}
     for id, node in query:iter_captures(root, bufnr) do
         local capture_name = query.captures[id]
-        if capture_name == query_type then
-            local row, col = node:start()
-            table.insert(items, {
-                text = vim.treesitter.get_node_text(node, bufnr),
-                path = vim.api.nvim_buf_get_name(bufnr),
-                lnum = row + 1,
-                col = col + 1,
-            })
+        local row, col = node:start()
+        local in_value = {
+            text = vim.treesitter.get_node_text(node, bufnr),
+            path = vim.api.nvim_buf_get_name(bufnr),
+            lnum = row + 1,
+            col = col + 1,
+        }
+        if not results[capture_name] then
+            results[capture_name] = { in_value }
+        else
+            table.insert(results[capture_name], in_value)
         end
     end
 
     start_pick({
-        items = items,
+        items = vim.tbl_keys(results),
         name = pick_name,
-        choose_marked = apply_marked_ts,
+        choose = function(choice)
+            if not choice then return end
+            start_pick({
+                items = results[choice],
+                name = choice,
+                choose_marked = function(choice2)
+                    if not choice2 then return end
+                    vim.api.nvim_win_set_cursor(0, { choice2.lnum, choice2.col - 1 })
+                end
+            })
+        end,
+        preview = function(buf_id, item)
+            vim.api.nvim_buf_set_lines(buf_id, 0, -1, false,
+                vim.iter(results[item])
+                :map(function(x)
+                    return x.text
+                end)
+                :totable())
+        end,
     })
 end
 
@@ -178,16 +189,6 @@ vim.keymap.set("n", "<leader>gmu", function()
     })
 end)
 
--- Treesitter Keys
-vim.keymap.set("n", "<leader>tv", function()
-    get_treesitter_list({
-        pick_name = "Variables",
-        query_type = "variable.local"
-    })
-end)
-vim.keymap.set("n", "<leader>tf", function()
-    get_treesitter_list({
-        pick_name = "Functions",
-        query_type = "function"
-    })
+vim.keymap.set("n", "<leader>tq", function()
+    get_treesitter_list({})
 end)

@@ -65,11 +65,11 @@ end
 
 local function toggle_term(direction)
     local terms = vim.iter(vim.api.nvim_list_bufs())
-        :map(function(b)
+        :map(function (b)
             return vim.fn.bufname(b)
         end)
         :filter(function(b)
-            return string.match(b, "term://") ~= nil
+            return string.match(b, "term://")
         end)
         :totable()
 
@@ -102,7 +102,11 @@ local function toggle_term(direction)
     end
 
     if #terms > 1 then
-        vim.ui.select(terms, {}, function(choice)
+        vim.ui.select(terms, {
+            preview_item = function (item)
+                return vim.api.nvim_buf_get_lines(vim.fn.bufnr(item), 0, -1, false)
+            end
+        }, function(choice)
             if not choice then return else apply_term(choice) end
         end, {})
     elseif #terms == 1 then
