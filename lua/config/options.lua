@@ -60,6 +60,11 @@ vim.diagnostic.config({
         prefix = "",
     },
 })
+vim.opt.statusline = "%=%-14.(%l,%c%V%) %P"
+local ok = pcall(require, "vim-fugitive.fugitive")
+if not ok then
+    vim.opt.winbar = "%<%f %h%m%r"
+end
 
 if vim.fn.has("win32") == 1 then
     vim.opt.shell = "pwsh -NoLogo"

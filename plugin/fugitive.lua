@@ -3,7 +3,7 @@ vim.pack.add({
 })
 vim.opt.diffopt:append("algorithm:patience")
 vim.opt.diffopt:append("indent-heuristic")
-vim.opt.statusline = "%<%f %h%m%r%{FugitiveStatusline()}%=%-14.(%l,%c%V%) %P"
+vim.opt.winbar = "%<%f %h%m%r%{FugitiveStatusline()}"
 
 vim.keymap.set("n", "<leader>gC", function()
     local branch = vim.fn.input("Branch name: ")
