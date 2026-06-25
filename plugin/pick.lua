@@ -118,6 +118,41 @@ local function get_treesitter_list(opts)
     })
 end
 
+local function get_lsp_items(opts)
+    local params = vim.lsp.util.make_position_params(0, "utf-8")
+    params.context = {
+        includeDeclaration = true
+    }
+
+    return vim.iter(vim.lsp.buf_request_sync(0, "textDocument/" .. (opts.type or "definition"), params, 3000))
+        :filter(function(x)
+            return x.result
+        end)
+        :map(function(x)
+            return x.result.uri and { x.result } or x.result
+        end)
+        :map(function(x)
+            return vim.iter(x)
+                :map(function(y)
+                    local file_path = vim.uri_to_fname(y.uri or y.targetUri)
+                    local range = y.range or y.targetSelectionRange
+                    local line = range.start.line + 1
+                    local col = range.start.character + 1
+                    local ok, lines = pcall(vim.fn.readfile, file_path)
+                    local line_text = ok and lines[line] and lines[line]:gsub("^%s+", "") or ""
+                    return {
+                        text = string.format("%s:%d:%d %s", vim.fn.fnamemodify(file_path, ":~:."), line, col, line_text),
+                        path = file_path,
+                        lnum = line,
+                        col = col,
+                    }
+                end)
+                :totable()
+        end)
+        :flatten()
+        :totable()
+end
+
 vim.keymap.set("n", "<leader>pf", function()
     pick.builtin.files({
         tool = "git"
@@ -133,6 +168,13 @@ vim.keymap.set("n", "<leader>ph", pick.builtin.help)
 vim.keymap.set("n", "<leader>pb", function()
     pick.builtin.buffers({
         include_current = false,
+    }, {
+        source = {
+            preview = function(buf_id, item)
+                (string.match(item.text, "term://") and require("utils.functions").preview_terminal or pick.default_preview)(
+                        buf_id, item)
+            end
+        }
     })
 end)
 vim.keymap.set("n", "<leader>pt", function()
@@ -189,6 +231,49 @@ vim.keymap.set("n", "<leader>gmu", function()
     })
 end)
 
-vim.keymap.set("n", "<leader>tq", function ()
+local function lsp_keymaps()
+    local function goto_def(choice)
+        if vim.fn.bufnr(choice.path) ~= vim.api.nvim_get_current_buf() then
+            vim.cmd.edit(choice.path)
+        end
+        vim.api.nvim_win_set_cursor(0, { choice.lnum, choice.col - 1 })
+    end
+    local items = function(type)
+        type = { type = type } or {}
+        local options = {
+            [0] = function(_)
+                vim.notify("No " .. (type.type and type.type or "definition") .. " found")
+            end,
+            [1] = goto_def
+        }
+        local items = get_lsp_items(type)
+        if options[#items] then options[#items](items[1]) else return items end
+    end
+    vim.keymap.set("n", "gd", function()
+        start_pick({
+            items = items(nil),
+            name = "Definition",
+            choose_marked = goto_def
+        })
+    end)
+    vim.keymap.set("n", "gr", function()
+        start_pick({
+            items = items("references"),
+            name = "References",
+            choose_marked = goto_def,
+        })
+    end)
+    vim.keymap.set("n", "gi", function()
+        start_pick({
+            items = items("implementation"),
+            name = "Implementations",
+            choose_marked = goto_def,
+        })
+    end)
+end
+
+vim.keymap.set("n", "<leader>tq", function()
     get_treesitter_list({})
 end)
+
+lsp_keymaps()

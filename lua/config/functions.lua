@@ -14,10 +14,9 @@ end
 
 local function open_previous_buffer()
     vim.cmd.buffer(vim.iter(bufs_by_last_access())
-        :filter(function(x)
+        :find(function (x)
             return x ~= vim.api.nvim_get_current_buf()
-        end)
-        :nth(1))
+        end))
 end
 
 local function close_buffer()
@@ -96,7 +95,7 @@ local function toggle_term(direction)
                     if not choice then return else apply_term(choice) end
                 end,
                 preview = function(buf_id, item)
-                    require("utils.functions").preview_terminal(buf_id, vim.fn.bufnr(item))
+                    require("utils.functions").preview_terminal(buf_id, { bufnr = vim.fn.bufnr(item), text = item })
                 end
             }
         })
