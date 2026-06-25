@@ -63,9 +63,22 @@ local function clean_plugins()
     )
 end
 
+local term_options = {
+    right = { open = "vsplit %s", new = "vert term" },
+    left = { open = "leftabove vsplit %s", new = "leftabove vert term" },
+    above = { open = "leftabove split %s", new = "leftabove hor term" },
+    below = { open = "split %s", new = "hor term" },
+    full = { open = "edit %s", new = "term" },
+}
+
 local function toggle_term(direction)
+    local function apply_term(term)
+        local c = term_options[direction]
+        vim.cmd(term and c.open:format(term) or c.new)
+    end
+
     local terms = vim.iter(vim.api.nvim_list_bufs())
-        :map(function (b)
+        :map(function(b)
             return vim.fn.bufname(b)
         end)
         :filter(function(b)
@@ -73,42 +86,28 @@ local function toggle_term(direction)
         end)
         :totable()
 
-    local function apply_term(term)
-        if term then
-            if direction == "right" then
-                vim.cmd("vsplit " .. term)
-            elseif direction == "left" then
-                vim.cmd("leftabove vsplit " .. term)
-            elseif direction == "above" then
-                vim.cmd("leftabove split " .. term)
-            elseif direction == "below" then
-                vim.cmd("split " .. term)
-            elseif direction == "full" then
-                vim.cmd("edit " .. term)
-            end
-        else
-            if direction == "right" then
-                vim.cmd("vert term")
-            elseif direction == "left" then
-                vim.cmd("leftabove vert term")
-            elseif direction == "above" then
-                vim.cmd("leftabove hor term")
-            elseif direction == "below" then
-                vim.cmd("hor term")
-            elseif direction == "full" then
-                vim.cmd("term")
-            end
-        end
+    local ok, pick = pcall(require, "mini.pick")
+    local call = ok and function()
+        pick.start({
+            source = {
+                items = terms,
+                name = "Terminals",
+                choose_marked = function(choice)
+                    if not choice then return else apply_term(choice) end
+                end,
+                preview = function(buf_id, item)
+                    require("utils.functions").preview_terminal(buf_id, vim.fn.bufnr(item))
+                end
+            }
+        })
+    end or function()
+        vim.ui.select(terms, {}, function(choice)
+            if not choice then return else apply_term(choice) end
+        end)
     end
 
     if #terms > 1 then
-        vim.ui.select(terms, {
-            preview_item = function (item)
-                return vim.api.nvim_buf_get_lines(vim.fn.bufnr(item), 0, -1, false)
-            end
-        }, function(choice)
-            if not choice then return else apply_term(choice) end
-        end, {})
+        call()
     elseif #terms == 1 then
         apply_term(terms[1])
     else
@@ -125,13 +124,15 @@ vim.api.nvim_create_user_command("ToggleTerm", function(opts)
 end, {
     nargs = "?",
     complete = function(lead)
-        return vim.iter({ "full", "right", "left", "above", "below" })
+        return vim.iter(vim.tbl_keys(term_options))
             :filter(function(x)
                 return x:find("^" .. lead)
             end)
             :totable()
     end
 })
+
+vim.keymap.set("n", "<leader>tt", vim.cmd.ToggleTerm)
 
 vim.api.nvim_create_autocmd("BufEnter", {
     callback = function(ev)

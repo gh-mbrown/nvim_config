@@ -23,7 +23,7 @@ pick.setup({
                 col = math.floor(0.5 * (vim.o.columns - width))
             }
         end
-    }
+    },
 })
 
 local function cli_pick(opts)
@@ -189,6 +189,6 @@ vim.keymap.set("n", "<leader>gmu", function()
     })
 end)
 
-vim.keymap.set("n", "<leader>tq", function()
+vim.keymap.set("n", "<leader>tq", function ()
     get_treesitter_list({})
 end)
