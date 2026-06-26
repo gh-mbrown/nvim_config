@@ -187,50 +187,6 @@ vim.keymap.set("n", "<leader>pt", function()
     })
 end)
 
--- Git Keys
-vim.keymap.set("n", "<leader>gb", function()
-    cli_pick({
-        command = { "git", "branch", "--all", "--format", "%(refname:short)" },
-        post_process = function(list)
-            return vim.iter(list)
-                :filter(function(x)
-                    return not str.starts_with(x, "origin")
-                end)
-                :totable()
-        end,
-        name = "Git Branches",
-        choose = function(selection)
-            vim.cmd.Git("checkout " .. selection)
-        end
-    })
-end)
-vim.keymap.set("n", "<leader>gsp", function()
-    cli_pick({
-        command = { "git", "stash", "list" },
-        name = "Git Stash Pop",
-        choose = function(selection)
-            local stash_name = string.match(selection, "%a+")
-            vim.cmd.Git("stash pop " .. stash_name)
-        end
-    })
-end)
-vim.keymap.set("n", "<leader>gmu", function()
-    cli_pick({
-        command = { "git", "config", "--file", ".gitmodules", "--get-regexp", "path" },
-        post_process = function(list)
-            return vim.iter(list)
-                :map(function(x)
-                    return string.match(x, "%S+$")
-                end)
-                :totable()
-        end,
-        name = "Git Submodules",
-        choose = function(selection)
-            vim.cmd.Git("submodule update --remote " .. selection)
-        end
-    })
-end)
-
 local function lsp_keymaps()
     local function goto_def(choice)
         if vim.fn.bufnr(choice.path) ~= vim.api.nvim_get_current_buf() then
