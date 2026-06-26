@@ -1,10 +1,7 @@
 vim.pack.add({
-    GIT_ROOT .. "mbbill/undotree"
+    GIT_ROOT .. "jiaoshijie/undotree"
 })
-if vim.fn.has("win32") == 1 then
-    vim.g.undotree_DiffCommand = "FC"
-end
-vim.g.undotree_SetFocusWhenToggle = 1
-vim.opt.undofile = true
-vim.opt.undodir = vim.fn.stdpath("data") .. "/undo"
-vim.keymap.set("n", "<leader>ut", vim.cmd.UndotreeToggle)
+
+local ut = require("undotree")
+ut.setup({})
+vim.keymap.set("n", "<leader>ut", ut.toggle)
