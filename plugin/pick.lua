@@ -1,5 +1,3 @@
-local str = require("utils.string")
-
 vim.pack.add({
     GIT_ROOT .. "nvim-mini/mini.pick"
 })
