@@ -4,6 +4,12 @@ vim.pack.add({
 })
 local oil = require("oil")
 oil.setup({
+    columns = {
+        "icon",
+        "permissions",
+        "size",
+        "mtime"
+    },
     view_options = {
         show_hidden = true,
     },
@@ -26,3 +32,10 @@ end)
 vim.keymap.set("n", "<leader>op", function ()
     apply_oil_func(true, "Not in Oil", oil.open_preview)
 end)
+
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--     pattern = "oil://*",
+--     callback = function ()
+--         oil.open_preview()
+--     end
+-- })
