@@ -13,10 +13,9 @@
       "rev": "707049feaca9ae65abb3696eff9aefc7879e66aa",
       "src": "https://github.com/smoka7/hop.nvim"
     },
-    "mini.icons": {
-      "rev": "e56797f90192d81f1fda02e662fc3e8e3d775027",
-      "src": "https://github.com/nvim-mini/mini.icons",
-      "version": "'stable'"
+    "lualine.nvim": {
+      "rev": "221ce6b2d999187044529f49da6554a92f740a96",
+      "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
     "mini.pick": {
       "rev": "8c1f75f8ddd8c9f75d07ed2ab5718d2c3cb65a66",
@@ -41,6 +40,10 @@
     "nvim-treesitter": {
       "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
+    },
+    "nvim-web-devicons": {
+      "rev": "dfbfaa967a6f7ec50789bead7ef87e336c1fa63c",
+      "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "oil.nvim": {
       "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",

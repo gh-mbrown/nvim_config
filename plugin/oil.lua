@@ -1,4 +1,5 @@
 vim.pack.add({
+    { src = GIT_ROOT .. "nvim-tree/nvim-web-devicons" },
     { src = GIT_ROOT .. "stevearc/oil.nvim" },
 })
 local oil = require("oil")

@@ -1,5 +1,6 @@
 vim.pack.add({
-    GIT_ROOT .. "nvim-mini/mini.pick"
+    { src = GIT_ROOT .. "nvim-tree/nvim-web-devicons" },
+    { src = GIT_ROOT .. "nvim-mini/mini.pick" }
 })
 
 local pick = require("mini.pick")

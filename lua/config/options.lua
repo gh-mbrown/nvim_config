@@ -60,8 +60,6 @@ vim.diagnostic.config({
         prefix = "",
     },
 })
-vim.opt.statusline = "%=%-14.(%l,%c%V%) %P"
-vim.opt.winbar = "%<%f %h%m%r"
 
 if vim.fn.has("win32") == 1 then
     vim.opt.shell = "pwsh -NoLogo"
