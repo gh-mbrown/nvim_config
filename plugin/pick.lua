@@ -4,6 +4,7 @@ vim.pack.add({
 })
 
 local pick = require("mini.pick")
+local funcs = require("utils.functions")
 pick.setup({
     mappings = {
         scroll_down = "<C-d>",
@@ -124,12 +125,8 @@ local function get_lsp_items(opts)
     }
 
     return vim.iter(vim.lsp.buf_request_sync(0, "textDocument/" .. (opts.type or "definition"), params, 3000))
-        :filter(function(x)
-            return x.result
-        end)
-        :map(function(x)
-            return x.result.uri and { x.result } or x.result
-        end)
+        :filter(function(x) return x.result end)
+        :map(function(x) return x.result.uri and { x.result } or x.result end)
         :map(function(x)
             return vim.iter(x)
                 :map(function(y)
@@ -170,7 +167,7 @@ vim.keymap.set("n", "<leader>pb", function()
     }, {
         source = {
             preview = function(buf_id, item)
-                (string.match(item.text, "term://") and require("utils.functions").preview_terminal or pick.default_preview)(
+                (string.match(item.text, "term://") and funcs.preview_terminal or pick.default_preview)(
                         buf_id, item)
             end
         }
@@ -181,54 +178,83 @@ vim.keymap.set("n", "<leader>pt", function()
         command = { "tldr", "--list" },
         name = "TLDR",
         choose = function(selection)
-            require("utils.functions").list_to_buffer(vim.fn.systemlist({ "tldr", selection }))
+            funcs.list_to_buffer(vim.fn.systemlist({ "tldr", selection }))
+        end
+    })
+end)
+vim.keymap.set("n", "<leader>pd", function()
+    start_pick({
+        items = function ()
+            local dirs = funcs.get_cwd_items({})
+            table.insert(dirs, ".")
+            table.sort(dirs, function (x, y) return x < y end)
+            return dirs
+        end,
+        name = "Directories",
+        choose_marked = function(choice)
+            local ok, oil = pcall(require, "oil")
+            if ok then oil.open(choice) else vim.cmd.edit(choice) end
+        end,
+        preview = function(buf_id, item)
+            local ok, oil = pcall(require, "oil")
+            if ok then
+                vim.api.nvim_buf_call(buf_id, function()
+                    oil.open(item)
+                end)
+            else
+                vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, funcs.get_cwd_items({
+                    path = item,
+                    depth = 1,
+                    types = {
+                        "file",
+                        "directory",
+                        "link"
+                    }
+                }))
+            end
         end
     })
 end)
 
-local function lsp_keymaps()
-    local function goto_def(choice)
-        if vim.fn.bufnr(choice.path) ~= vim.api.nvim_get_current_buf() then
-            vim.cmd.edit(choice.path)
-        end
-        vim.api.nvim_win_set_cursor(0, { choice.lnum, choice.col - 1 })
+local function goto_def(choice)
+    if vim.fn.bufnr(choice.path) ~= vim.api.nvim_get_current_buf() then
+        vim.cmd.edit(choice.path)
     end
-    local items = function(type)
-        type = { type = type } or {}
-        local options = {
-            [0] = function(_)
-                vim.notify("No " .. (type.type and type.type or "definition") .. " found")
-            end,
-            [1] = goto_def
-        }
-        local items = get_lsp_items(type)
-        if options[#items] then options[#items](items[1]) else return items end
-    end
-    vim.keymap.set("n", "gd", function()
-        start_pick({
-            items = items(nil),
-            name = "Definition",
-            choose_marked = goto_def
-        })
-    end)
-    vim.keymap.set("n", "gr", function()
-        start_pick({
-            items = items("references"),
-            name = "References",
-            choose_marked = goto_def,
-        })
-    end)
-    vim.keymap.set("n", "gi", function()
-        start_pick({
-            items = items("implementation"),
-            name = "Implementations",
-            choose_marked = goto_def,
-        })
-    end)
+    vim.api.nvim_win_set_cursor(0, { choice.lnum, choice.col - 1 })
 end
+local items = function(type)
+    type = { type = type } or {}
+    local options = {
+        [0] = function(_)
+            vim.notify("No " .. (type.type and type.type or "definition") .. " found")
+        end,
+        [1] = goto_def
+    }
+    local items = get_lsp_items(type)
+    if options[#items] then options[#items](items[1]) else return items end
+end
+vim.keymap.set("n", "gd", function()
+    start_pick({
+        items = items(nil),
+        name = "Definition",
+        choose_marked = goto_def
+    })
+end)
+vim.keymap.set("n", "gr", function()
+    start_pick({
+        items = items("references"),
+        name = "References",
+        choose_marked = goto_def,
+    })
+end)
+vim.keymap.set("n", "gi", function()
+    start_pick({
+        items = items("implementation"),
+        name = "Implementations",
+        choose_marked = goto_def,
+    })
+end)
 
 vim.keymap.set("n", "<leader>tq", function()
     get_treesitter_list({})
 end)
-
-lsp_keymaps()
