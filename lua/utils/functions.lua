@@ -78,22 +78,6 @@ M.get_treesitter_list = function(opts)
     return results
 end
 
-local icon_hl_cache = {}
-local function get_icon_hl(path)
-    local ok, icons = pcall(require, "nvim-web-devicons")
-    if not ok then return end
-
-    local icon, color = icons.get_icon(vim.fn.fnamemodify(path, ":t"), vim.fn.fnamemodify(path, ":e"),
-        { default = true })
-    local hl_group = color and "FileIcon_" .. color:sub(2) or "nil"
-    if not icon_hl_cache[hl_group] then
-        vim.api.nvim_set_hl(0, hl_group, { fg = color })
-        icon_hl_cache[hl_group] = true
-    end
-
-    return icon, hl_group
-end
-
 M.get_diagnostics = function(opts)
     return vim.iter(vim.diagnostic.get(nil, {
             severity = opts.severity and opts.severity or {
@@ -107,8 +91,6 @@ M.get_diagnostics = function(opts)
             local col = x.col + 1
             local text = string.format("%s %s:%d:%d %s", vim.diagnostic.severity[x.severity],
                 vim.fn.fnamemodify(file_path, ":~:."), line, col, x.message)
-            -- local icon, hl_group = get_icon_hl(file_path)
-            -- vim.api.nvim_buf_add_highlight(0, 0, hl_group, i - 1, 0, #icon)
             return {
                 text = text,
                 path = file_path,
@@ -116,6 +98,36 @@ M.get_diagnostics = function(opts)
                 col = col
             }
         end)
+        :totable()
+end
+
+M.get_lsp_items = function (opts)
+    local params = vim.lsp.util.make_position_params(0, "utf-8")
+    params.context = {
+        includeDeclaration = true
+    }
+
+    return vim.iter(vim.lsp.buf_request_sync(0, "textDocument/" .. (opts.type or "definition"), params, 3000))
+        :filter(function(x) return x.result end)
+        :map(function(x)
+            return vim.iter(x.result.uri and { x.result } or x.result)
+                :map(function(y)
+                    local file_path = vim.uri_to_fname(y.uri or y.targetUri)
+                    local range = y.range or y.targetSelectionRange
+                    local line = range.start.line + 1
+                    local col = range.start.character + 1
+                    local ok, lines = pcall(vim.fn.readfile, file_path)
+                    local line_text = ok and lines[line] and lines[line]:gsub("^%s+", "") or ""
+                    return {
+                        text = string.format("%s:%d:%d %s", vim.fn.fnamemodify(file_path, ":~:."), line, col, line_text),
+                        path = file_path,
+                        lnum = line,
+                        col = col,
+                    }
+                end)
+                :totable()
+        end)
+        :flatten()
         :totable()
 end
 
