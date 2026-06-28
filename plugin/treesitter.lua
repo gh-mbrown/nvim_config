@@ -15,6 +15,7 @@ vim.pack.add({
 })
 
 local ts = require("nvim-treesitter")
+local funcs = require("utils.functions")
 ts.setup({})
 
 local function auto_install_tree_sitter()
@@ -27,10 +28,6 @@ local function auto_install_tree_sitter()
     if not vim.tbl_contains(ts.get_installed(), rft) and vim.tbl_contains(ts.get_available(), rft) then
         ts.install({ rft })
     end
-end
-
-local function list_to_read_bufnr()
-    require("utils.functions").list_to_buffer(ts.get_installed())
 end
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -49,5 +46,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.keymap.set("n", "<leader>ti", vim.cmd.InspectTree)
 vim.keymap.set("n", "<leader>te", vim.cmd.EditQuery)
-vim.keymap.set("n", "<leader>tl", list_to_read_bufnr)
+vim.keymap.set("n", "<leader>tl", function ()
+    funcs.list_to_buffer(ts.get_installed())
+end)
 vim.keymap.set("n", "<leader>tu", vim.cmd.TSUpdate)
