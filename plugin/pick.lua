@@ -5,6 +5,7 @@ vim.pack.add({
 
 local pick = require("mini.pick")
 local funcs = require("utils.functions")
+local ui_select = vim.ui.select
 pick.setup({
     mappings = {
         scroll_down = "<C-d>",
@@ -25,6 +26,7 @@ pick.setup({
         end
     },
 })
+vim.ui.select = ui_select
 
 local function cli_pick(opts)
     local command = opts.command
@@ -65,59 +67,6 @@ local function start_pick(opts)
     })
 end
 
-local function get_treesitter_list(opts)
-    local pick_name = opts.pick_name or "Treesitter"
-    local file = opts.file or "highlights"
-
-    local bufnr = vim.api.nvim_get_current_buf()
-    local lang = vim.bo[bufnr].filetype
-    local parser = vim.treesitter.get_parser(bufnr, lang)
-    local tree = parser:parse()[1]
-    local query = vim.treesitter.query.get(lang, file)
-    local root = tree:root()
-
-    local results = {}
-    for id, node in query:iter_captures(root, bufnr) do
-        local capture_name = query.captures[id]
-        local row, col = node:start()
-        local in_value = {
-            text = vim.treesitter.get_node_text(node, bufnr),
-            path = vim.api.nvim_buf_get_name(bufnr),
-            lnum = row + 1,
-            col = col + 1,
-        }
-        if not results[capture_name] then
-            results[capture_name] = { in_value }
-        else
-            table.insert(results[capture_name], in_value)
-        end
-    end
-
-    start_pick({
-        items = vim.tbl_keys(results),
-        name = pick_name,
-        choose = function(choice)
-            if not choice then return end
-            start_pick({
-                items = results[choice],
-                name = choice,
-                choose_marked = function(choice2)
-                    if not choice2 then return end
-                    vim.api.nvim_win_set_cursor(0, { choice2.lnum, choice2.col - 1 })
-                end
-            })
-        end,
-        preview = function(buf_id, item)
-            vim.api.nvim_buf_set_lines(buf_id, 0, -1, false,
-                vim.iter(results[item])
-                :map(function(x)
-                    return x.text
-                end)
-                :totable())
-        end,
-    })
-end
-
 local function get_lsp_items(opts)
     local params = vim.lsp.util.make_position_params(0, "utf-8")
     params.context = {
@@ -126,9 +75,8 @@ local function get_lsp_items(opts)
 
     return vim.iter(vim.lsp.buf_request_sync(0, "textDocument/" .. (opts.type or "definition"), params, 3000))
         :filter(function(x) return x.result end)
-        :map(function(x) return x.result.uri and { x.result } or x.result end)
         :map(function(x)
-            return vim.iter(x)
+            return vim.iter(x.result.uri and { x.result } or x.result)
                 :map(function(y)
                     local file_path = vim.uri_to_fname(y.uri or y.targetUri)
                     local range = y.range or y.targetSelectionRange
@@ -184,10 +132,10 @@ vim.keymap.set("n", "<leader>pt", function()
 end)
 vim.keymap.set("n", "<leader>pd", function()
     start_pick({
-        items = function ()
+        items = function()
             local dirs = funcs.get_cwd_items({})
             table.insert(dirs, ".")
-            table.sort(dirs, function (x, y) return x < y end)
+            table.sort(dirs, function(x, y) return x < y end)
             return dirs
         end,
         name = "Directories",
@@ -217,6 +165,7 @@ vim.keymap.set("n", "<leader>pd", function()
 end)
 
 local function goto_def(choice)
+    vim.cmd("normal! m'")
     if vim.fn.bufnr(choice.path) ~= vim.api.nvim_get_current_buf() then
         vim.cmd.edit(choice.path)
     end
@@ -256,5 +205,59 @@ vim.keymap.set("n", "gi", function()
 end)
 
 vim.keymap.set("n", "<leader>tq", function()
-    get_treesitter_list({})
+    local tree_query = funcs.get_treesitter_list({})
+
+    start_pick({
+        items = vim.tbl_keys(tree_query),
+        name = "Treesitter",
+        choose = function(choice)
+            if not choice then return end
+            start_pick({
+                items = tree_query[choice],
+                name = choice,
+                choose_marked = function(choice2)
+                    if not choice2 then return end
+                    vim.api.nvim_win_set_cursor(0, { choice2.lnum, choice2.col - 1 })
+                end
+            })
+        end,
+        preview = function(buf_id, item)
+            vim.api.nvim_buf_set_lines(buf_id, 0, -1, false,
+                vim.iter(tree_query[item])
+                :map(function(x)
+                    return x.text
+                end)
+                :totable())
+        end,
+    })
+end)
+
+vim.keymap.set("n", "<leader>dd", function ()
+    start_pick({
+        items = funcs.get_diagnostics({}),
+        name = "Diagnostics",
+        choose_marked = goto_def
+    })
+end)
+vim.keymap.set("n", "<leader>di", function ()
+    start_pick({
+        items = funcs.get_diagnostics({
+            severity = {
+                vim.diagnostic.severity.INFO
+            }
+        }),
+        name = "Diagnostics Info",
+        choose_marked = goto_def
+    })
+end)
+vim.keymap.set("n", "<leader>dh", function ()
+    start_pick({
+        items = funcs.get_diagnostics({
+            severity = {
+                vim.diagnostic.severity.HINT
+            }
+        }),
+        name = "Diagnostics Hint",
+        choose_marked = goto_def
+    })
 end)
