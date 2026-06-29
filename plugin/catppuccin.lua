@@ -3,7 +3,12 @@ vim.pack.add({
 })
 local cat = require("catppuccin")
 cat.setup({
-    transparent_background = vim.g.neovide and false or true,
+    transparent_background = not vim.g.neovide,
     auto_integrations = true,
+    custom_highlights = function (colors)
+        return {
+            CursorLine = { bg = "none" }
+        }
+    end
 })
 vim.cmd.Catppuccin("mocha")

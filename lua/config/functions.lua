@@ -1,20 +1,6 @@
-local buf_access_time = {}
-
-local function bufs_by_last_access()
-    local bufs = vim.iter(vim.api.nvim_list_bufs())
-        :filter(function(b)
-            return vim.api.nvim_buf_is_valid(b) and vim.bo[b].buflisted
-        end)
-        :totable()
-    table.sort(bufs, function(x, y)
-        return (buf_access_time[x] or 0) > (buf_access_time[y] or 0)
-    end)
-    return bufs
-end
-
 local function open_previous_buffer()
-    vim.cmd.buffer(vim.iter(bufs_by_last_access())
-        :find(function (x)
+    vim.cmd.buffer(vim.iter(require("utils.functions").bufs_by_last_access())
+        :find(function(x)
             return x ~= vim.api.nvim_get_current_buf()
         end))
 end
@@ -29,10 +15,10 @@ local function close_buffer()
         :totable()
 
     if #buffers > 0 then
-        vim.cmd("OpenPreviousBuffer")
+        open_previous_buffer()
         vim.api.nvim_buf_delete(buf, { force = true })
     else
-        vim.cmd("quit")
+        vim.notify("Last buffer", vim.log.levels.INFO)
     end
 end
 

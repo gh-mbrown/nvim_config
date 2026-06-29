@@ -1,43 +1,45 @@
-vim.pack.add({
-    { src = GIT_ROOT .. "saghen/blink.cmp", version = "v1" },
-})
+require("lazy_load").on_vim_enter(function()
+    vim.pack.add({
+        { src = GIT_ROOT .. "saghen/blink.cmp", version = "v1" },
+    })
 
-require("blink.cmp").setup({
-    keymap = {
-        ["<C-n>"] = {
-            "select_next",
-            "fallback_to_mappings",
+    require("blink.cmp").setup({
+        keymap = {
+            ["<C-n>"] = {
+                "select_next",
+                "fallback_to_mappings",
+            },
+            ["<C-p>"] = {
+                "select_prev",
+                "fallback_to_mappings",
+            },
+            ["<C-y>"] = {
+                "select_and_accept",
+                "fallback",
+            },
+            ["<C-e>"] = {
+                "hide",
+                "fallback",
+            },
         },
-        ["<C-p>"] = {
-            "select_prev",
-            "fallback_to_mappings",
+        appearance = {
+            nerd_font_variant = "normal",
         },
-        ["<C-y>"] = {
-            "select_and_accept",
-            "fallback",
+        completion = {
+            documentation = {
+                auto_show = true,
+            },
         },
-        ["<C-e>"] = {
-            "hide",
-            "fallback",
+        sources = {
+            default = {
+                "lsp",
+                "path",
+                "snippets",
+                "buffer",
+            },
         },
-    },
-    appearance = {
-        nerd_font_variant = "normal",
-    },
-    completion = {
-        documentation = {
-            auto_show = true,
+        fuzzy = {
+            implementation = vim.fn.has("win32") == 0 and "prefer_rust_with_warning" or "lua",
         },
-    },
-    sources = {
-        default = {
-            "lsp",
-            "path",
-            "snippets",
-            "buffer",
-        },
-    },
-    fuzzy = {
-        implementation = vim.fn.has("win32") == 0 and "prefer_rust_with_warning" or "lua",
-    },
-})
+    })
+end)
