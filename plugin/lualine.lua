@@ -6,9 +6,11 @@ require("lazy_load").on_vim_enter(function()
     local function get_project_name()
         local ok, project = pcall(require, "project_nvim.project")
         if not ok then return "" end
-        local root = project.get_project_root()
-        if root then
-            return vim.fn.fnamemodify(root, ":t")
+        if vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
+            local root = project.get_project_root()
+            if root then
+                return vim.fn.fnamemodify(root, ":t")
+            end
         end
         return ""
     end

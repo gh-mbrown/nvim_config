@@ -18,7 +18,13 @@ local function close_buffer()
         open_previous_buffer()
         vim.api.nvim_buf_delete(buf, { force = true })
     else
-        vim.notify("Last buffer", vim.log.levels.INFO)
+        local ok, oil = pcall(require, "oil")
+        if ok then
+            oil.open()
+            vim.api.nvim_buf_delete(buf, { force = true })
+        else
+            vim.notify("Last buffer", vim.log.levels.INFO)
+        end
     end
 end
 
