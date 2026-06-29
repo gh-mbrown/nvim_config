@@ -1,4 +1,4 @@
-require("lazy_load").on_vim_enter(function ()
+require("lazy_load").on_vim_enter(function()
     vim.api.nvim_create_autocmd("PackChanged", {
         callback = function(ev)
             local name, kind = ev.data.spec.name, ev.data.kind
@@ -6,17 +6,19 @@ require("lazy_load").on_vim_enter(function ()
                 if not ev.data.active then vim.cmd.packadd("telescope-fzf-native.nvim") end
                 vim.system({ "cmake", "-S.", "-Bbuild", "-DCMAKE_BUILD_TYPE=Release" }, { cwd = ev.data.path }):wait()
                 vim.system({ "cmake", "--build", "build", "--config", "Release", "--target", "install" },
-                { cwd = ev.data.path }):wait()
+                    { cwd = ev.data.path }):wait()
             end
         end
     })
 
     vim.pack.add({
+        { src = GIT_ROOT .. "gh-mbrown/project.nvim", version = "main" },
         { src = GIT_ROOT .. "nvim-lua/plenary.nvim" },
         { src = GIT_ROOT .. "nvim-telescope/telescope-fzf-native.nvim" },
         { src = GIT_ROOT .. "nvim-telescope/telescope.nvim" }
     })
 
+    require("project_nvim").setup({})
     local telescope = require("telescope")
     local builtin = require("telescope.builtin")
     local actions = require("telescope.actions")
@@ -49,6 +51,8 @@ require("lazy_load").on_vim_enter(function ()
         }
     })
     telescope.load_extension("fzf")
+    telescope.load_extension("projects")
+    vim.keymap.set("n", "<leader>pp", telescope.extensions.projects.projects)
     vim.keymap.set("n", "<leader>pf", builtin.git_files)
     vim.keymap.set("n", "<leader>ff", builtin.find_files)
     vim.keymap.set("n", "<leader>pg", builtin.live_grep)
