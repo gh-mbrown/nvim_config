@@ -71,21 +71,7 @@ local function toggle_term(direction)
         end)
         :totable()
 
-    local ok, pick = pcall(require, "mini.pick")
-    local call = ok and function()
-        pick.start({
-            source = {
-                items = terms,
-                name = "Terminals",
-                choose_marked = function(choice)
-                    if not choice then return else apply_term(choice) end
-                end,
-                preview = function(buf_id, item)
-                    require("utils.functions").preview_terminal(buf_id, { bufnr = vim.fn.bufnr(item), text = item })
-                end
-            }
-        })
-    end or function()
+    local call = function()
         vim.ui.select(terms, {}, function(choice)
             if not choice then return else apply_term(choice) end
         end)
@@ -118,9 +104,3 @@ end, {
 })
 
 vim.keymap.set("n", "<leader>tt", vim.cmd.ToggleTerm)
-
-vim.api.nvim_create_autocmd("BufEnter", {
-    callback = function(ev)
-        buf_access_time[ev.buf] = vim.uv.hrtime()
-    end
-})

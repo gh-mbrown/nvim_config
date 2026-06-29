@@ -1,7 +1,10 @@
 local M = {}
 M.__index = M
 
-M.buf_access_time = {}
+local buf_access_time = {}
+
+function M.get_buf_access_time() return buf_access_time end
+function M.set_buf_access_time(opts) buf_access_time = opts end
 
 function M.bufs_by_last_access()
     local bufs = vim.iter(vim.api.nvim_list_bufs())
@@ -10,7 +13,7 @@ function M.bufs_by_last_access()
         end)
         :totable()
     table.sort(bufs, function(x, y)
-        return (M.buf_access_time[x] or 0) > (M.buf_access_time[y] or 0)
+        return (buf_access_time[x] or 0) > (buf_access_time[y] or 0)
     end)
     return bufs
 end
