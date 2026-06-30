@@ -30,7 +30,6 @@ require("lazy_load").on_vim_enter(function()
             lualine_b = { get_project_name },
             lualine_c = { "hostname" },
             lualine_x = { "filesize" },
-            lualine_y = { "tabs" },
             lualine_z = { "fileformat" }
         },
         inactive_winbar = {

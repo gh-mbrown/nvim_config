@@ -19,14 +19,15 @@ require("lazy_load").on_vim_enter(function()
     local funcs = require("utils.functions")
     ts.setup({})
 
+    local remap = {
+        cs = "c_sharp",
+        jsonc = "json"
+    }
+
     vim.api.nvim_create_autocmd("FileType", {
         pattern = "*",
         callback = function()
             local ft = vim.bo.filetype
-            local remap = {
-                cs = "c_sharp",
-                jsonc = "json"
-            }
             local rft = remap[ft] or ft
             if not vim.tbl_contains(ts.get_installed(), rft) and vim.tbl_contains(ts.get_available(), rft) then
                 ts.install({ rft })
