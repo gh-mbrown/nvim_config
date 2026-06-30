@@ -49,7 +49,8 @@ require("lazy_load").on_vim_enter(function()
             lualine_c = { "hostname" },
         },
         extensions = {
-            pcall(require, "oil") and "oil"
+            pcall(require, "oil") and "oil",
+            pcall(require, "toggleterm") and "toggleterm"
         }
     })
 
