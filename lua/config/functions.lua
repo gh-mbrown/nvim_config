@@ -1,5 +1,25 @@
+local buf_access_time = {}
+
+vim.api.nvim_create_autocmd("BufEnter", {
+    callback = function(ev)
+        buf_access_time[ev.buf] = vim.uv.hrtime()
+    end
+})
+
+local function bufs_by_last_access()
+    local bufs = vim.iter(vim.api.nvim_list_bufs())
+        :filter(function(b)
+            return vim.api.nvim_buf_is_valid(b) and vim.bo[b].buflisted
+        end)
+        :totable()
+    table.sort(bufs, function(x, y)
+        return (buf_access_time[x] or 0) > (buf_access_time[y] or 0)
+    end)
+    return bufs
+end
+
 local function open_previous_buffer()
-    vim.cmd.buffer(vim.iter(require("utils.functions").bufs_by_last_access())
+    vim.cmd.buffer(vim.iter(bufs_by_last_access())
         :find(function(x)
             return x ~= vim.api.nvim_get_current_buf()
         end))
@@ -14,18 +34,21 @@ local function close_buffer()
         end)
         :totable()
 
-    if #buffers > 0 then
+    local func = #buffers > 0 and function()
         open_previous_buffer()
-        vim.api.nvim_buf_delete(buf, { force = true })
-    else
+        vim.api.nvim_buf_delete(buf, { force = false })
+    end or function()
         local ok, oil = pcall(require, "oil")
-        if ok then
+        local open = ok and function()
             oil.open()
-            vim.api.nvim_buf_delete(buf, { force = true })
-        else
+            vim.api.nvim_buf_delete(buf, { force = false })
+        end or function()
             vim.notify("Last buffer", vim.log.levels.INFO)
         end
+        open()
     end
+
+    func()
 end
 
 local function update_plugins()
@@ -55,14 +78,32 @@ local function clean_plugins()
 end
 local function show_plugins()
     require("utils.functions").list_to_buffer(vim.iter(vim.pack.get())
-        :filter(function (p)
+        :filter(function(p)
             return p.active
         end)
-        :map(function (p)
+        :map(function(p)
             local sub = string.gsub(p.spec.src, "%" .. GIT_ROOT, "")
             return sub
         end)
         :totable())
+end
+
+local function open_buffer(num)
+    num = tonumber(num)
+    local bufs = vim.iter(vim.api.nvim_list_bufs())
+        :filter(function(b)
+            return vim.api.nvim_buf_is_valid(b) and vim.bo[b].buflisted
+        end)
+        :totable()
+    table.sort(bufs, function(x, y)
+        return x < y
+    end)
+    local func = bufs[num] and function()
+        vim.cmd.buffer(bufs[num])
+    end or function()
+        vim.notify("No index number " .. num .. " in list of loaded bufs", vim.log.levels.WARN)
+    end
+    func()
 end
 
 vim.api.nvim_create_user_command("OpenPreviousBuffer", open_previous_buffer, {})
@@ -70,3 +111,9 @@ vim.api.nvim_create_user_command("CloseBuffer", close_buffer, {})
 vim.api.nvim_create_user_command("UpdatePlugins", update_plugins, {})
 vim.api.nvim_create_user_command("CleanPlugins", clean_plugins, {})
 vim.api.nvim_create_user_command("ShowPlugins", show_plugins, {})
+vim.api.nvim_create_user_command("OpenBuffer", function(opts)
+        open_buffer((opts.args == "" or opts.args == nil) and 1 or opts.args)
+    end,
+    {
+        nargs = 1
+    })

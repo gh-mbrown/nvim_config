@@ -18,7 +18,11 @@ require("lazy_load").on_vim_enter(function()
     lualine.setup({
         sections = {
             lualine_a = { "mode" },
-            lualine_b = { "branch", "diff", "diagnostics" },
+            lualine_b = {
+                "branch",
+                "diff",
+                "diagnostics",
+            },
             lualine_c = {
                 {
                     "filename",
@@ -37,16 +41,23 @@ require("lazy_load").on_vim_enter(function()
             lualine_z = { "location" }
         },
         winbar = {
-            lualine_a = { "lsp_status" },
-            lualine_b = { get_project_name },
+            lualine_a = { get_project_name },
+            lualine_b = {
+                {
+                    "buffers",
+                    show_filename_only = false,
+                    use_mode_colors = true,
+                },
+            },
             lualine_c = { "hostname" },
             lualine_x = { "filesize" },
-            lualine_z = { "fileformat" }
+            lualine_y = { "fileformat" },
+            lualine_z = { "lsp_status" }
         },
         inactive_winbar = {
-            lualine_a = { "lsp_status" },
-            lualine_b = { get_project_name },
-            lualine_c = { "hostname" },
+            lualine_a = { get_project_name },
+            lualine_x = { "filesize" },
+            lualine_z = { "lsp_status" }
         },
         extensions = {
             pcall(require, "oil") and "oil",

@@ -19,11 +19,3 @@ vim.api.nvim_create_autocmd({"TermOpen", "BufEnter"}, {
     end
 })
 
-vim.api.nvim_create_autocmd("BufEnter", {
-    callback = function(ev)
-        local funcs = require("utils.functions")
-        local buf_access_time = funcs.get_buf_access_time()
-        buf_access_time[ev.buf] = vim.uv.hrtime()
-        funcs.set_buf_access_time(buf_access_time)
-    end
-})
