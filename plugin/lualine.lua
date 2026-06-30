@@ -14,14 +14,25 @@ require("lazy_load").on_vim_enter(function()
         end
         return ""
     end
-    require("lualine").setup({
+    local lualine = require("lualine")
+    lualine.setup({
         sections = {
             lualine_a = { "mode" },
             lualine_b = { "branch", "diff", "diagnostics" },
-            lualine_c = { function()
-                return vim.fn.bufname(vim.api.nvim_get_current_buf())
-            end },
-            lualine_x = { "filetype" },
+            lualine_c = {
+                {
+                    "filename",
+                    file_status = true,
+                    newfile_status = true,
+                    path = 1,
+                },
+            },
+            lualine_x = {
+                {
+                    "filetype",
+                    icon_only = true,
+                }
+            },
             lualine_y = { "progress" },
             lualine_z = { "location" }
         },
@@ -36,6 +47,27 @@ require("lazy_load").on_vim_enter(function()
             lualine_a = { "lsp_status" },
             lualine_b = { get_project_name },
             lualine_c = { "hostname" },
+        },
+        extensions = {
+            pcall(require, "oil") and "oil"
         }
+    })
+
+    vim.keymap.set("n", "<leader>lh", lualine.hide)
+    vim.keymap.set("n", "<leader>lr", lualine.refresh)
+    vim.keymap.set("n", "<leader>ls", function()
+        lualine.hide({
+            unhide = true
+        })
+    end)
+    vim.api.nvim_set_hl(0, "lualine_c_normal", {
+        nocombine = true,
+        bg = "#181825",
+        fg = "#cdd6f4",
+    })
+    vim.api.nvim_set_hl(0, "lualine_c_inactive", {
+        nocombine = true,
+        bg = "#181825",
+        fg = "#6c7086",
     })
 end)

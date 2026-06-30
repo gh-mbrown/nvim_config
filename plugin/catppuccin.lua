@@ -9,6 +9,6 @@ cat.setup({
         return {
             CursorLine = { bg = "none" }
         }
-    end
+    end,
 })
 vim.cmd.Catppuccin("mocha")
