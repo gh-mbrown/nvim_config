@@ -53,6 +53,16 @@ local function clean_plugins()
         :totable()
     )
 end
+local function show_plugins()
+    require("utils.functions").list_to_buffer(vim.iter(vim.pack.get())
+        :filter(function (p)
+            return p.active
+        end)
+        :map(function (p)
+            return p.spec.name
+        end)
+        :totable())
+end
 
 local term_options = {
     right = { open = "vsplit %s", new = "vert term" },
@@ -96,6 +106,7 @@ vim.api.nvim_create_user_command("OpenPreviousBuffer", open_previous_buffer, {})
 vim.api.nvim_create_user_command("CloseBuffer", close_buffer, {})
 vim.api.nvim_create_user_command("UpdatePlugins", update_plugins, {})
 vim.api.nvim_create_user_command("CleanPlugins", clean_plugins, {})
+vim.api.nvim_create_user_command("ShowPlugins", show_plugins, {})
 vim.api.nvim_create_user_command("ToggleTerm", function(opts)
     toggle_term(opts.args == "" and "full" or opts.args)
 end, {
