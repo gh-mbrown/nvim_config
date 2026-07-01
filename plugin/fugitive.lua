@@ -1,0 +1,22 @@
+require("lazy_load").on_vim_enter(function()
+    vim.pack.add({
+        GIT_ROOT .. "tpope/vim-fugitive"
+    })
+
+    vim.keymap.set("n", "<leader>gg", vim.cmd.Git)
+    vim.keymap.set("n", "<leader>gb", function()
+        vim.cmd.Git("blame")
+    end)
+    vim.keymap.set("n", "<leader>gl", function ()
+        vim.cmd.Git("--paginate log")
+    end)
+    vim.keymap.set("n", "<leader>gd", function ()
+        vim.cmd.Git("--paginate diff")
+    end)
+    vim.keymap.set("n", "<leader>gm", function ()
+        vim.cmd.Git("mergetool")
+    end)
+    vim.keymap.set("n", "<leader>gt", function ()
+        vim.cmd.Git("difftool")
+    end)
+end)

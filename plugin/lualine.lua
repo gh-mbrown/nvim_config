@@ -51,7 +51,8 @@ require("lazy_load").on_vim_enter(function()
         },
         extensions = {
             pcall(require, "oil") and "oil",
-            pcall(require, "toggleterm") and "toggleterm"
+            pcall(require, "toggleterm") and "toggleterm",
+            "fugitive"
         }
     })
 
