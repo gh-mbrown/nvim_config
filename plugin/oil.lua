@@ -7,6 +7,17 @@ oil.setup({
     view_options = {
         show_hidden = true,
     },
+    use_default_keymaps = true,
+    keymaps = {
+        ["<C-l>"] = function()
+            vim.cmd.wincmd("l")
+        end,
+        ["<C-h>"] = function()
+            vim.cmd.wincmd("h")
+        end,
+        ["<C-v>"] = { "actions.select", opts = { vertical = true } },
+        ["<C-s>"] = { "actions.select", opts = { horizontal = true } },
+    }
 })
 
 local function apply_oil_func(con, mes, func)
