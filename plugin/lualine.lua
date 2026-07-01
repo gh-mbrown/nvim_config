@@ -3,12 +3,6 @@ require("lazy_load").on_vim_enter(function()
         { src = GIT_ROOT .. "nvim-tree/nvim-web-devicons" },
         { src = GIT_ROOT .. "nvim-lualine/lualine.nvim" }
     })
-    local function get_project_name()
-        local ok, project = pcall(require, "project_nvim.project")
-        if not ok then return "" end
-        local root = project.get_project_root()
-        return root and vim.fn.fnamemodify(root, ":t") or ""
-    end
     local lualine = require("lualine")
     lualine.setup({
         theme = "jellybeans",
@@ -30,23 +24,28 @@ require("lazy_load").on_vim_enter(function()
                     path = 1,
                 },
             },
-            lualine_x = {
+            lualine_x = {},
+            lualine_y = { "progress" },
+            lualine_z = { "location" }
+        },
+        winbar = {
+            lualine_b = {
+                {
+                    "filetype",
+                    icon_only = true,
+                },
+                "buffers"
+            },
+            lualine_x = { "hostname" },
+            lualine_z = { "lsp_status" }
+        },
+        inactive_winbar = {
+            lualine_b = {
                 {
                     "filetype",
                     icon_only = true,
                 }
             },
-            lualine_y = { "progress" },
-            lualine_z = { "location" }
-        },
-        winbar = {
-            lualine_a = { get_project_name },
-            lualine_b = { "buffers" },
-            lualine_x = { "hostname" },
-            lualine_z = { "lsp_status" }
-        },
-        inactive_winbar = {
-            lualine_a = { get_project_name },
             lualine_x = { "hostname" },
             lualine_z = { "lsp_status" }
         },

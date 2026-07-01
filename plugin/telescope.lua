@@ -12,13 +12,12 @@ require("lazy_load").on_vim_enter(function()
     })
 
     vim.pack.add({
-        { src = GIT_ROOT .. "gh-mbrown/project.nvim", version = "main" },
+        { src = GIT_ROOT .. "nvim-telescope/telescope-project.nvim" },
         { src = GIT_ROOT .. "nvim-lua/plenary.nvim" },
         { src = GIT_ROOT .. "nvim-telescope/telescope-fzf-native.nvim" },
         { src = GIT_ROOT .. "nvim-telescope/telescope.nvim" }
     })
 
-    require("project_nvim").setup({})
     local telescope = require("telescope")
     local builtin = require("telescope.builtin")
     local actions = require("telescope.actions")
@@ -47,13 +46,14 @@ require("lazy_load").on_vim_enter(function()
                 override_generic_sorter = true,
                 override_file_sorter = true,
                 case_mode = "smart_case"
-            }
+            },
         }
     })
     telescope.load_extension("fzf")
-    telescope.load_extension("projects")
-    telescope.load_extension("harpoon")
-    vim.keymap.set("n", "<leader>pp", telescope.extensions.projects.projects)
+    telescope.load_extension("project")
+    local ok = pcall(require, "harpoon")
+    if ok then telescope.load_extension("harpoon") end
+    vim.keymap.set("n", "<leader>pp", telescope.extensions.project.project)
     vim.keymap.set("n", "<leader>pf", builtin.git_files)
     vim.keymap.set("n", "<leader>ff", builtin.find_files)
     vim.keymap.set("n", "<leader>pg", builtin.live_grep)
