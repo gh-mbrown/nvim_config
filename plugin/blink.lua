@@ -1,6 +1,7 @@
 require("lazy_load").on_vim_enter(function()
     vim.pack.add({
-        { src = GIT_ROOT .. "saghen/blink.cmp", version = "v1" },
+        { src = GIT_ROOT .. "rafamadriz/friendly-snippets" },
+        { src = GIT_ROOT .. "saghen/blink.cmp",            version = "v1" },
     })
 
     require("blink.cmp").setup({
@@ -23,7 +24,7 @@ require("lazy_load").on_vim_enter(function()
             },
         },
         appearance = {
-            nerd_font_variant = "normal",
+            nerd_font_variant = "mono",
         },
         completion = {
             documentation = {
