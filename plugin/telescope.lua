@@ -51,8 +51,10 @@ require("lazy_load").on_vim_enter(function()
     })
     telescope.load_extension("fzf")
     telescope.load_extension("project")
-    local ok = pcall(require, "harpoon")
-    if ok then telescope.load_extension("harpoon") end
+    if pcall(require, "harpoon") then
+        telescope.load_extension("harpoon")
+        vim.keymap.set("n", "<leader>hh", telescope.extensions.harpoon.marks)
+    end
     vim.keymap.set("n", "<leader>pp", telescope.extensions.project.project)
     vim.keymap.set("n", "<leader>pf", builtin.git_files)
     vim.keymap.set("n", "<leader>ff", builtin.find_files)
@@ -68,5 +70,4 @@ require("lazy_load").on_vim_enter(function()
     vim.keymap.set("n", "gt", builtin.lsp_type_definitions)
     vim.keymap.set("n", "<leader>pd", builtin.diagnostics)
     vim.keymap.set("n", "<leader>pt", builtin.treesitter)
-    vim.keymap.set("n", "<leader>hh", telescope.extensions.harpoon.marks)
 end)

@@ -15,6 +15,7 @@ require("lazy_load").on_vim_enter(function ()
         "fsautocomplete",
         "powershell_es",
         "azure_pipelines_ls",
-        "hyprls"
+        "hyprls",
+        "gopls",
     })
 end)
