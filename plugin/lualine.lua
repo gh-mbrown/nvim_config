@@ -6,22 +6,21 @@ require("lazy_load").on_vim_enter(function()
     local function get_project_name()
         local ok, project = pcall(require, "project_nvim.project")
         if not ok then return "" end
-        if vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
-            local root = project.get_project_root()
-            if root then
-                return vim.fn.fnamemodify(root, ":t")
-            end
-        end
-        return ""
+        local root = project.get_project_root()
+        return root and vim.fn.fnamemodify(root, ":t") or ""
     end
     local lualine = require("lualine")
     lualine.setup({
+        theme = "jellybeans",
         sections = {
             lualine_a = { "mode" },
             lualine_b = {
                 "branch",
                 "diff",
-                "diagnostics",
+                {
+                    "diagnostics",
+                    always_visible = true
+                },
             },
             lualine_c = {
                 {
@@ -42,21 +41,13 @@ require("lazy_load").on_vim_enter(function()
         },
         winbar = {
             lualine_a = { get_project_name },
-            lualine_b = {
-                {
-                    "buffers",
-                    show_filename_only = false,
-                    use_mode_colors = true,
-                },
-            },
-            lualine_c = { "hostname" },
-            lualine_x = { "filesize" },
-            lualine_y = { "fileformat" },
+            lualine_b = { "buffers" },
+            lualine_x = { "hostname" },
             lualine_z = { "lsp_status" }
         },
         inactive_winbar = {
             lualine_a = { get_project_name },
-            lualine_x = { "filesize" },
+            lualine_x = { "hostname" },
             lualine_z = { "lsp_status" }
         },
         extensions = {
@@ -72,14 +63,13 @@ require("lazy_load").on_vim_enter(function()
             unhide = true
         })
     end)
-    vim.api.nvim_set_hl(0, "lualine_c_normal", {
-        nocombine = true,
-        bg = "#181825",
-        fg = "#cdd6f4",
-    })
-    vim.api.nvim_set_hl(0, "lualine_c_inactive", {
-        nocombine = true,
-        bg = "#181825",
-        fg = "#6c7086",
-    })
+    vim.keymap.set("n", "<leader>b1", function() vim.cmd("LualineBuffersJump! 1") end)
+    vim.keymap.set("n", "<leader>b2", function() vim.cmd("LualineBuffersJump! 2") end)
+    vim.keymap.set("n", "<leader>b3", function() vim.cmd("LualineBuffersJump! 3") end)
+    vim.keymap.set("n", "<leader>b4", function() vim.cmd("LualineBuffersJump! 4") end)
+    vim.keymap.set("n", "<leader>b5", function() vim.cmd("LualineBuffersJump! 5") end)
+    vim.keymap.set("n", "<leader>b6", function() vim.cmd("LualineBuffersJump! 6") end)
+    vim.keymap.set("n", "<leader>b7", function() vim.cmd("LualineBuffersJump! 7") end)
+    vim.keymap.set("n", "<leader>b8", function() vim.cmd("LualineBuffersJump! 8") end)
+    vim.keymap.set("n", "<leader>b9", function() vim.cmd("LualineBuffersJump! 9") end)
 end)

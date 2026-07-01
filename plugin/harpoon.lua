@@ -4,7 +4,9 @@ require("lazy_load").on_vim_enter(function()
         { src = GIT_ROOT .. "ThePrimeagen/harpoon", version = "harpoon2" }
     })
     local harpoon = require("harpoon")
+    local ext = require("harpoon.extensions")
 
+    harpoon:extend(ext.builtins.highlight_current_file())
     harpoon:setup({
         settings = {
             save_on_toggle = true
@@ -13,9 +15,6 @@ require("lazy_load").on_vim_enter(function()
 
     vim.keymap.set("n", "<leader>ha", function()
         harpoon:list():add()
-    end)
-    vim.keymap.set("n", "<leader>hh", function()
-        harpoon.ui:toggle_quick_menu(harpoon:list())
     end)
     vim.keymap.set("n", "<leader>h1", function()
         harpoon:list():select(1)

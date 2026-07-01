@@ -69,7 +69,7 @@ if vim.fn.has("win32") == 1 then
 end
 
 if vim.g.neovide then
-    vim.o.guifont = "CaskaydiaCove Nerd Font Mono"
+    vim.o.guifont = vim.fn.has("win32") == 1 and "CaskaydiaCove Nerd Font Mono" or ""
     vim.opt.linespace = 0
     vim.g.neovide_scale_factor = 0.85
     vim.g.neovide_cursor_animation_length = 0

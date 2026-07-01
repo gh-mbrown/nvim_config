@@ -88,32 +88,8 @@ local function show_plugins()
         :totable())
 end
 
-local function open_buffer(num)
-    num = tonumber(num)
-    local bufs = vim.iter(vim.api.nvim_list_bufs())
-        :filter(function(b)
-            return vim.api.nvim_buf_is_valid(b) and vim.bo[b].buflisted
-        end)
-        :totable()
-    table.sort(bufs, function(x, y)
-        return x < y
-    end)
-    local func = bufs[num] and function()
-        vim.cmd.buffer(bufs[num])
-    end or function()
-        vim.notify("No index number " .. num .. " in list of loaded bufs", vim.log.levels.WARN)
-    end
-    func()
-end
-
 vim.api.nvim_create_user_command("OpenPreviousBuffer", open_previous_buffer, {})
 vim.api.nvim_create_user_command("CloseBuffer", close_buffer, {})
 vim.api.nvim_create_user_command("UpdatePlugins", update_plugins, {})
 vim.api.nvim_create_user_command("CleanPlugins", clean_plugins, {})
 vim.api.nvim_create_user_command("ShowPlugins", show_plugins, {})
-vim.api.nvim_create_user_command("OpenBuffer", function(opts)
-        open_buffer((opts.args == "" or opts.args == nil) and 1 or opts.args)
-    end,
-    {
-        nargs = 1
-    })
