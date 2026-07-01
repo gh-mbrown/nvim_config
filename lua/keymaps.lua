@@ -27,8 +27,4 @@ if vim.g.neovide then
     vim.keymap.set("n", "<C-j>", function() vim.cmd.wincmd("j") end)
     vim.keymap.set("n", "<C-k>", function() vim.cmd.wincmd("k") end)
     vim.keymap.set("n", "<C-l>", function() vim.cmd.wincmd("l") end)
-    vim.keymap.set("t", "<C-h>", function() vim.cmd.wincmd("h") end)
-    vim.keymap.set("t", "<C-j>", function() vim.cmd.wincmd("j") end)
-    vim.keymap.set("t", "<C-k>", function() vim.cmd.wincmd("k") end)
-    vim.keymap.set("t", "<C-l>", function() vim.cmd.wincmd("l") end)
 end
