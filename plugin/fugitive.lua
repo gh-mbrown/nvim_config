@@ -26,6 +26,12 @@ require("lazy_load").on_vim_enter(function()
     vim.keymap.set("n", "<leader>gP", function()
         vim.cmd.Git("push")
     end)
+    vim.keymap.set("n", "<leader>gc", function ()
+        local branch = vim.fn.input("Branch Name: ")
+        if not branch or branch == "" then return end
+        vim.cmd.Git("checkout -b " .. branch)
+        vim.cmd.Git("push -u origin " .. branch)
+    end)
 
     vim.api.nvim_create_autocmd("FileType", {
         pattern = "gitcommit",
