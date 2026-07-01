@@ -77,7 +77,7 @@ local function clean_plugins()
     )
 end
 local function show_plugins()
-    require("utils.functions").list_to_buffer(vim.iter(vim.pack.get())
+    require("utils").list_to_buffer(vim.iter(vim.pack.get())
         :filter(function(p)
             return p.active
         end)
