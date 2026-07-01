@@ -3,7 +3,10 @@ require("lazy_load").on_vim_enter(function()
         GIT_ROOT .. "tpope/vim-fugitive"
     })
 
-    vim.keymap.set("n", "<leader>gg", vim.cmd.Git)
+    vim.keymap.set("n", "<leader>gg", function ()
+        vim.cmd.Git()
+        vim.cmd.only()
+    end)
     vim.keymap.set("n", "<leader>gw", function()
         vim.cmd.Git("blame")
     end)
