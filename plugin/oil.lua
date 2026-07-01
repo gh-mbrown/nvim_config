@@ -9,6 +9,9 @@ oil.setup({
     },
     use_default_keymaps = true,
     keymaps = {
+        ["<leader>oc"] = oil.close,
+        ["<leader>oh"] = oil.toggle_hidden,
+        ["<leader>op"] = oil.open_preview,
         ["<C-l>"] = function()
             vim.cmd.wincmd("l")
         end,
@@ -20,20 +23,10 @@ oil.setup({
     }
 })
 
-local function apply_oil_func(con, mes, func)
-    if con == (vim.bo[vim.api.nvim_get_current_buf()].filetype == "oil") then func() else vim.notify(mes) end
-end
-
 vim.keymap.set("n", "<leader>oo", function()
-    apply_oil_func(false, "Already in Oil", oil.open)
-end)
-vim.keymap.set("n", "<leader>oc", function()
-    apply_oil_func(true, "Not in Oil", oil.close)
-end)
-vim.keymap.set("n", "<leader>ot", oil.toggle_float)
-vim.keymap.set("n", "<leader>oh", function()
-    apply_oil_func(true, "Not in Oil", oil.toggle_hidden)
-end)
-vim.keymap.set("n", "<leader>op", function()
-    apply_oil_func(true, "Not in Oil", oil.open_preview)
+    if vim.bo[vim.api.nvim_get_current_buf()].filetype ~= "oil" then
+        oil.open()
+    else
+        vim.notify("Already in Oil", vim.log.levels.INFO)
+    end
 end)
