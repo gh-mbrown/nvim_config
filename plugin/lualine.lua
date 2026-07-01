@@ -24,30 +24,24 @@ require("lazy_load").on_vim_enter(function()
                     path = 1,
                 },
             },
-            lualine_x = {},
+            lualine_x = {
+                "filetype",
+            },
             lualine_y = { "progress" },
             lualine_z = { "location" }
         },
         winbar = {
+            lualine_a = { "lsp_status" },
             lualine_b = {
-                {
-                    "filetype",
-                    icon_only = true,
-                },
                 "buffers"
             },
             lualine_x = { "hostname" },
-            lualine_z = { "lsp_status" }
+            lualine_z = { "fileformat" }
         },
         inactive_winbar = {
-            lualine_b = {
-                {
-                    "filetype",
-                    icon_only = true,
-                }
-            },
+            lualine_a = { "lsp_status" },
             lualine_x = { "hostname" },
-            lualine_z = { "lsp_status" }
+            lualine_z = { "fileformat" }
         },
         extensions = {
             pcall(require, "oil") and "oil",
@@ -64,11 +58,11 @@ require("lazy_load").on_vim_enter(function()
         })
     end)
     for i = 1, 9 do
-        vim.keymap.set("n", "<leader>b" .. i, function ()
+        vim.keymap.set("n", "<leader>b" .. i, function()
             vim.cmd("LualineBuffersJump! " .. i)
         end)
     end
-    vim.keymap.set("n", "<leader>bb", function ()
+    vim.keymap.set("n", "<leader>bb", function()
         vim.cmd("LualineBuffersJump! " .. vim.v.count1)
     end)
 end)
