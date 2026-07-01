@@ -4,7 +4,7 @@ require("lazy_load").on_vim_enter(function()
     })
 
     vim.keymap.set("n", "<leader>gg", vim.cmd.Git)
-    vim.keymap.set("n", "<leader>gb", function()
+    vim.keymap.set("n", "<leader>gw", function()
         vim.cmd.Git("blame")
     end)
     vim.keymap.set("n", "<leader>gl", function ()

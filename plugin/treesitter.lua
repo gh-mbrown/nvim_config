@@ -16,7 +16,7 @@ require("lazy_load").on_vim_enter(function()
     })
 
     local ts = require("nvim-treesitter")
-    local funcs = require("utils.functions")
+    local funcs = require("utils")
     ts.setup({})
 
     local remap = {

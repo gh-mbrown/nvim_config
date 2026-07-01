@@ -1,2 +1,2 @@
-**/.luarc.json
-**/nvim-pack-lock.json
+.luarc.json
+nvim-pack-lock.json
