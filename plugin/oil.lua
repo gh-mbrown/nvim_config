@@ -30,3 +30,4 @@ vim.keymap.set("n", "<leader>oo", function()
         vim.notify("Already in Oil", vim.log.levels.INFO)
     end
 end)
+vim.keymap.set("n", "<leader>ot", oil.toggle_float)
