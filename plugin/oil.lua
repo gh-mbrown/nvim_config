@@ -4,6 +4,11 @@ vim.pack.add({
 })
 local oil = require("oil")
 oil.setup({
+    columns = {
+        "permissions",
+        "size",
+        "icon",
+    },
     view_options = {
         show_hidden = true,
     },
