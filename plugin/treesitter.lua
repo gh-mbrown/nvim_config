@@ -44,9 +44,9 @@ require("lazy_load").on_vim_enter(function()
         end,
     })
 
-    vim.keymap.set("n", "<leader>ti", vim.cmd.InspectTree)
+    vim.keymap.set("n", "<leader>tt", vim.cmd.InspectTree)
     vim.keymap.set("n", "<leader>te", vim.cmd.EditQuery)
-    vim.keymap.set("n", "<leader>tl", function()
+    vim.keymap.set("n", "<leader>ti", function()
         funcs.list_to_buffer(ts.get_installed())
     end)
     vim.keymap.set("n", "<leader>tu", vim.cmd.TSUpdate)

@@ -12,6 +12,7 @@ require("lazy_load").on_vim_enter(function()
     })
 
     vim.pack.add({
+        { src = GIT_ROOT .. "nvim-telescope/telescope-ui-select.nvim" },
         { src = GIT_ROOT .. "nvim-telescope/telescope-project.nvim" },
         { src = GIT_ROOT .. "nvim-lua/plenary.nvim" },
         { src = GIT_ROOT .. "nvim-telescope/telescope-fzf-native.nvim" },
@@ -51,10 +52,8 @@ require("lazy_load").on_vim_enter(function()
     })
     telescope.load_extension("fzf")
     telescope.load_extension("project")
-    if pcall(require, "harpoon") then
-        telescope.load_extension("harpoon")
-        vim.keymap.set("n", "<leader>hh", telescope.extensions.harpoon.marks)
-    end
+    telescope.load_extension("ui-select")
+    if pcall(require, "noice") then telescope.load_extension("noice") end
     vim.keymap.set("n", "<leader>pp", telescope.extensions.project.project)
     vim.keymap.set("n", "<leader>pf", builtin.git_files)
     vim.keymap.set("n", "<leader>ff", builtin.find_files)
@@ -63,7 +62,6 @@ require("lazy_load").on_vim_enter(function()
     vim.keymap.set("n", "<leader>pb", builtin.buffers)
     vim.keymap.set("n", "<leader>ph", builtin.help_tags)
     vim.keymap.set("n", "<leader>ch", builtin.command_history)
-    vim.keymap.set("n", "<leader>pm", builtin.man_pages)
     vim.keymap.set("n", "gd", builtin.lsp_definitions)
     vim.keymap.set("n", "gr", builtin.lsp_references)
     vim.keymap.set("n", "gi", builtin.lsp_implementations)
@@ -71,4 +69,5 @@ require("lazy_load").on_vim_enter(function()
     vim.keymap.set("n", "<leader>pd", builtin.diagnostics)
     vim.keymap.set("n", "<leader>pt", builtin.treesitter)
     vim.keymap.set("n", "<leader>gb", builtin.git_branches)
+    vim.keymap.set("n", "<leader>pm", telescope.extensions.noice.noice)
 end)
